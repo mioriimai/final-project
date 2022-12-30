@@ -23,7 +23,7 @@ create table "public"."items" (
   "category"            text           not null,
   "brand"               text           not null,
   "color"               text           not null,
-  "note"                text           not null,
+  "note"                text,
   "userId"              serial         not null,
   "isFavorite"          BOOLEAN,
   "createdAt"      timestamptz(6) not null default now(),
