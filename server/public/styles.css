@@ -117,6 +117,47 @@ body {
   opacity: 50%;
 }
 
+/* ----------- home view ---------- */
+.home-view-wrapper {
+  text-align: center;
+}
+
+.wanna-organize,
+.what-to-wear {
+  font-family: "The Girl Next Door", sans-serif;
+  font-size: 40px;
+  margin: 20px;
+}
+
+.wanna-organize {
+  margin-top: 40px;
+}
+
+.add-item-button,
+.add-outfit-button,
+.see-items-button,
+.see-outfits-button {
+  text-decoration: none;
+  color: white;
+  font-family: "Playfair Display", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: #807f7e;
+  display: inline-block;
+  width: 230px;
+  padding: 12px 40px;
+  margin-bottom: 20px;
+  border-radius: 30px;
+}
+
+.add-item-button:hover,
+.add-outfit-button:hover,
+.see-items-button:hover,
+.see-outfits-button:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
