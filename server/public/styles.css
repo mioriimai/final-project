@@ -16,13 +16,29 @@ body {
   color: black;
   font-family: "Playfair Display SC", serif;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 33px;
   text-decoration: none;
 }
 
 .fa-solid.fa-bars {
   font-size: 2rem;
   position: absolute;
-  left: 20px;
-  top: 11px;
+  left: 25px;
+  top: 13px;
+}
+
+/* ------------- media query ------------  */
+
+/* mobile screen */
+@media screen and (max-width: 480px) {
+  /* --------- mobile navbar -------- */
+  .your-closet {
+    font-size: 20px;
+  }
+
+  .fa-solid.fa-bars {
+    font-size: 1.5rem;
+    left: 18px;
+    top: 9px;
+  }
 }
