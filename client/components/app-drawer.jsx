@@ -10,6 +10,18 @@ export default class AppDrawer extends React.Component {
     this.handleLinksOrShadeClick = this.handleLinksOrShadeClick.bind(this);
   }
 
+  handleMenuIconClick() {
+    this.setState({
+      isMenuOpened: true
+    });
+  }
+
+  handleLinksOrShadeClick() {
+    this.setState({
+      isMenuOpened: false
+    });
+  }
+
   render() {
     return (
       <i className="fa-solid fa-bars" />
