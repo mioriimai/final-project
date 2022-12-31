@@ -192,4 +192,25 @@ body {
     padding: 5px;
     padding-left: 20px;
   }
+
+  /* ----------- mobile home view ---------- */
+  .wanna-organize,
+  .what-to-wear {
+    font-size: 18px;
+    margin: 10px;
+  }
+
+  .wanna-organize {
+    margin-top: 30px;
+  }
+
+  .add-item-button,
+  .add-outfit-button,
+  .see-items-button,
+  .see-outfits-button {
+    font-size: 13px;
+    width: 140px;
+    padding: 7px 25px;
+    margin-bottom: 15px;
+  }
 }
