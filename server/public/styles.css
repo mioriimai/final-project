@@ -1,3 +1,28 @@
 body {
   background-color: #f3f0e8;
 }
+
+/* ---------- navbar --------- */
+
+.navbar-wrapper {
+  border-bottom: 1px solid black;
+  padding: 7px;
+  margin: 0;
+  text-align: center;
+  position: relative;
+}
+
+.your-closet {
+  color: black;
+  font-family: "Playfair Display SC", serif;
+  font-weight: bold;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+.fa-solid.fa-bars {
+  font-size: 2rem;
+  position: absolute;
+  left: 20px;
+  top: 11px;
+}
