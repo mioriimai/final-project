@@ -8,7 +8,6 @@ export default class Navbar extends React.Component {
     return (
       <nav className='navbar-wrapper'>
         <a className='your-closet' href='#home'>Your Closet</a>
-        {/* <i className="fa-solid fa-bars" /> */}
         <AppDrawer />
       </nav>
     );
