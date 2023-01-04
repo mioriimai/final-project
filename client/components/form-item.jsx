@@ -6,13 +6,20 @@ export default class FormItem extends React.Component {
     this.state = {
       originalImageUr: 'test',
       bgRemovedImageUrl: 'test',
-      category: 'None',
-      brand: 'None',
-      color: 'None',
+      category: 'none',
+      brand: 'none',
+      color: 'none',
       notes: ''
     };
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleCategoryChange(event) {
+    this.setState({
+      category: event.target.value
+    });
   }
 
   handleNotesChange(event) {
@@ -56,7 +63,7 @@ export default class FormItem extends React.Component {
                   <p className='form-item-category'>Category</p>
                 </div>
                 <div className='column-half position-right'>
-                  <select name="category" id="category">
+                  <select name="category" id="category" value={this.state.value} onChange={this.handleCategoryChange}>
                     <option value="none">None</option>
                     <option value="dresses">Dresses</option>
                     <option value="tops">Tops</option>
