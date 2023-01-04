@@ -1,21 +1,47 @@
 import React from 'react';
+// import Create from '../components/file-upload';
 
 export default class FormItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      originalImageUr: 'test',
+      originalImageUrl: '',
       bgRemovedImageUrl: 'test',
       category: 'none',
       brand: 'none',
       color: 'none',
-      notes: ''
+      notes: '',
+      preview: null
     };
+    this.fileInputRef = React.createRef();
+    this.handleImageChange = this.handleImageChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleBrandChange = this.handleBrandChange.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleImageChange(event) {
+
+    const files = event.target.files;
+    if (files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = event => {
+        this.setState({ preview: event.target.result });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      this.setState({ preview: null });
+    }
+    // this.setState({
+    //   originalImageUrl: window.URL.createObjectURL(event.target.files[0])
+    // });
+    this.setState({
+      originalImageUrl: event.target.files[0].name
+    });
+
   }
 
   handleCategoryChange(event) {
@@ -58,6 +84,21 @@ export default class FormItem extends React.Component {
 
   render() {
     // console.log(this.state);
+
+    const previewImage = this.state.preview;
+    let preview = '';
+    let placeholderClassName = 'item-image-placeholder';
+    let uploadMessage = 'Upload from Camera Roll';
+    if (previewImage != null) {
+      preview = (
+
+        <img src={previewImage} className='chosen-image' />
+
+      );
+      placeholderClassName = 'item-image-placeholder hidden';
+      uploadMessage = '';
+    }
+
     return (
       <form onSubmit={this.onSubmit}>
         <div className='form-item-container'>
@@ -69,7 +110,15 @@ export default class FormItem extends React.Component {
 
           <div className='row'>
             <div className='column-half'>
-              <p className='upload-from-camera-roll'>Upload from Camera Roll</p>
+              <div className='row  item-image-wrapper'>
+                <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
+                <p className='upload-from-camera-roll'>{uploadMessage}</p>
+                {/* file upload */}
+                {preview}
+              </div>
+              <div className='row'>
+                <input required type="file" name='image' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageChange} className='choose-file' />
+              </div>
             </div>
 
             <div className='column-half'>

@@ -165,16 +165,41 @@ body {
   margin: 35px 0 5px;
 }
 
+.item-image-wrapper {
+  position: relative;
+
+  /* text-align: center; */
+  border: 1px solid #c0c0c0;
+  border-radius: 10px;
+  width: 80%;
+  height: 300px;
+  margin: 20px 0 0;
+}
+
+.item-image-placeholder {
+  opacity: 40%;
+  position: absolute;
+  left: 85px;
+  top: 35px;
+  width: 45%;
+}
+
 .upload-from-camera-roll {
   color: #737373;
   font-family: Alegreya, sans-serif;
   font-size: 20px;
-  text-align: center;
-  line-height: 300px;
-  border: 1px solid #c0c0c0;
-  border-radius: 10px;
-  width: 80%;
-  height: 320px;
+  margin: 190px auto;
+}
+
+.choose-file {
+  margin: 18px 0 0 10px;
+}
+
+.chosen-image {
+  width: 95%;
+  margin: 0 auto;
+  height: 290px;
+  object-fit: contain;
 }
 
 .form-item-category,
