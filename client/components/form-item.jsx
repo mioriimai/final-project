@@ -12,6 +12,7 @@ export default class FormItem extends React.Component {
       notes: ''
     };
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
+    this.handleBrandChange = this.handleBrandChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -19,6 +20,12 @@ export default class FormItem extends React.Component {
   handleCategoryChange(event) {
     this.setState({
       category: event.target.value
+    });
+  }
+
+  handleBrandChange(event) {
+    this.setState({
+      brand: event.target.value
     });
   }
 
@@ -76,10 +83,10 @@ export default class FormItem extends React.Component {
                   <p className='form-item-brand'>Brand</p>
                 </div>
                 <div className='column-half position-right'>
-                  <select name="brand" id="brand">
+                  <select name="brand" id="brand" value={this.state.value} onChange={this.handleBrandChange}>
                     <option value="none">None</option>
-                    <option value="dresses">Zara</option>
-                    <option value="tops">H&M</option>
+                    <option value="zara">Zara</option>
+                    <option value="h&m">H&M</option>
                   </select>
                 </div>
               </div>
@@ -91,8 +98,8 @@ export default class FormItem extends React.Component {
                 <div className='column-half position-right'>
                   <select name="color" id="color">
                     <option value="none">None</option>
-                    <option value="dresses">White</option>
-                    <option value="tops">Pink</option>
+                    <option value="white">White</option>
+                    <option value="pink">Pink</option>
                   </select>
                 </div>
               </div>
