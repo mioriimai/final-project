@@ -4,9 +4,15 @@ export default class FormItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      originalImageUr: 'test',
+      bgRemovedImageUrl: 'test',
+      category: 'None',
+      brand: 'None',
+      color: 'None',
       notes: ''
     };
     this.handleNotesChange = this.handleNotesChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleNotesChange(event) {
@@ -15,11 +21,24 @@ export default class FormItem extends React.Component {
     });
   }
 
+  handleSubmit(event) {
+    // prevent the default form submission behavior.
+    event.preventDefault();
+    // reset the form.
+    this.setState({
+      originalImageUr: 'test',
+      bgRemovedImageUrl: 'test',
+      category: 'None',
+      brand: 'None',
+      color: 'None',
+      notes: ''
+    });
+  }
+
   render() {
-
+    // console.log(this.state);
     return (
-
-      <form>
+      <form onSubmit={this.onSubmit}>
         <div className='form-item-container'>
           <div className='row'>
             <div className='column-full'>
@@ -75,6 +94,9 @@ export default class FormItem extends React.Component {
               </div>
               <div className='row'>
                 <textarea name="notes" id="notes" value={this.state.notes} onChange={this.handleNotesChange} />
+              </div>
+              <div className='row item-save-button-wrapper'>
+                <button className='item-save-button'>SAVE</button>
               </div>
             </div>
           </div>

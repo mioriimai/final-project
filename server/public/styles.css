@@ -234,6 +234,23 @@ body {
   font-size: 16px;
 }
 
+.item-save-button-wrapper {
+  display: block;
+  text-align: right;
+}
+
+.item-save-button {
+  color: white;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #8f8f8f;
+  border: none;
+  border-radius: 30px;
+  padding: 7px 25px;
+  margin-top: 20px;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
