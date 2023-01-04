@@ -24,7 +24,7 @@ export default class App extends React.Component {
 
   renderPage() {
     const { path } = this.state.route;
-    if (path === 'home') {
+    if (path === 'home' || path === '') {
       return <Home />;
     }
     if (path === 'add-item') {

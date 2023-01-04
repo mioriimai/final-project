@@ -1,0 +1,20 @@
+.form-item-container {
+  max-width: 80%;
+  margin: 40px auto;
+  padding: 0 7%;
+  background-color: white;
+  height: 500px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column-full {
+  flex-basis: 100%;
+}
+
+.column-half {
+  flex-basis: 50%;
+}
