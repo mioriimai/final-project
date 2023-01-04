@@ -13,6 +13,7 @@ export default class FormItem extends React.Component {
     };
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleBrandChange = this.handleBrandChange.bind(this);
+    this.handleColorChange = this.handleColorChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -26,6 +27,12 @@ export default class FormItem extends React.Component {
   handleBrandChange(event) {
     this.setState({
       brand: event.target.value
+    });
+  }
+
+  handleColorChange(event) {
+    this.setState({
+      color: event.target.value
     });
   }
 
@@ -59,6 +66,7 @@ export default class FormItem extends React.Component {
               <p className='form-item-title'>{this.props.title}</p>
             </div>
           </div>
+
           <div className='row'>
             <div className='column-half'>
               <p className='upload-from-camera-roll'>Upload from Camera Roll</p>
@@ -96,19 +104,21 @@ export default class FormItem extends React.Component {
                   <p className='form-item-color'>Color</p>
                 </div>
                 <div className='column-half position-right'>
-                  <select name="color" id="color">
+                  <select name="color" id="color" value={this.state.value} onChange={this.handleColorChange}>
                     <option value="none">None</option>
                     <option value="white">White</option>
                     <option value="pink">Pink</option>
                   </select>
                 </div>
               </div>
+
               <div className='row'>
                 <label htmlFor="notes" className='form-item-notes'>Notes</label>
               </div>
               <div className='row'>
                 <textarea name="notes" id="notes" value={this.state.notes} onChange={this.handleNotesChange} />
               </div>
+
               <div className='row item-save-button-wrapper'>
                 <button className='item-save-button'>SAVE</button>
               </div>
