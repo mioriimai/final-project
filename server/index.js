@@ -4,6 +4,8 @@ const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
 const ClientError = require('./client-error');
 const pg = require('pg');
+const uploadsMiddleware = require('./uploads-middleware');
+const path = require('path');
 
 // create a database connection object to use the pg package.
 const db = new pg.Pool({
@@ -18,20 +20,26 @@ const app = express();
 app.use(staticMiddleware);
 app.use(express.json());
 
-app.post('/api/form-item', (req, res, next) => {
+app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
   // varidate the "inputs" first.
   const newItem = req.body;
-  if ('originalImageUrl' in newItem === false || 'bgRemovedImageUrl' in newItem === false || 'category' in newItem === false || 'brand' in newItem === false || 'color' in newItem === false || 'isFavorite' in newItem === false || 'userId' in newItem === false || !Number.isInteger(newItem.userId) || newItem.userId <= 0) {
+  // console.log('newItem:', newItem);
+  if ('isFavorite' in newItem === false || 'userId' in newItem === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   }
+
+  // create a url for the image by combining '/images' with req.file.filename
+
+  const url = path.join('/images', req.file.filename);
+
   // query the database
   const sql = `
-    insert into "items" ("originalImageUrl", "bgRemovedImageUrl", "category", "brand", "color", "isFavorite", "userId")
+    insert into "items" ("originalImage", "bgRemovedImage", "category", "brand", "color", "isFavorite", "userId")
     values ($1, $2, $3, $4, $5, $6, $7)
     returning *
   `;
   // send the user input in a separate array instead of putting the user input directory into our query
-  const params = [newItem.originalImageUrl, newItem.bgRemovedImageUrl, newItem.category, newItem.brand, newItem.color, newItem.isFavorite, newItem.userId];
+  const params = [url, newItem.bgRemovedImage, newItem.category, newItem.brand, newItem.color, newItem.isFavorite, newItem.userId];
 
   db.query(sql, params)
     .then(result => {

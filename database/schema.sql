@@ -15,15 +15,14 @@ create table "public"."users" (
   primary key ("userId"),
   unique ("username")
 );
-
 create table "public"."items" (
   "itemId"              serial,
-  "originalImageUrl"    text           not null,
-  "bgRemovedImageUrl"   text           not null,
-  "category"            text           not null,
-  "brand"               text           not null,
-  "color"               text           not null,
-  "notes"                text,
+  "originalImage"       text           not null,
+  "bgRemovedImage"      text,
+  "category"            text,
+  "brand"               text,
+  "color"               text,
+  "note"                text,
   "userId"              serial         not null,
   "isFavorite"          BOOLEAN,
   "createdAt"      timestamptz(6) not null default now(),

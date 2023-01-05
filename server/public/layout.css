@@ -19,6 +19,22 @@
   flex-basis: 50%;
 }
 
+.column-two-fifth {
+  flex-basis: 40%;
+}
+
+.column-three-fifth {
+  flex-basis: 60%;
+}
+
+.column-three-ten {
+  flex-basis: 30%;
+}
+
+.column-seven-ten {
+  flex-basis: 70%;
+}
+
 .hidden {
   display: none;
 }

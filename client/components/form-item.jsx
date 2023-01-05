@@ -1,15 +1,14 @@
 import React from 'react';
-// import Create from '../components/file-upload';
 
 export default class FormItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      originalImageUrl: '',
-      bgRemovedImageUrl: 'test',
-      category: 'none',
-      brand: 'none',
-      color: 'none',
+      originalImage: '',
+      bgRemovedImage: 'None',
+      category: 'None',
+      brand: 'None',
+      color: 'None',
       notes: '',
       preview: null
     };
@@ -35,13 +34,10 @@ export default class FormItem extends React.Component {
     } else {
       this.setState({ preview: null });
     }
-    // this.setState({
-    //   originalImageUrl: window.URL.createObjectURL(event.target.files[0])
-    // });
-    this.setState({
-      originalImageUrl: event.target.files[0].name
-    });
 
+    this.setState({
+      originalImage: event.target.files[0].name
+    });
   }
 
   handleCategoryChange(event) {
@@ -71,36 +67,81 @@ export default class FormItem extends React.Component {
   handleSubmit(event) {
     // prevent the default form submission behavior.
     event.preventDefault();
-    // reset the form.
-    this.setState({
-      originalImageUr: 'test',
-      bgRemovedImageUrl: 'test',
-      category: 'None',
-      brand: 'None',
-      color: 'None',
-      notes: ''
-    });
+
+    // Create a `new` FormData object.
+    const formDataObject = new FormData();
+
+    //  Append entries to the form data object I created.
+    formDataObject.append('originalImage', this.fileInputRef.current.files[0]);
+    formDataObject.append('bgRemovedImage', this.state.bgRemovedImage);
+    formDataObject.append('category', this.state.category);
+    formDataObject.append('brand', this.state.brand);
+    formDataObject.append('color', this.state.color);
+    formDataObject.append('notes', this.state.notes);
+    formDataObject.append('isFavorite', false);
+    formDataObject.append('userId', 1);
+
+    // Use fetch() to send a POST request to / api / form-item.
+    fetch('/api/form-item', {
+      method: 'POST',
+      body: formDataObject
+    })
+      .then(res => res.json())
+      .then(data => {
+        // console.log('data:', data); // test
+        this.setState({
+          originalImage: '',
+          bgRemovedImage: 'None',
+          category: 'None',
+          brand: 'None',
+          color: 'None',
+          notes: '',
+          preview: null
+        });
+        this.fileInputRef.current.value = null;
+      })
+      .catch(err => console.error(err));
   }
 
   render() {
-    // console.log(this.state);
+    // console.log(this.state); //test
 
+    // show image placeholder and hide it when image is selected
     const previewImage = this.state.preview;
     let preview = '';
     let placeholderClassName = 'item-image-placeholder';
     let uploadMessage = 'Upload from Camera Roll';
     if (previewImage != null) {
       preview = (
-
         <img src={previewImage} className='chosen-image' />
-
       );
       placeholderClassName = 'item-image-placeholder hidden';
       uploadMessage = '';
     }
 
+    // for category options
+    const categoryOptions = ['None', 'Dress', 'Tops & blouses', 'Sweaters', 'Jeans', 'Pants', 'Skirts', 'Coats & jacktes', 'Athletic apparel', 'Swimwear', 'Handbags', 'Accessories', 'Jewelry', 'Shoes'];
+    const categoryOptionList = [];
+    for (let i = 0; i < categoryOptions.length; i++) {
+      categoryOptionList.push(<option key={i} value={categoryOptions[i]}>{categoryOptions[i]}</option>);
+    }
+
+    // for brand options
+    const brandOptions = ['None', 'Adidas', 'Chanel', 'Christian Dior', 'Gap', 'Gucci', 'H&M', 'Hermes', 'Lacoste', 'Louis Vuitton', 'Lululemon', 'Moncler', 'Nike', 'Polo Ralph Lauren', 'The North Face', 'Uniqlo', 'Urban Outfitters', 'Zara'];
+    const brandOptionList = [];
+    for (let i = 0; i < brandOptions.length; i++) {
+      brandOptionList.push(<option key={i} value={brandOptions[i]}>{brandOptions[i]}</option>);
+    }
+
+    // for color options
+    const colorOptions = ['None', 'Black', 'Grey', 'White', 'Beige', 'Red', 'Pink', 'Purple', 'Navy', 'Blue', 'Green', 'Yellow', 'Orange', 'Brown', 'Gold', 'Silver'];
+    const colorOptionList = [];
+    for (let i = 0; i < colorOptions.length; i++) {
+      colorOptionList.push(<option key={i} value={colorOptions[i]}>{colorOptions[i]}</option>);
+    }
+
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.handleSubmit}>
         <div className='form-item-container'>
           <div className='row'>
             <div className='column-full'>
@@ -113,50 +154,43 @@ export default class FormItem extends React.Component {
               <div className='row  item-image-wrapper'>
                 <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
                 <p className='upload-from-camera-roll'>{uploadMessage}</p>
-                {/* file upload */}
                 {preview}
               </div>
               <div className='row'>
-                <input required type="file" name='image' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageChange} className='choose-file' />
+                <input required type="file" name='originalImage' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageChange} className='choose-file' />
               </div>
             </div>
 
             <div className='column-half'>
               <div className='row each-row'>
-                <div className='column-half'>
+                <div className='column-two-fifth'>
                   <p className='form-item-category'>Category</p>
                 </div>
-                <div className='column-half position-right'>
-                  <select name="category" id="category" value={this.state.value} onChange={this.handleCategoryChange}>
-                    <option value="none">None</option>
-                    <option value="dresses">Dresses</option>
-                    <option value="tops">Tops</option>
+                <div className='column-three-fifth position-right'>
+                  <select name="category" id="category" value={this.state.category} onChange={this.handleCategoryChange}>
+                    {categoryOptionList}
                   </select>
                 </div>
               </div>
 
               <div className='row each-row'>
-                <div className='column-half'>
+                <div className='column-three-ten'>
                   <p className='form-item-brand'>Brand</p>
                 </div>
-                <div className='column-half position-right'>
-                  <select name="brand" id="brand" value={this.state.value} onChange={this.handleBrandChange}>
-                    <option value="none">None</option>
-                    <option value="zara">Zara</option>
-                    <option value="h&m">H&M</option>
+                <div className='column-seven-ten position-right'>
+                  <select name="brand" id="brand" value={this.state.brand} onChange={this.handleBrandChange}>
+                    {brandOptionList}
                   </select>
                 </div>
               </div>
 
               <div className='row each-row'>
-                <div className='column-half'>
+                <div className='column-three-ten'>
                   <p className='form-item-color'>Color</p>
                 </div>
-                <div className='column-half position-right'>
-                  <select name="color" id="color" value={this.state.value} onChange={this.handleColorChange}>
-                    <option value="none">None</option>
-                    <option value="white">White</option>
-                    <option value="pink">Pink</option>
+                <div className='column-seven-ten position-right'>
+                  <select name="color" id="color" value={this.state.color} onChange={this.handleColorChange}>
+                    {colorOptionList}
                   </select>
                 </div>
               </div>
@@ -169,13 +203,12 @@ export default class FormItem extends React.Component {
               </div>
 
               <div className='row item-save-button-wrapper'>
-                <button className='item-save-button'>SAVE</button>
+                <button type='submit' className='item-save-button'>SAVE</button>
               </div>
             </div>
           </div>
         </div>
       </form>
-
     );
   }
 }
