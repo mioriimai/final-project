@@ -42,8 +42,33 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       // the query succeeded
-      // respond to the client with the status code 200 and created grade object
+      // respond to the client with the status code 200 and created newItem object
       res.status(201).json(result.rows[0]);
+    })
+    .catch(err => {
+      // the query failed for some reason
+      // possibly due to a syntax error in the SQL statement
+      // print the error to STDERR (the terminal) for debugging purposes
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+app.get('/api/items', (req, res, next) => {
+  // query the database
+  const sql = `
+    select ("originalImage", "notes")
+    from "items"
+  `;
+
+  db.query(sql)
+    .then(result => {
+      // the query succeeded
+      // respond to the client with the status code 200 and all rows from the "items" table
+      res.status(200).json(result.rows);
     })
     .catch(err => {
       // the query failed for some reason
