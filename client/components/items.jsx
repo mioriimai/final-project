@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default class Item extends React.Component {
+export default class Items extends React.Component {
 
   render() {
     return (
-      <p>Test</p>
+      <p>{this.props.content}</p>
     );
   }
 }
