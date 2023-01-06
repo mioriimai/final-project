@@ -13,6 +13,7 @@ export default class FormItem extends React.Component {
       preview: null,
       saved: false
     };
+
     this.fileInputRef = React.createRef();
     this.handleImageChange = this.handleImageChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
@@ -21,6 +22,11 @@ export default class FormItem extends React.Component {
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePopupClick = this.handlePopupClick.bind(this);
+
+    this.categoryOptions = ['None', 'Dress', 'Tops & blouses', 'Sweaters', 'Jeans', 'Pants', 'Skirts', 'Coats & jacktes', 'Athletic apparel', 'Swimwear', 'Handbags', 'Accessories', 'Jewelry', 'Shoes'];
+    this.brandOptions = ['None', 'Adidas', 'Chanel', 'Christian Dior', 'Gap', 'Gucci', 'H&M', 'Hermes', 'Lacoste', 'Louis Vuitton', 'Lululemon', 'Moncler', 'Nike', 'Polo Ralph Lauren', 'The North Face', 'Uniqlo', 'Urban Outfitters', 'Zara'];
+    this.colorOptions = ['None', 'Black', 'Grey', 'White', 'Beige', 'Red', 'Pink', 'Purple', 'Navy', 'Blue', 'Green', 'Yellow', 'Orange', 'Brown', 'Gold', 'Silver'];
+    this.createOptions = this.createOptions.bind(this);
   }
 
   handleImageChange(event) {
@@ -112,6 +118,14 @@ export default class FormItem extends React.Component {
     });
   }
 
+  createOptions(array) {
+    const optionList = [];
+    for (let i = 0; i < array.length; i++) {
+      optionList.push(<option key={i} value={array[i]}>{array[i]}</option>);
+    }
+    return optionList;
+  }
+
   render() {
     // show image placeholder and hide it when image is selected
     const previewImage = this.state.preview;
@@ -124,27 +138,6 @@ export default class FormItem extends React.Component {
       );
       placeholderClassName = 'item-image-placeholder hidden';
       uploadMessage = 'upload-from-camera-roll hidden';
-    }
-
-    // for category options
-    const categoryOptions = ['None', 'Dress', 'Tops & blouses', 'Sweaters', 'Jeans', 'Pants', 'Skirts', 'Coats & jacktes', 'Athletic apparel', 'Swimwear', 'Handbags', 'Accessories', 'Jewelry', 'Shoes'];
-    const categoryOptionList = [];
-    for (let i = 0; i < categoryOptions.length; i++) {
-      categoryOptionList.push(<option key={i} value={categoryOptions[i]}>{categoryOptions[i]}</option>);
-    }
-
-    // for brand options
-    const brandOptions = ['None', 'Adidas', 'Chanel', 'Christian Dior', 'Gap', 'Gucci', 'H&M', 'Hermes', 'Lacoste', 'Louis Vuitton', 'Lululemon', 'Moncler', 'Nike', 'Polo Ralph Lauren', 'The North Face', 'Uniqlo', 'Urban Outfitters', 'Zara'];
-    const brandOptionList = [];
-    for (let i = 0; i < brandOptions.length; i++) {
-      brandOptionList.push(<option key={i} value={brandOptions[i]}>{brandOptions[i]}</option>);
-    }
-
-    // for color options
-    const colorOptions = ['None', 'Black', 'Grey', 'White', 'Beige', 'Red', 'Pink', 'Purple', 'Navy', 'Blue', 'Green', 'Yellow', 'Orange', 'Brown', 'Gold', 'Silver'];
-    const colorOptionList = [];
-    for (let i = 0; i < colorOptions.length; i++) {
-      colorOptionList.push(<option key={i} value={colorOptions[i]}>{colorOptions[i]}</option>);
     }
 
     // popup-window
@@ -179,7 +172,7 @@ export default class FormItem extends React.Component {
                   </div>
                   <div className='column-three-fifth position-right'>
                     <select name="category" id="category" value={this.state.category} onChange={this.handleCategoryChange}>
-                      {categoryOptionList}
+                      {this.createOptions(this.categoryOptions)}
                     </select>
                   </div>
                 </div>
@@ -190,7 +183,7 @@ export default class FormItem extends React.Component {
                   </div>
                   <div className='column-seven-ten position-right'>
                     <select name="brand" id="brand" value={this.state.brand} onChange={this.handleBrandChange}>
-                      {brandOptionList}
+                      {this.createOptions(this.brandOptions)}
                     </select>
                   </div>
                 </div>
@@ -201,7 +194,7 @@ export default class FormItem extends React.Component {
                   </div>
                   <div className='column-seven-ten position-right'>
                     <select name="color" id="color" value={this.state.color} onChange={this.handleColorChange}>
-                      {colorOptionList}
+                      {this.createOptions(this.colorOptions)}
                     </select>
                   </div>
                 </div>

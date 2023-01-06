@@ -32,12 +32,12 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
 
   // query the database
   const sql = `
-    insert into "items" ("originalImage", "bgRemovedImage", "category", "brand", "color", "isFavorite", "userId")
-    values ($1, $2, $3, $4, $5, $6, $7)
+    insert into "items" ("originalImage", "bgRemovedImage", "category", "brand", "color", "notes", "isFavorite", "userId")
+    values ($1, $2, $3, $4, $5, $6, $7, $8)
     returning *
   `;
   // send the user input in a separate array instead of putting the user input directory into our query
-  const params = [url, newItem.bgRemovedImage, newItem.category, newItem.brand, newItem.color, newItem.isFavorite, newItem.userId];
+  const params = [url, newItem.bgRemovedImage, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.isFavorite, newItem.userId];
 
   db.query(sql, params)
     .then(result => {
