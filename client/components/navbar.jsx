@@ -4,7 +4,6 @@ import AppDrawer from '../components/app-drawer';
 
 export default class Navbar extends React.Component {
   render() {
-    // const { user, handleSignOut } = this.context;
     return (
       <nav className='navbar-wrapper'>
         <a className='your-closet' href='#home'>Your Closet</a>
