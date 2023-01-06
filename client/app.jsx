@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './pages/home';
 import ItemView from './pages/item-view';
+import ListView from './pages/list-view';
 // import AppContext from './lib/app-context';
 import Navbar from './components/navbar';
 import parseRoute from './lib/parse-route';
@@ -29,6 +30,9 @@ export default class App extends React.Component {
     }
     if (path === 'add-item') {
       return <ItemView />;
+    }
+    if (path === 'items') {
+      return <ListView />;
     }
   }
 
