@@ -23,13 +23,11 @@ app.use(express.json());
 app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
   // varidate the "inputs" first.
   const newItem = req.body;
-  // console.log('newItem:', newItem);
   if ('isFavorite' in newItem === false || 'userId' in newItem === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   }
 
   // create a url for the image by combining '/images' with req.file.filename
-
   const url = path.join('/images', req.file.filename);
 
   // query the database

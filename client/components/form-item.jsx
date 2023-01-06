@@ -90,7 +90,6 @@ export default class FormItem extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        // console.log('data:', data); // test
         this.setState({
           originalImage: '',
           bgRemovedImage: 'None',
@@ -114,8 +113,6 @@ export default class FormItem extends React.Component {
   }
 
   render() {
-    // console.log(this.state); //test
-
     // show image placeholder and hide it when image is selected
     const previewImage = this.state.preview;
     let preview = '';
