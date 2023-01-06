@@ -8,6 +8,12 @@ export default class Items extends React.Component {
     };
   }
 
+  componentDidMount() {
+    fetch('/api/items')
+      .then(res => res.json())
+      .then(items => this.setState({ items }));
+  }
+
   render() {
     return (
       <div className='items-container'>
