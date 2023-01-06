@@ -10,7 +10,8 @@ export default class FormItem extends React.Component {
       brand: 'None',
       color: 'None',
       notes: '',
-      preview: null
+      preview: null,
+      saved: false
     };
     this.fileInputRef = React.createRef();
     this.handleImageChange = this.handleImageChange.bind(this);
@@ -19,6 +20,7 @@ export default class FormItem extends React.Component {
     this.handleColorChange = this.handleColorChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePopupClick = this.handlePopupClick.bind(this);
   }
 
   handleImageChange(event) {
@@ -96,11 +98,19 @@ export default class FormItem extends React.Component {
           brand: 'None',
           color: 'None',
           notes: '',
-          preview: null
+          preview: null,
+          saved: true
         });
         this.fileInputRef.current.value = null;
+
       })
       .catch(err => console.error(err));
+  }
+
+  handlePopupClick() {
+    this.setState({
+      saved: !this.state.saved
+    });
   }
 
   render() {
@@ -140,75 +150,89 @@ export default class FormItem extends React.Component {
       colorOptionList.push(<option key={i} value={colorOptions[i]}>{colorOptions[i]}</option>);
     }
 
+    // popup-window
+    const popup = this.state.saved ? 'pop-up' : 'pop-uo hidden';
+
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className='form-item-container'>
-          <div className='row'>
-            <div className='column-full'>
-              <p className='form-item-title'>{this.props.title}</p>
+      <>
+        <form onSubmit={this.handleSubmit}>
+          <div className='form-item-container'>
+            <div className='row'>
+              <div className='column-full'>
+                <p className='form-item-title'>{this.props.title}</p>
+              </div>
+            </div>
+
+            <div className='row'>
+              <div className='column-half'>
+                <div className='row  item-image-wrapper'>
+                  <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
+                  <p className='upload-from-camera-roll'>{uploadMessage}</p>
+                  {preview}
+                </div>
+                <div className='row'>
+                  <input required type="file" name='originalImage' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageChange} className='choose-file' />
+                </div>
+              </div>
+
+              <div className='column-half'>
+                <div className='row each-row'>
+                  <div className='column-two-fifth'>
+                    <p className='form-item-category'>Category</p>
+                  </div>
+                  <div className='column-three-fifth position-right'>
+                    <select name="category" id="category" value={this.state.category} onChange={this.handleCategoryChange}>
+                      {categoryOptionList}
+                    </select>
+                  </div>
+                </div>
+
+                <div className='row each-row'>
+                  <div className='column-three-ten'>
+                    <p className='form-item-brand'>Brand</p>
+                  </div>
+                  <div className='column-seven-ten position-right'>
+                    <select name="brand" id="brand" value={this.state.brand} onChange={this.handleBrandChange}>
+                      {brandOptionList}
+                    </select>
+                  </div>
+                </div>
+
+                <div className='row each-row'>
+                  <div className='column-three-ten'>
+                    <p className='form-item-color'>Color</p>
+                  </div>
+                  <div className='column-seven-ten position-right'>
+                    <select name="color" id="color" value={this.state.color} onChange={this.handleColorChange}>
+                      {colorOptionList}
+                    </select>
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <label htmlFor="notes" className='form-item-notes'>Notes</label>
+                </div>
+                <div className='row'>
+                  <textarea name="notes" id="notes" value={this.state.notes} onChange={this.handleNotesChange} />
+                </div>
+
+                <div className='row item-save-button-wrapper'>
+                  <button type='submit' className='item-save-button'>SAVE</button>
+                </div>
+              </div>
             </div>
           </div>
+        </form>
 
-          <div className='row'>
-            <div className='column-half'>
-              <div className='row  item-image-wrapper'>
-                <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
-                <p className='upload-from-camera-roll'>{uploadMessage}</p>
-                {preview}
-              </div>
-              <div className='row'>
-                <input required type="file" name='originalImage' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageChange} className='choose-file' />
-              </div>
-            </div>
-
-            <div className='column-half'>
-              <div className='row each-row'>
-                <div className='column-two-fifth'>
-                  <p className='form-item-category'>Category</p>
-                </div>
-                <div className='column-three-fifth position-right'>
-                  <select name="category" id="category" value={this.state.category} onChange={this.handleCategoryChange}>
-                    {categoryOptionList}
-                  </select>
-                </div>
-              </div>
-
-              <div className='row each-row'>
-                <div className='column-three-ten'>
-                  <p className='form-item-brand'>Brand</p>
-                </div>
-                <div className='column-seven-ten position-right'>
-                  <select name="brand" id="brand" value={this.state.brand} onChange={this.handleBrandChange}>
-                    {brandOptionList}
-                  </select>
-                </div>
-              </div>
-
-              <div className='row each-row'>
-                <div className='column-three-ten'>
-                  <p className='form-item-color'>Color</p>
-                </div>
-                <div className='column-seven-ten position-right'>
-                  <select name="color" id="color" value={this.state.color} onChange={this.handleColorChange}>
-                    {colorOptionList}
-                  </select>
-                </div>
-              </div>
-
-              <div className='row'>
-                <label htmlFor="notes" className='form-item-notes'>Notes</label>
-              </div>
-              <div className='row'>
-                <textarea name="notes" id="notes" value={this.state.notes} onChange={this.handleNotesChange} />
-              </div>
-
-              <div className='row item-save-button-wrapper'>
-                <button type='submit' className='item-save-button'>SAVE</button>
-              </div>
-            </div>
+        <div className={popup}>
+          <div className='popup-text-wrapper'>
+            <h1 className='successfully-saved'>Successfully saved!</h1>
+            <a className='add-more-items' href='#add-item' onClick={this.handlePopupClick}>Add More Items</a>
+            <br />
+            <a className='see-items' href='#items' onClick={this.handlePopupClick}>See Items in the Closet</a>
           </div>
         </div>
-      </form>
+      </>
     );
   }
 }
