@@ -193,6 +193,10 @@ body {
   margin: 18px auto 0;
 }
 
+.choose-file:hover {
+  cursor: pointer;
+}
+
 .file-upload-wrapper {
   width: 80%;
 }
@@ -234,6 +238,12 @@ body {
   padding-bottom: 10px;
 }
 
+#category:hover,
+#brand:hover,
+#color:hover {
+  cursor: pointer;
+}
+
 .each-row {
   margin-bottom: 10px;
 }
@@ -259,6 +269,10 @@ body {
   font-size: 16px;
 }
 
+#notes:hover {
+  cursor: pointer;
+}
+
 .item-save-button-wrapper {
   display: block;
   text-align: right;
@@ -274,6 +288,10 @@ body {
   border-radius: 30px;
   padding: 7px 25px;
   margin-top: 20px;
+}
+
+.item-save-button:hover {
+  cursor: pointer;
 }
 
 .pop-up {
