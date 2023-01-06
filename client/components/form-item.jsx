@@ -120,13 +120,13 @@ export default class FormItem extends React.Component {
     const previewImage = this.state.preview;
     let preview = '';
     let placeholderClassName = 'item-image-placeholder';
-    let uploadMessage = 'Upload from Camera Roll';
+    let uploadMessage = 'upload-from-camera-roll';
     if (previewImage != null) {
       preview = (
         <img src={previewImage} className='chosen-image' />
       );
       placeholderClassName = 'item-image-placeholder hidden';
-      uploadMessage = '';
+      uploadMessage = 'upload-from-camera-roll hidden';
     }
 
     // for category options
@@ -151,7 +151,7 @@ export default class FormItem extends React.Component {
     }
 
     // popup-window
-    const popup = this.state.saved ? 'pop-up' : 'pop-uo hidden';
+    const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
 
     return (
       <>
@@ -167,10 +167,10 @@ export default class FormItem extends React.Component {
               <div className='column-half'>
                 <div className='row  item-image-wrapper'>
                   <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
-                  <p className='upload-from-camera-roll'>{uploadMessage}</p>
+                  <p className={uploadMessage}>Upload from Camera Roll</p>
                   {preview}
                 </div>
-                <div className='row'>
+                <div className='row file-upload-wrapper'>
                   <input required type="file" name='originalImage' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageChange} className='choose-file' />
                 </div>
               </div>

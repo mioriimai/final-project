@@ -167,8 +167,6 @@ body {
 
 .item-image-wrapper {
   position: relative;
-
-  /* text-align: center; */
   border: 1px solid #c0c0c0;
   border-radius: 10px;
   width: 80%;
@@ -192,13 +190,17 @@ body {
 }
 
 .choose-file {
-  margin: 18px 0 0 10px;
+  margin: 18px auto 0;
+}
+
+.file-upload-wrapper {
+  width: 80%;
 }
 
 .chosen-image {
   width: 95%;
-  margin: 0 auto;
-  height: 290px;
+  margin: auto;
+  height: 95%;
   object-fit: contain;
 }
 
@@ -374,5 +376,101 @@ body {
     width: 140px;
     padding: 7px 25px;
     margin-bottom: 15px;
+  }
+
+  /* ----------- moble item form view ---------- */
+
+  .form-item-title {
+    font-size: 27px;
+    margin: 15px 0 5px;
+  }
+
+  .item-image-wrapper {
+    border-radius: 15px;
+    width: 100%;
+    height: 260px;
+    margin: 10px auto;
+  }
+
+  .item-image-placeholder {
+    left: 68px;
+    top: 40px;
+    width: 50%;
+  }
+
+  .upload-from-camera-roll {
+    font-size: 20px;
+    margin: 175px auto;
+  }
+
+  .choose-file {
+    margin: 5px auto 20px;
+    font-size: 12px;
+  }
+
+  .file-upload-wrapper {
+    width: 100%;
+  }
+
+  .form-item-category,
+  .form-item-brand,
+  .form-item-color {
+    font-size: 18px;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    margin: 10px 0 0;
+  }
+
+  #category,
+  #brand,
+  #color {
+    font-size: 17px;
+    border: none;
+    padding: 0 15px 0 0;
+    text-align: right;
+  }
+
+  .each-row {
+    margin: 0;
+  }
+
+  .form-item-notes {
+    font-size: 18px;
+    margin: 10px 0 0;
+    padding-left: 15px;
+    padding-bottom: 10px;
+  }
+
+  #notes {
+    margin: 0 auto;
+    width: 93%;
+    height: 100px;
+    padding: 10px 15px;
+    font-size: 15px;
+  }
+
+  .item-save-button {
+    font-size: 15px;
+    padding: 4px 20px;
+    margin-top: 13px;
+  }
+
+  .popup-text-wrapper {
+    width: 300px;
+    height: 200px;
+    margin: 40% auto;
+  }
+
+  .successfully-saved {
+    font-size: 27px;
+    padding: 33px 0 0;
+  }
+
+  .add-more-items,
+  .see-items {
+    font-size: 14px;
+    width: 65%;
+    padding: 10px;
+    margin-bottom: -9px;
   }
 }
