@@ -60,7 +60,7 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
 app.get('/api/items', (req, res, next) => {
   // query the database
   const sql = `
-    select ("originalImage", "notes")
+    select "originalImage", "notes"
     from "items"
   `;
 
