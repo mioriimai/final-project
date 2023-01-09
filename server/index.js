@@ -21,8 +21,8 @@ app.use(staticMiddleware);
 app.use(express.json());
 
 app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
-  // varidate the "inputs" first.
   const newItem = req.body;
+  // varidate the "inputs" first.
   if ('isFavorite' in newItem === false || 'userId' in newItem === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   }

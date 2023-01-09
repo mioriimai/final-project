@@ -2,7 +2,6 @@ import React from 'react';
 import Home from './pages/home';
 import ItemView from './pages/item-view';
 import ListView from './pages/list-view';
-// import AppContext from './lib/app-context';
 import Navbar from './components/navbar';
 import parseRoute from './lib/parse-route';
 import PageContainer from './components/page-container';
@@ -38,15 +37,12 @@ export default class App extends React.Component {
 
   render() {
     return (
-    // <AppContext.Provider>
       <>
         <Navbar />
         <PageContainer>
           { this.renderPage()}
         </PageContainer>
-        {/* <Home/> */}
       </>
-    // </AppContext.Provider>
     );
   }
 }
