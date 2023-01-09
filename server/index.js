@@ -23,7 +23,7 @@ app.use(express.json());
 app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
   const newItem = req.body;
   // varidate the "inputs" first.
-  if ('isFavorite' in newItem === false || 'userId' in newItem === false) {
+  if ('category' in newItem === false || 'brand' in newItem === false || 'color' in newItem === false || 'notes' in newItem === false || 'userId' in newItem === false || 'bgRemovedImage' in newItem === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   }
 

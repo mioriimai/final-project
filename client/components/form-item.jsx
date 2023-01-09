@@ -5,10 +5,10 @@ export default class FormItem extends React.Component {
     super(props);
     this.state = {
       originalImage: '',
-      bgRemovedImage: 'None',
-      category: 'None',
-      brand: 'None',
-      color: 'None',
+      bgRemovedImage: '',
+      category: '',
+      brand: '',
+      color: '',
       notes: '',
       preview: null,
       saved: false
@@ -97,10 +97,10 @@ export default class FormItem extends React.Component {
       .then(data => {
         this.setState({
           originalImage: '',
-          bgRemovedImage: 'None',
-          category: 'None',
-          brand: 'None',
-          color: 'None',
+          bgRemovedImage: '',
+          category: '',
+          brand: '',
+          color: '',
           notes: '',
           preview: null,
           saved: true
