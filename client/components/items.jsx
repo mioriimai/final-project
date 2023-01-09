@@ -34,6 +34,7 @@ export default class Items extends React.Component {
     return (
       <div className='items-container'>
         <p className='items'>{this.props.content}</p>
+        <a href="#add-item" className='add-items-button'>Add {this.props.content}</a>
 
         <div className='item-list-wrapper'>
           {
