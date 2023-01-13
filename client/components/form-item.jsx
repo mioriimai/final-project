@@ -5,7 +5,7 @@ export default class FormItem extends React.Component {
     super(props);
     this.state = {
       originalImage: '',
-      bgRemovedImage: '',
+      bgRemovedImage: 'None',
       category: '',
       brand: '',
       color: '',
