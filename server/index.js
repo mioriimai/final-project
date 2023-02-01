@@ -5,7 +5,7 @@ const errorMiddleware = require('./error-middleware');
 const ClientError = require('./client-error');
 const pg = require('pg');
 const uploadsMiddleware = require('./uploads-middleware');
-const path = require('path');
+// const path = require('path');
 
 // create a database connection object to use the pg package.
 const db = new pg.Pool({
@@ -27,8 +27,10 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
     throw new ClientError(400, 'An invalid/missing information.');
   }
 
-  // create a url for the image by combining '/images' with req.file.filename
-  const url = path.join('/images', req.file.filename);
+  // // create a url for the image by combining '/images' with req.file.filename
+  // const url = path.join('/images', req.file.filename);
+
+  const url = req.file.location; // The S3 url to access the uploaded file later
 
   // query the database
   const sql = `
