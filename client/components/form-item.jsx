@@ -6,16 +6,16 @@ export default class FormItem extends React.Component {
     this.state = {
       originalImage: '',
       bgRemovedImage: 'None',
-      category: 'None',
-      brand: 'None',
-      color: 'None',
+      category: '',
+      brand: '',
+      color: '',
       notes: '',
       preview: null,
       saved: false
     };
 
     this.fileInputRef = React.createRef();
-    this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleImageUpload = this.handleImageUpload.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handleBrandChange = this.handleBrandChange.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
@@ -24,13 +24,12 @@ export default class FormItem extends React.Component {
     this.handlePopupClick = this.handlePopupClick.bind(this);
 
     this.categoryOptions = ['None', 'Dress', 'Tops & blouses', 'Sweaters', 'Jeans', 'Pants', 'Skirts', 'Coats & jacktes', 'Athletic apparel', 'Swimwear', 'Handbags', 'Accessories', 'Jewelry', 'Shoes'];
-    this.brandOptions = ['None', 'Adidas', 'Chanel', 'Christian Dior', 'Gap', 'Gucci', 'H&M', 'Hermes', 'Lacoste', 'Louis Vuitton', 'Lululemon', 'Moncler', 'Nike', 'Polo Ralph Lauren', 'The North Face', 'Uniqlo', 'Urban Outfitters', 'Zara'];
+    this.brandOptions = ['None', 'Adidas', 'Birkenstocks', 'Chanel', 'Christian Dior', 'Gap', 'Gucci', 'H&M', 'Hermes', 'Lacoste', 'Louis Vuitton', 'Lululemon', 'Moncler', 'Nike', 'Polo Ralph Lauren', 'The North Face', 'Uniqlo', 'Urban Outfitters', 'Zara'];
     this.colorOptions = ['None', 'Black', 'Grey', 'White', 'Beige', 'Red', 'Pink', 'Purple', 'Navy', 'Blue', 'Green', 'Yellow', 'Orange', 'Brown', 'Gold', 'Silver'];
     this.createOptions = this.createOptions.bind(this);
   }
 
-  handleImageChange(event) {
-
+  handleImageUpload(event) {
     const files = event.target.files;
     if (files.length > 0) {
       const file = files[0];
@@ -98,10 +97,10 @@ export default class FormItem extends React.Component {
       .then(data => {
         this.setState({
           originalImage: '',
-          bgRemovedImage: 'None',
-          category: 'None',
-          brand: 'None',
-          color: 'None',
+          bgRemovedImage: '',
+          category: '',
+          brand: '',
+          color: '',
           notes: '',
           preview: null,
           saved: true
@@ -152,7 +151,6 @@ export default class FormItem extends React.Component {
                 <p className='form-item-title'>{this.props.title}</p>
               </div>
             </div>
-
             <div className='row'>
               <div className='column-half'>
                 <div className='row  item-image-wrapper'>
@@ -161,10 +159,9 @@ export default class FormItem extends React.Component {
                   {preview}
                 </div>
                 <div className='row file-upload-wrapper'>
-                  <input required type="file" name='originalImage' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageChange} className='choose-file' />
+                  <input required type="file" name='originalImage' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
                 </div>
               </div>
-
               <div className='column-half'>
                 <div className='row each-row'>
                   <div className='column-two-fifth'>
@@ -176,7 +173,6 @@ export default class FormItem extends React.Component {
                     </select>
                   </div>
                 </div>
-
                 <div className='row each-row'>
                   <div className='column-three-ten'>
                     <p className='form-item-brand'>Brand</p>
@@ -187,7 +183,6 @@ export default class FormItem extends React.Component {
                     </select>
                   </div>
                 </div>
-
                 <div className='row each-row'>
                   <div className='column-three-ten'>
                     <p className='form-item-color'>Color</p>
@@ -198,14 +193,12 @@ export default class FormItem extends React.Component {
                     </select>
                   </div>
                 </div>
-
                 <div className='row'>
                   <label htmlFor="notes" className='form-item-notes'>Notes</label>
                 </div>
                 <div className='row'>
                   <textarea name="notes" id="notes" value={this.state.notes} onChange={this.handleNotesChange} />
                 </div>
-
                 <div className='row item-save-button-wrapper'>
                   <button type='submit' className='item-save-button'>SAVE</button>
                 </div>
