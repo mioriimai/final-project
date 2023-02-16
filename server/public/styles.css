@@ -354,6 +354,7 @@ body {
 
 .add-items-button {
   position: fixed;
+  z-index: 10000;
   right: 6%;
   bottom: 6%;
   text-decoration: none;
