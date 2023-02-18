@@ -2,6 +2,7 @@ import React from 'react';
 import Home from './pages/home';
 // import ItemView from './pages/item-view';
 import FormItem from './components/form-item';
+import EditItem from './components/edit-item';
 import ListView from './pages/list-view';
 import Navbar from './components/navbar';
 import parseRoute from './lib/parse-route';
@@ -34,10 +35,10 @@ export default class App extends React.Component {
     if (route.path === 'items') {
       return <ListView />;
     }
-    // if (route.path === 'item') {
-    //   const itemId = route.params.get('itemId');
-    //   return <EditItem itemId={itemId} />;
-    // }
+    if (route.path === 'item') {
+      const itemId = route.params.get('itemId');
+      return <EditItem itemId={itemId} />;
+    }
   }
 
   render() {

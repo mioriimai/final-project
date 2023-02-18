@@ -17,7 +17,7 @@ export default class EditItem extends React.Component {
 
   render() {
     return (
-      <p>test</p>
+      <p>{this.props.itemId}</p>
     );
   }
 }
