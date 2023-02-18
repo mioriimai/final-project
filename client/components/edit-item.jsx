@@ -4,14 +4,7 @@ export default class EditItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      originalImage: '',
-      bgRemovedImage: 'None',
-      category: '',
-      brand: '',
-      color: '',
-      notes: '',
-      preview: null,
-      saved: false
+      item: null
     };
   }
 
