@@ -341,15 +341,17 @@ body {
 }
 
 /* ----------- items view ----------- */
-.items-container {
-  margin: 5px 6% 0;
+.items-view-container {
+  margin: 5px auto;
+  max-width: 1700px;
+  padding: 0 5%;
 }
 
 .items {
   font-family: "Playfair Display", sans-serif;
   font-weight: bold;
   font-size: 40px;
-  margin: 30px 0 30px 2%;
+  margin: 30px 0 30px 4%;
 }
 
 .add-items-button {
@@ -389,12 +391,12 @@ body {
 }
 
 .item-wrapper {
-  flex-basis: calc(100% / 3);
-  padding: 0 2.5% 6%;
+  padding: 0 2% 6%;
+  width: 350px;
 }
 
 .item-button {
-  /* display: "block",; */
+  display: "block";
   cursor: "pointer";
 }
 
@@ -406,10 +408,6 @@ body {
   height: 380px;
 }
 
-.item-image:hover {
-  background-color: rgb(0 0 0 / 30%);
-}
-
 .position {
   position: relative;
 }
@@ -418,7 +416,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: rgb(0 0 0 / 30%);
+  background-color: rgb(0 0 0 / 20%);
   width: 100%;
   height: 380px;
   border-radius: 30px;
