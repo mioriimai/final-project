@@ -72,7 +72,7 @@ function Item(props) {
   const { originalImage, notes, itemId } = props.item;
 
   return (
-    <a href={`#items?itemId=${itemId}`} className='item-button' >
+    <a href={`#item?itemId=${itemId}`} className='item-button' >
       <div className='position'>
         <img
           src={originalImage}

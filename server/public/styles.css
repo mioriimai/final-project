@@ -158,11 +158,28 @@ body {
   cursor: pointer;
 }
 
-/* ----------- item form view ---------- */
+/* ----------- form item view ---------- */
+.form-item-container {
+  max-width: 1300px;
+  min-width: 870px;
+  margin: 40px 10%;
+  background-color: white;
+  height: 515px;
+}
+
 .form-item-title {
   font-family: Alegreya, sans-serif;
   font-size: 35px;
   margin: 35px 0 5px;
+  padding-left: 8%;
+}
+
+.add-padding-left {
+  padding-left: 8%;
+}
+
+.add-padding-right {
+  padding-right: 8%;
 }
 
 .item-image-wrapper {

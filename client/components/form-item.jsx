@@ -148,12 +148,12 @@ export default class FormItem extends React.Component {
           <div className='form-item-container'>
             <div className='row'>
               <div className='column-full'>
-                <p className='form-item-title'>{this.props.title}</p>
+                <p className='form-item-title'>Items</p>
               </div>
             </div>
             <div className='row'>
-              <div className='column-half'>
-                <div className='row  item-image-wrapper'>
+              <div className='column-half add-padding-left'>
+                <div className='row item-image-wrapper'>
                   <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
                   <p className={uploadMessage}>Upload from Camera Roll</p>
                   {preview}
@@ -162,7 +162,7 @@ export default class FormItem extends React.Component {
                   <input required type="file" name='originalImage' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
                 </div>
               </div>
-              <div className='column-half'>
+              <div className='column-half add-padding-right'>
                 <div className='row each-row'>
                   <div className='column-two-fifth'>
                     <p className='form-item-category'>Category</p>
