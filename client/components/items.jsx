@@ -83,6 +83,7 @@ function Item(props) {
         />
         <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
           <p className='items-notes'>{notes}</p>
+          <i className="fa-solid fa-pen item" />
         </div>
       </div>
     </a>
