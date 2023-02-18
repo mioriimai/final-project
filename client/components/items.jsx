@@ -90,6 +90,7 @@ function Item(props) {
           title={`${itemId}`}
         onMouseEnter={props.handleMouseEnter}
         />
+        <i className='fa-solid fa-trash-can' />
         <div className={props.hoverClassName} onMouseLeave={props.handleMouseLeave} >
           <p className='items-notes'>{notes}</p>
         </div>
