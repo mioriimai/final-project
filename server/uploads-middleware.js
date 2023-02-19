@@ -15,7 +15,7 @@
 //   }
 // });
 
-// const uploadsMiddleware = multer({ storage }).single('originalImage');
+// const uploadsMiddleware = multer({ storage }).single('image');
 
 // module.exports = uploadsMiddleware;
 /* code ends here */
@@ -53,7 +53,7 @@ const storage = multerS3({
 // create the middleware
 const uploadsMiddleware = multer({
   storage
-}).single('originalImage');
+}).single('image');
 
 // the string argument to .single() is the file's field name
 // it matches the <input name="file-to-upload" type="file"/>

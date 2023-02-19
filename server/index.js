@@ -23,7 +23,7 @@ app.use(express.json());
 app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
   const newItem = req.body;
   // varidate the "inputs" first.
-  if ('category' in newItem === false || 'brand' in newItem === false || 'color' in newItem === false || 'notes' in newItem === false || 'userId' in newItem === false || 'bgRemovedImage' in newItem === false) {
+  if ('category' in newItem === false || 'brand' in newItem === false || 'color' in newItem === false || 'notes' in newItem === false || 'userId' in newItem === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   }
 
@@ -31,12 +31,12 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
 
   // query the database
   const sql = `
-    insert into "items" ("originalImage", "bgRemovedImage", "category", "brand", "color", "notes", "isFavorite", "userId")
-    values ($1, $2, $3, $4, $5, $6, $7, $8)
+    insert into "items" ("image", "category", "brand", "color", "notes", "isFavorite", "userId")
+    values ($1, $2, $3, $4, $5, $6, $7)
     returning *
   `;
   // send the user input in a separate array instead of putting the user input directory into our query
-  const params = [url, newItem.bgRemovedImage, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.isFavorite, newItem.userId];
+  const params = [url, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.isFavorite, newItem.userId];
 
   db.query(sql, params)
     .then(result => {
@@ -59,7 +59,7 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
 app.get('/api/items', (req, res, next) => {
   // query the database
   const sql = `
-    select "originalImage", "notes", "itemId"
+    select "image", "notes", "itemId"
     from "items"
   `;
   db.query(sql)
@@ -87,7 +87,7 @@ app.get('/api/items/:itemId', (req, res, next) => {
   }
   const sql = `
       select "itemId",
-             "originalImage",
+             "image",
              "category",
              "brand",
              "color",
@@ -110,29 +110,29 @@ app.get('/api/items/:itemId', (req, res, next) => {
 
 app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   const updatedItem = req.body;
+  // console.log('updatedItem:', updatedItem);
   const itemId = Number(req.params.itemId);
   // varidate the "inputs" first.
-  if ('category' in updatedItem === false || 'brand' in updatedItem === false || 'color' in updatedItem === false || 'notes' in updatedItem === false || 'userId' in updatedItem === false || 'bgRemovedImage' in updatedItem === false) {
+  if ('category' in updatedItem === false || 'brand' in updatedItem === false || 'color' in updatedItem === false || 'notes' in updatedItem === false || 'userId' in updatedItem === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   } else if (!Number.isInteger(itemId) || itemId <= 0) {
     throw new ClientError(400, 'itemId mush be a positive integer');
   }
-
+  // console.log('req.file:', req.file);
   if (req.file === undefined) { // when the image was not updated
     // query the database
     const sql = `
     update "items"
-       set "originalImage" = $1,
-           "bgRemovedImage" = $2,
-           "category" = $3,
-           "brand" = $4,
-           "color" = $5,
-           "notes" = $6
-     where "itemId" = $7
+       set "image" = $1,
+           "category" = $2,
+           "brand" = $3,
+           "color" = $4,
+           "notes" = $5
+     where "itemId" = $6
     returning *
    `;
     // send the user input in a separate array instead of putting the user input directory into our query
-    const params = [updatedItem.originalImage, updatedItem.bgRemovedImage, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
+    const params = [updatedItem.image, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
     db.query(sql, params)
       .then(result => {
         const item = result.rows[0];
@@ -160,17 +160,16 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
     // query the database
     const sql = `
     update "items"
-       set "originalImage" = $1,
-           "bgRemovedImage" = $2,
-           "category" = $3,
-           "brand" = $4,
-           "color" = $5,
-           "notes" = $6
-     where "itemId" = $7
+       set "image" = $1,
+           "category" = $2,
+           "brand" = $3,
+           "color" = $4,
+           "notes" = $5
+     where "itemId" = $6
     returning *
   `;
     // send the user input in a separate array instead of putting the user input directory into our query
-    const params = [url, updatedItem.bgRemovedImage, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
+    const params = [url, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
 
     db.query(sql, params)
       .then(result => {

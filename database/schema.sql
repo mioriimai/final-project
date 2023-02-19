@@ -17,8 +17,7 @@ create table "public"."users" (
 );
 create table "public"."items" (
   "itemId"              serial,
-  "originalImage"       text           not null,
-  "bgRemovedImage"      text,
+  "image"       text           not null,
   "category"            text,
   "brand"               text,
   "color"               text,

@@ -7,8 +7,7 @@ export default class EditItem extends React.Component {
     this.state = {
       item: null,
       preview: null,
-      updatedOriginalImage: null,
-      updatedBgRemovedImage: 'None',
+      updatedImage: null,
       updatedCategory: null,
       updatedBrand: null,
       updatedColor: null,
@@ -46,7 +45,7 @@ export default class EditItem extends React.Component {
     }
 
     this.setState({
-      updatedOriginalImage: event.target.files[0].name
+      updatedImage: event.target.files[0].name
     });
   }
 
@@ -83,8 +82,8 @@ export default class EditItem extends React.Component {
 
     //  Append entries to the form data object I created.
     let image;
-    if (this.state.updatedOriginalImage === null) {
-      image = this.state.item.originalImage;
+    if (this.state.updatedImage === null) {
+      image = this.state.item.image;
     } else {
       image = this.fileInputRef.current.files[0];
     }
@@ -116,8 +115,7 @@ export default class EditItem extends React.Component {
     } else {
       notes = this.state.updatedNotes;
     }
-    formDataObject.append('originalImage', image);
-    formDataObject.append('bgRemovedImage', this.state.updatedBgRemovedImage);
+    formDataObject.append('image', image);
     formDataObject.append('category', category);
     formDataObject.append('brand', brand);
     formDataObject.append('color', color);
@@ -146,10 +144,9 @@ export default class EditItem extends React.Component {
   }
 
   render() {
-    // console.log('this.state:', this.state);
     if (!this.state.item) return null;
 
-    const { originalImage, category, brand, color, notes, itemId } = this.state.item;
+    const { image, category, brand, color, notes, itemId } = this.state.item;
 
     const previewImage = this.state.preview;
     let preview = '';
@@ -197,11 +194,11 @@ export default class EditItem extends React.Component {
             <div className='row'>
               <div className='column-half add-padding-left'>
                 <div className='row item-image-wrapper'>
-                  <img src={ originalImage } alt={ itemId } className={showedImageClassName} />
+                  <img src={ image } alt={ itemId } className={showedImageClassName} />
                   {preview}
                 </div>
                 <div className='row file-upload-wrapper'>
-                  <input type="file" name='originalImage' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
+                  <input type="file" name='image' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
                 </div>
               </div>
               <div className='column-half add-padding-right'>

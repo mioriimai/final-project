@@ -5,8 +5,7 @@ export default class FormItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      originalImage: '',
-      bgRemovedImage: 'None',
+      image: '',
       category: '',
       brand: '',
       color: '',
@@ -39,7 +38,7 @@ export default class FormItem extends React.Component {
     }
 
     this.setState({
-      originalImage: event.target.files[0].name
+      image: event.target.files[0].name
     });
   }
 
@@ -75,8 +74,7 @@ export default class FormItem extends React.Component {
     const formDataObject = new FormData();
 
     //  Append entries to the form data object I created.
-    formDataObject.append('originalImage', this.fileInputRef.current.files[0]);
-    formDataObject.append('bgRemovedImage', this.state.bgRemovedImage);
+    formDataObject.append('image', this.fileInputRef.current.files[0]);
     formDataObject.append('category', this.state.category);
     formDataObject.append('brand', this.state.brand);
     formDataObject.append('color', this.state.color);
@@ -92,8 +90,7 @@ export default class FormItem extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
-          originalImage: '',
-          bgRemovedImage: '',
+          image: '',
           category: '',
           brand: '',
           color: '',
@@ -147,7 +144,7 @@ export default class FormItem extends React.Component {
                   {preview}
                 </div>
                 <div className='row file-upload-wrapper'>
-                  <input required type="file" name='originalImage' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
+                  <input required type="file" name='image' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
                 </div>
               </div>
               <div className='column-half add-padding-right'>

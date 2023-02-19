@@ -58,8 +58,10 @@ export default class Items extends React.Component {
     return (
       <div className='items-view-container'>
         <p className='items'>{this.props.content}</p>
-        <a href="#add-item" className='add-items-button'>Add {this.props.content}</a>
-
+        <a href="#add-item" className='add-items-button'>
+          <i className="fa-solid fa-plus" />
+          Add {this.props.content}
+        </a>
         <div className='item-list-wrapper'>
           {itemsArray}
         </div>
@@ -69,13 +71,13 @@ export default class Items extends React.Component {
 }
 
 function Item(props) {
-  const { originalImage, notes, itemId } = props.item;
+  const { image, notes, itemId } = props.item;
 
   return (
     <div className='item-button' >
       <div className='position'>
         <img
-          src={originalImage}
+          src={image}
           alt={`Item ${itemId}`}
           className="item-image"
           onMouseEnter={props.handleMouseEnter}
