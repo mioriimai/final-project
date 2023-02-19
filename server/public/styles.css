@@ -395,7 +395,7 @@ body {
 .item-list-wrapper::before {
   content: "";
   display: block;
-  width: calc(100% / 3);
+  width: 340px;
   height: 380px;
   order: 1;
 }
@@ -403,7 +403,7 @@ body {
 .item-list-wrapper::after {
   content: "";
   display: block;
-  width: calc(100% / 3);
+  width: 340px;
   height: 380px;
 }
 

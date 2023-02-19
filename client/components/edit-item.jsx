@@ -6,7 +6,13 @@ export default class EditItem extends React.Component {
     super(props);
     this.state = {
       item: null,
-      preview: null
+      preview: null,
+      updatedOriginalImage: '',
+      updatedBgRemovedImage: 'None',
+      updatedCategory: '',
+      updatedBrand: '',
+      updatedColor: '',
+      updatedNotes: ''
     };
 
     this.fileInputRef = React.createRef();
