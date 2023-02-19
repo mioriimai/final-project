@@ -118,10 +118,47 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
     throw new ClientError(400, 'itemId mush be a positive integer');
   }
 
-  const url = req.file.location; // The S3 url to access the uploaded file later
+  if (req.file === undefined) { // when the image was not updated
+    // query the database
+    const sql = `
+    update "items"
+       set "originalImage" = $1,
+           "bgRemovedImage" = $2,
+           "category" = $3,
+           "brand" = $4,
+           "color" = $5,
+           "notes" = $6
+     where "itemId" = $7
+    returning *
+   `;
+    // send the user input in a separate array instead of putting the user input directory into our query
+    const params = [updatedItem.originalImage, updatedItem.bgRemovedImage, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
+    db.query(sql, params)
+      .then(result => {
+        const item = result.rows[0];
+        if (!item) {
+          throw new ClientError(404, `cannot find item with itemId ${itemId}`);
+        } else {
+          // the query succeeded
+          // respond to the client with the status code 200 and created newItem object
+          res.status(201).json(item);
+        }
+      })
+      .catch(err => {
+        // the query failed for some reason
+        // possibly due to a syntax error in the SQL statement
+        // print the error to STDERR (the terminal) for debugging purposes
+        console.error(err);
+        // respond to the client with a generic 500 error message
+        res.status(500).json({
+          error: 'An unexpected error occurred.'
+        });
+      });
 
-  // query the database
-  const sql = `
+  } else { // when image was updated
+    const url = req.file.location; // The S3 url to access the uploaded file later
+    // query the database
+    const sql = `
     update "items"
        set "originalImage" = $1,
            "bgRemovedImage" = $2,
@@ -132,30 +169,31 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
      where "itemId" = $7
     returning *
   `;
-  // send the user input in a separate array instead of putting the user input directory into our query
-  const params = [url, updatedItem.bgRemovedImage, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
+    // send the user input in a separate array instead of putting the user input directory into our query
+    const params = [url, updatedItem.bgRemovedImage, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
 
-  db.query(sql, params)
-    .then(result => {
-      const item = result.rows[0];
-      if (!item) {
-        throw new ClientError(404, `cannot find item with itemId ${itemId}`);
-      } else {
-        // the query succeeded
-        // respond to the client with the status code 200 and created newItem object
-        res.status(201).json(item);
-      }
-    })
-    .catch(err => {
-      // the query failed for some reason
-      // possibly due to a syntax error in the SQL statement
-      // print the error to STDERR (the terminal) for debugging purposes
-      console.error(err);
-      // respond to the client with a generic 500 error message
-      res.status(500).json({
-        error: 'An unexpected error occurred.'
+    db.query(sql, params)
+      .then(result => {
+        const item = result.rows[0];
+        if (!item) {
+          throw new ClientError(404, `cannot find item with itemId ${itemId}`);
+        } else {
+          // the query succeeded
+          // respond to the client with the status code 200 and created newItem object
+          res.status(201).json(item);
+        }
+      })
+      .catch(err => {
+        // the query failed for some reason
+        // possibly due to a syntax error in the SQL statement
+        // print the error to STDERR (the terminal) for debugging purposes
+        console.error(err);
+        // respond to the client with a generic 500 error message
+        res.status(500).json({
+          error: 'An unexpected error occurred.'
+        });
       });
-    });
+  }
 });
 
 app.use(errorMiddleware);
