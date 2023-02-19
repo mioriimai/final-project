@@ -136,7 +136,7 @@ export default class FormItem extends React.Component {
           <div className='form-item-container'>
             <div className='row'>
               <div className='column-full'>
-                <p className='form-item-title'>Items</p>
+                <p className='form-item-title'>New Item</p>
               </div>
             </div>
             <div className='row'>
