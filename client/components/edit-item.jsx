@@ -7,16 +7,20 @@ export default class EditItem extends React.Component {
     this.state = {
       item: null,
       preview: null,
-      updatedOriginalImage: '',
+      updatedOriginalImage: null,
       updatedBgRemovedImage: 'None',
-      updatedCategory: '',
-      updatedBrand: '',
-      updatedColor: '',
-      updatedNotes: ''
+      updatedCategory: null,
+      updatedBrand: null,
+      updatedColor: null,
+      updatedNotes: null
     };
 
     this.fileInputRef = React.createRef();
     this.handleImageUpload = this.handleImageUpload.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
+    this.handleBrandChange = this.handleBrandChange.bind(this);
+    this.handleColorChange = this.handleColorChange.bind(this);
+    this.handleNotesChange = this.handleNotesChange.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +47,30 @@ export default class EditItem extends React.Component {
     // });
   }
 
+  handleCategoryChange(event) {
+    this.setState({
+      updatedCategory: event.target.value
+    });
+  }
+
+  handleBrandChange(event) {
+    this.setState({
+      updatedBrand: event.target.value
+    });
+  }
+
+  handleColorChange(event) {
+    this.setState({
+      updatedColor: event.target.value
+    });
+  }
+
+  handleNotesChange(event) {
+    this.setState({
+      updatedNotes: event.target.value
+    });
+  }
+
   render() {
     // console.log('this.state:', this.state);
     if (!this.state.item) return null;
@@ -57,6 +85,26 @@ export default class EditItem extends React.Component {
         <img src={previewImage} className='chosen-image' />
       );
       showedImageClassName = 'chosen-image hidden';
+    }
+
+    let valueOfCategory = category;
+    if (this.state.updatedCategory !== null) {
+      valueOfCategory = this.state.updatedCategory;
+    }
+
+    let valueOfBrand = brand;
+    if (this.state.updatedBrand !== null) {
+      valueOfBrand = this.state.updatedBrand;
+    }
+
+    let valueOfColor = color;
+    if (this.state.updatedColor !== null) {
+      valueOfColor = this.state.updatedColor;
+    }
+
+    let valueOfNotes = notes;
+    if (this.state.updatedNotes !== null) {
+      valueOfNotes = this.state.updatedNotes;
     }
 
     return (
@@ -84,7 +132,7 @@ export default class EditItem extends React.Component {
                   <p className='form-item-category'>Category</p>
                 </div>
                 <div className='column-three-fifth position-right'>
-                  <select name="category" id="category" value={category} /*  onChange={this.handleCategoryChange} */>
+                  <select name="category" id="category" value={valueOfCategory} onChange={this.handleCategoryChange} >
                     <CreateOptions options="category" />
                   </select>
                 </div>
@@ -94,7 +142,7 @@ export default class EditItem extends React.Component {
                   <p className='form-item-brand'>Brand</p>
                 </div>
                 <div className='column-seven-ten position-right'>
-                  <select name="brand" id="brand" value={brand} /* onChange={this.handleBrandChange} */>
+                  <select name="brand" id="brand" value={valueOfBrand} onChange={this.handleBrandChange} >
                     <CreateOptions options="brand" />
                   </select>
                 </div>
@@ -104,7 +152,7 @@ export default class EditItem extends React.Component {
                   <p className='form-item-color'>Color</p>
                 </div>
                 <div className='column-seven-ten position-right'>
-                  <select name="color" id="color" value={color} /* onChange={this.handleColorChange} */>
+                  <select name="color" id="color" value={valueOfColor} onChange={this.handleColorChange} >
                     <CreateOptions options="color" />
                   </select>
                 </div>
@@ -113,7 +161,7 @@ export default class EditItem extends React.Component {
                 <label htmlFor="notes" className='form-item-notes'>Notes</label>
               </div>
               <div className='row'>
-                <textarea name="notes" id="notes" value={notes} /* onChange={this.handleNotesChange} / */ />
+                <textarea name="notes" id="notes" value={valueOfNotes} onChange={this.handleNotesChange} />
               </div>
               <div className='row item-save-button-wrapper'>
                 <button type='submit' className='item-save-button'>SAVE</button>
@@ -121,7 +169,6 @@ export default class EditItem extends React.Component {
             </div>
           </div>
         </div>
-
       </form>
 
     );
