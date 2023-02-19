@@ -138,10 +138,12 @@ export default class FormItem extends React.Component {
             </div>
             <div className='row'>
               <div className='column-half add-padding-left'>
-                <div className='row item-image-wrapper'>
-                  <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
-                  <p className={uploadMessage}>Upload from Camera Roll</p>
-                  {preview}
+                <div className='row'>
+                  <div className='item-image-wrapper'>
+                    <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
+                    <p className={uploadMessage}>Upload from Camera Roll</p>
+                    {preview}
+                  </div>
                 </div>
                 <div className='row file-upload-wrapper'>
                   <input required type="file" name='image' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />

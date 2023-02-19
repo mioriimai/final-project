@@ -38,7 +38,7 @@ body {
   position: fixed;
   top: 0;
   left: -80%;
-  z-index: 99;
+  z-index: 200;
   overflow-y: scroll;
   transition: all 0.5s ease-out;
   width: 80%;
@@ -107,7 +107,7 @@ body {
   /* background-color: #707070; */
   background-color: black;
   position: fixed;
-  z-index: 9;
+  z-index: 150;
   top: 0;
   left: 0;
 }
@@ -161,7 +161,6 @@ body {
 /* ----------- form item view ---------- */
 .form-item-container {
   max-width: 1300px;
-  min-width: 870px;
   margin: 40px 10%;
   background-color: white;
   height: 515px;
@@ -183,27 +182,29 @@ body {
 }
 
 .item-image-wrapper {
-  position: relative;
   border: 1px solid #c0c0c0;
   border-radius: 10px;
   width: 80%;
-  height: 300px;
+  height: 310px;
   margin: 20px 0 0;
 }
 
 .item-image-placeholder {
   opacity: 40%;
-  position: absolute;
-  left: 85px;
-  top: 35px;
-  width: 45%;
+  width: 50%;
+  margin: 3% auto;
+  object-fit: contain;
 }
 
 .upload-from-camera-roll {
   color: #737373;
   font-family: Alegreya, sans-serif;
   font-size: 20px;
-  margin: 190px auto;
+  margin: -30px auto;
+}
+
+.file-upload-wrapper {
+  width: 80%;
 }
 
 .choose-file {
@@ -212,10 +213,6 @@ body {
 
 .choose-file:hover {
   cursor: pointer;
-}
-
-.file-upload-wrapper {
-  width: 80%;
 }
 
 .chosen-image {
@@ -241,6 +238,9 @@ body {
   justify-content: flex-end;
   border-bottom: 1px solid #c0c0c0;
   padding-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #category,
@@ -283,7 +283,7 @@ body {
   font-family: Alegreya, Arial, Helvetica, sans-serif;
   color: #a4a4a4;
   padding: 15px;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 #notes:hover {
@@ -373,7 +373,7 @@ body {
 
 .add-items-button {
   position: fixed;
-  z-index: 10000;
+  z-index: 100;
   right: 6%;
   bottom: 6%;
   text-decoration: none;
@@ -407,6 +407,7 @@ body {
   width: 340px;
   height: 380px;
   order: 1;
+  margin: 10px 10px 20px;
 }
 
 .item-list-wrapper::after {
@@ -414,11 +415,13 @@ body {
   display: block;
   width: 340px;
   height: 380px;
+  margin: 10px 10px 20px;
 }
 
 .item-wrapper {
-  padding: 0 2% 6%;
+  padding: 0;
   width: 340px;
+  margin: 10px 10px 20px;
 }
 
 .item-button {
@@ -429,9 +432,10 @@ body {
 .item-image {
   object-fit: contain;
   background-color: white;
-  border-radius: 40px;
+  border-radius: 25px;
   width: 100%;
   height: 380px;
+  padding: 10px;
 }
 
 .position {
@@ -445,7 +449,7 @@ body {
   background-color: rgb(0 0 0 / 25%);
   width: 100%;
   height: 380px;
-  border-radius: 40px;
+  border-radius: 25px;
 }
 
 .items-notes {
@@ -467,7 +471,7 @@ body {
 /* ------------- media query ------------  */
 
 /* mobile screen */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 767px) {
   /* --------- mobile navbar -------- */
   .your-closet {
     font-size: 20px;
@@ -522,36 +526,50 @@ body {
 
   /* ----------- moble item form view ---------- */
 
+  .form-item-container {
+    margin: 20px 7%;
+    padding: 0 8%;
+    height: 700px;
+  }
+
   .form-item-title {
-    font-size: 27px;
-    margin: 15px 0 5px;
+    font-size: 25px;
+    margin: 17px 0 5px;
+    padding: 0;
+  }
+
+  .add-padding-left {
+    padding-left: 0;
+  }
+
+  .add-padding-right {
+    padding-right: 0;
   }
 
   .item-image-wrapper {
-    border-radius: 15px;
-    width: 100%;
-    height: 260px;
+    border-radius: 10px;
+    width: 98%;
+    height: 240px;
     margin: 10px auto;
+    text-align: center;
   }
 
   .item-image-placeholder {
-    left: 68px;
-    top: 40px;
     width: 50%;
+    margin: 30px;
   }
 
   .upload-from-camera-roll {
-    font-size: 20px;
-    margin: 175px auto;
+    font-size: 18px;
+  }
+
+  .file-upload-wrapper {
+    width: 100%;
   }
 
   .choose-file {
     margin: 5px auto 20px;
     font-size: 12px;
-  }
-
-  .file-upload-wrapper {
-    width: 100%;
   }
 
   .form-item-category,
@@ -568,7 +586,7 @@ body {
   #color {
     font-size: 17px;
     border: none;
-    padding: 0 15px 0 0;
+    padding: 0 5px 0 0;
     text-align: right;
   }
 
@@ -614,5 +632,171 @@ body {
     width: 65%;
     padding: 10px;
     margin-bottom: -9px;
+  }
+
+  /* ----------- mobile items view ----------- */
+  .items-view-container {
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  .items {
+    font-size: 28px;
+    margin: 25px 0 12px 4%;
+  }
+
+  .add-items-button {
+    right: 6%;
+    bottom: 4%;
+    font-size: 17px;
+    padding: 9px 24px 9px 21px;
+  }
+
+  .fa-solid.fa-plus {
+    margin-right: 6px;
+  }
+
+  .item-wrapper {
+    width: 150px;
+    margin: 7px;
+  }
+
+  .item-image {
+    border-radius: 15px;
+    width: 100%;
+    height: 175px;
+    padding: 5px;
+  }
+
+  .item-list-wrapper::before {
+    content: none;
+  }
+
+  .item-list-wrapper::after {
+    content: "";
+    display: block;
+    width: 150px;
+    height: 175px;
+    margin: 7px;
+  }
+
+  .shadow-wrapper {
+    width: 100%;
+    height: 175px;
+    border-radius: 15px;
+  }
+
+  .items-notes {
+    font-size: 15px;
+    margin: 65px 18px;
+  }
+
+  .fa-solid.fa-pen.item {
+    left: 21px;
+    top: 22px;
+    font-size: 1.5em;
+  }
+}
+
+/* tablet screen */
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  /* ----------- tablet form item view ---------- */
+
+  .form-item-container {
+    margin: 33px 6%;
+  }
+
+  .form-item-title {
+    font-size: 30px;
+    margin: 27px 0 0;
+    padding-left: 7%;
+  }
+
+  .add-padding-left {
+    padding-left: 6%;
+  }
+
+  .add-padding-right {
+    padding-right: 6%;
+    padding-top: 13px;
+  }
+
+  .item-image-wrapper {
+    width: 94%;
+    height: 300px;
+    text-align: center;
+  }
+
+  .item-image-placeholder {
+    width: 200px;
+    margin: 5% auto;
+  }
+
+  .upload-from-camera-roll {
+    font-size: 18px;
+  }
+
+  .file-upload-wrapper {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .form-item-category,
+  .form-item-brand,
+  .form-item-color {
+    font-size: 22px;
+    padding-bottom: 8px;
+  }
+
+  .position-right {
+    padding-right: 10px;
+  }
+
+  #category,
+  #brand,
+  #color {
+    font-size: 19px;
+    padding: 0 5px;
+    text-align: right;
+    padding-bottom: 6px;
+  }
+
+  .each-row {
+    margin-bottom: 10px;
+  }
+
+  .form-item-notes {
+    font-size: 22px;
+    margin: 0;
+    padding-left: 20px;
+    padding-bottom: 8px;
+  }
+
+  #notes {
+    margin-left: 20px;
+    height: 113px;
+    padding: 13px;
+    font-size: 17px;
+  }
+
+  .item-save-button {
+    font-size: 17px;
+    font-weight: bold;
+    padding: 5px 24px;
+    margin-top: 15px;
+  }
+
+  /* --------- tablet items view ---------- */
+
+  .items {
+    font-size: 40px;
+    margin: 35px 0 17px 4%;
+  }
+
+  .add-items-button {
+    right: 7%;
+    bottom: 45px;
+    font-size: 25px;
+    padding: 10px 37px 13px 35px;
   }
 }
