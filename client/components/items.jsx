@@ -72,7 +72,7 @@ function Item(props) {
   const { originalImage, notes, itemId } = props.item;
 
   return (
-    <a href={`#item?itemId=${itemId}`} className='item-button' >
+    <div className='item-button' >
       <div className='position'>
         <img
           src={originalImage}
@@ -83,9 +83,11 @@ function Item(props) {
         />
         <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
           <p className='items-notes'>{notes}</p>
-          <i className="fa-solid fa-pen item" />
+          <a href={`#item?itemId=${itemId}`}>
+            <i className="fa-solid fa-pen item" />
+          </a>
         </div>
       </div>
-    </a>
+    </div>
   );
 }
