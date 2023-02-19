@@ -21,6 +21,7 @@ export default class EditItem extends React.Component {
     this.handleBrandChange = this.handleBrandChange.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +72,38 @@ export default class EditItem extends React.Component {
     });
   }
 
+  handleSubmit(event) {
+    // prevent the default form submission behavior.
+    event.preventDefault();
+
+    // Create a `new` FormData object.
+    const formDataObject = new FormData();
+
+    //  Append entries to the form data object I created.
+    formDataObject.append('originalImage', this.fileInputRef.current.files[0]);
+    formDataObject.append('bgRemovedImage', this.state.updatedBgRemovedImage);
+    formDataObject.append('category', this.state.updatedCategory);
+    formDataObject.append('brand', this.state.updatedBrand);
+    formDataObject.append('color', this.state.updatedColor);
+    formDataObject.append('notes', this.state.updatedNotes);
+    formDataObject.append('userId', 1);
+
+    // Use fetch() to send a POST request to / api / form-item.
+    fetch(`/api/items/${this.props.itemId}`, {
+      method: 'PATCH',
+      body: formDataObject
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+
+        });
+        this.fileInputRef.current.value = null;
+
+      })
+      .catch(err => console.error(err));
+  }
+
   render() {
     // console.log('this.state:', this.state);
     if (!this.state.item) return null;
@@ -109,7 +142,7 @@ export default class EditItem extends React.Component {
 
     return (
 
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <div className='form-item-container'>
           <div className='row'>
             <div className='column-full'>

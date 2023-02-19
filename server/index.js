@@ -108,7 +108,7 @@ app.get('/api/items/:itemId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
+app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   const updatedItem = req.body;
   const itemId = Number(req.params.itemId);
   // varidate the "inputs" first.
