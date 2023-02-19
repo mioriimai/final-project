@@ -27,9 +27,6 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
     throw new ClientError(400, 'An invalid/missing information.');
   }
 
-  // // create a url for the image by combining '/images' with req.file.filename
-  // const url = path.join('/images', req.file.filename);
-
   const url = req.file.location; // The S3 url to access the uploaded file later
 
   // query the database
@@ -65,7 +62,6 @@ app.get('/api/items', (req, res, next) => {
     select "originalImage", "notes", "itemId"
     from "items"
   `;
-
   db.query(sql)
     .then(result => {
       // the query succeeded
@@ -110,6 +106,56 @@ app.get('/api/items/:itemId', (req, res, next) => {
       res.json(item);
     })
     .catch(err => next(err));
+});
+
+app.post('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
+  const updatedItem = req.body;
+  const itemId = Number(req.params.itemId);
+  // varidate the "inputs" first.
+  if ('category' in updatedItem === false || 'brand' in updatedItem === false || 'color' in updatedItem === false || 'notes' in updatedItem === false || 'userId' in updatedItem === false || 'bgRemovedImage' in updatedItem === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  } else if (!Number.isInteger(itemId) || itemId <= 0) {
+    throw new ClientError(400, 'itemId mush be a positive integer');
+  }
+
+  const url = req.file.location; // The S3 url to access the uploaded file later
+
+  // query the database
+  const sql = `
+    update "items"
+       set "originalImage" = $1,
+           "bgRemovedImage" = $2,
+           "category" = $3,
+           "brand" = $4,
+           "color" = $5,
+           "notes" = $6
+     where "itemId" = $7
+    returning *
+  `;
+  // send the user input in a separate array instead of putting the user input directory into our query
+  const params = [url, updatedItem.bgRemovedImage, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
+
+  db.query(sql, params)
+    .then(result => {
+      const item = result.rows[0];
+      if (!item) {
+        throw new ClientError(404, `cannot find item with itemId ${itemId}`);
+      } else {
+        // the query succeeded
+        // respond to the client with the status code 200 and created newItem object
+        res.status(201).json(item);
+      }
+    })
+    .catch(err => {
+      // the query failed for some reason
+      // possibly due to a syntax error in the SQL statement
+      // print the error to STDERR (the terminal) for debugging purposes
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
 });
 
 app.use(errorMiddleware);

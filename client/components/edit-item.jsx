@@ -42,9 +42,9 @@ export default class EditItem extends React.Component {
       this.setState({ preview: null });
     }
 
-    // this.setState({
-    //   originalImage: event.target.files[0].name
-    // });
+    this.setState({
+      updatedOriginalImage: event.target.files[0].name
+    });
   }
 
   handleCategoryChange(event) {
