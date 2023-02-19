@@ -1,4 +1,5 @@
 import React from 'react';
+import CreateOptions from './create-options';
 
 export default class FormItem extends React.Component {
   constructor(props) {
@@ -22,11 +23,6 @@ export default class FormItem extends React.Component {
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePopupClick = this.handlePopupClick.bind(this);
-
-    this.categoryOptions = ['None', 'Dress', 'Tops & blouses', 'Sweaters', 'Jeans', 'Pants', 'Skirts', 'Coats & jacktes', 'Athletic apparel', 'Swimwear', 'Handbags', 'Accessories', 'Jewelry', 'Shoes'];
-    this.brandOptions = ['None', 'Adidas', 'Birkenstocks', 'Chanel', 'Christian Dior', 'Gap', 'Gucci', 'H&M', 'Hermes', 'Lacoste', 'Louis Vuitton', 'Lululemon', 'Moncler', 'Nike', 'Polo Ralph Lauren', 'The North Face', 'Uniqlo', 'Urban Outfitters', 'Zara'];
-    this.colorOptions = ['None', 'Black', 'Grey', 'White', 'Beige', 'Red', 'Pink', 'Purple', 'Navy', 'Blue', 'Green', 'Yellow', 'Orange', 'Brown', 'Gold', 'Silver'];
-    this.createOptions = this.createOptions.bind(this);
   }
 
   handleImageUpload(event) {
@@ -117,14 +113,6 @@ export default class FormItem extends React.Component {
     });
   }
 
-  createOptions(array) {
-    const optionList = [];
-    for (let i = 0; i < array.length; i++) {
-      optionList.push(<option key={i} value={array[i]}>{array[i]}</option>);
-    }
-    return optionList;
-  }
-
   render() {
     // show image placeholder and hide it when image is selected
     const previewImage = this.state.preview;
@@ -169,7 +157,7 @@ export default class FormItem extends React.Component {
                   </div>
                   <div className='column-three-fifth position-right'>
                     <select name="category" id="category" value={this.state.category} onChange={this.handleCategoryChange}>
-                      {this.createOptions(this.categoryOptions)}
+                      <CreateOptions options="category" />
                     </select>
                   </div>
                 </div>
@@ -179,7 +167,7 @@ export default class FormItem extends React.Component {
                   </div>
                   <div className='column-seven-ten position-right'>
                     <select name="brand" id="brand" value={this.state.brand} onChange={this.handleBrandChange}>
-                      {this.createOptions(this.brandOptions)}
+                      <CreateOptions options="brand" />
                     </select>
                   </div>
                 </div>
@@ -189,7 +177,7 @@ export default class FormItem extends React.Component {
                   </div>
                   <div className='column-seven-ten position-right'>
                     <select name="color" id="color" value={this.state.color} onChange={this.handleColorChange}>
-                      {this.createOptions(this.colorOptions)}
+                      <CreateOptions options="color" />
                     </select>
                   </div>
                 </div>

@@ -17,10 +17,14 @@ export default class EditItem extends React.Component {
   render() {
     // console.log('this.state:', this.state);
 
-    if (!this.state.product) return null;
+    // if (!this.state.product) return null;
+
+    // const { originalImage, category, brand, color, notes } = this.state.item;
 
     return (
+
       <p>{this.props.itemId}</p>
+
     );
   }
 }
