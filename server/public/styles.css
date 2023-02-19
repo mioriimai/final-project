@@ -309,6 +309,7 @@ body {
 
 .item-save-button:hover {
   cursor: pointer;
+  opacity: 0.7;
 }
 
 .pop-up {

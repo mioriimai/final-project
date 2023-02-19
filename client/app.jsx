@@ -1,6 +1,5 @@
 import React from 'react';
 import Home from './pages/home';
-// import ItemView from './pages/item-view';
 import FormItem from './components/form-item';
 import EditItem from './components/edit-item';
 import ListView from './pages/list-view';

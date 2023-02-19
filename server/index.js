@@ -110,7 +110,7 @@ app.get('/api/items/:itemId', (req, res, next) => {
 
 app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   const updatedItem = req.body;
-  // console.log('updatedItem:', updatedItem);
+
   const itemId = Number(req.params.itemId);
   // varidate the "inputs" first.
   if ('category' in updatedItem === false || 'brand' in updatedItem === false || 'color' in updatedItem === false || 'notes' in updatedItem === false || 'userId' in updatedItem === false) {
@@ -118,7 +118,7 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   } else if (!Number.isInteger(itemId) || itemId <= 0) {
     throw new ClientError(400, 'itemId mush be a positive integer');
   }
-  // console.log('req.file:', req.file);
+
   if (req.file === undefined) { // when the image was not updated
     // query the database
     const sql = `
