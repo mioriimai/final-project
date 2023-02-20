@@ -195,6 +195,30 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   }
 });
 
+app.delete('/api/items/:itemId', (req, res, next) => {
+  const itemId = Number(req.params.itemId);
+  if (!Number.isInteger(itemId) || itemId <= 0) {
+    throw new ClientError(400, 'itemId mush be a positive integer');
+  }
+
+  const sql = `
+       delete
+       from  "items"
+       where "itemId" = $1
+       returning *
+  `;
+  const params = [itemId];
+  db.query(sql, params)
+    .then(result => {
+      const item = result.rows[0];
+      if (!item) {
+        throw new ClientError(404, `cannot find item with itemId ${itemId}`);
+      }
+      res.json(item);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

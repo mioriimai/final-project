@@ -290,6 +290,27 @@ body {
   cursor: pointer;
 }
 
+.item-delete-confirm-button {
+  color: #515151;
+  background-color: white;
+  font-family: "Playfair Display", sans-serif;
+  border: none;
+  font-size: 15px;
+  margin-top: 17px;
+  margin-left: 25px;
+}
+
+.fa-regular.fa-trash-can {
+  font-size: 1.5rem;
+  margin-right: 6px;
+  color: #7c7c7c;
+}
+
+.item-delete-confirm-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 .item-save-button-wrapper {
   display: block;
   text-align: right;
@@ -303,8 +324,8 @@ body {
   background-color: #8f8f8f;
   border: none;
   border-radius: 30px;
-  padding: 7px 25px;
-  margin-top: 20px;
+  padding: 5px 25px;
+  margin-top: 15px;
 }
 
 .item-save-button:hover {
@@ -321,12 +342,12 @@ body {
   height: 100%;
 }
 
-.popup-text-wrapper {
+.saved-popup-text-wrapper {
   background-color: white;
   text-align: center;
   width: 500px;
   height: 280px;
-  margin: 15% auto;
+  margin: 180px auto;
   border-radius: 17px;
 }
 
@@ -356,6 +377,42 @@ body {
 .see-items:hover {
   cursor: pointer;
   background-color: #cbcbcb;
+}
+
+.delete-confirm-message {
+  color: #7d7d7d;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 25px;
+  padding: 55px 75px 0;
+  margin-bottom: 30px;
+}
+
+.cancel-delete-button {
+  font-family: "Playfair Display", sans-serif;
+  background-color: #f3f0e8;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 6px 40px 8px;
+  margin-right: 40px;
+}
+
+.delete-item-button {
+  font-family: "Playfair Display", sans-serif;
+  color: white;
+  background-color: #d43e3e;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 6px 40px 8px;
+}
+
+.cancel-delete-button:hover,
+.delete-item-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 /* ----------- items view ----------- */
@@ -610,13 +667,25 @@ body {
     font-size: 15px;
   }
 
+  .item-delete-confirm-button {
+    font-size: 13px;
+    margin-top: 15px;
+    margin-left: 12px;
+  }
+
+  .fa-regular.fa-trash-can {
+    font-size: 1.4rem;
+    margin-right: 5px;
+  }
+
   .item-save-button {
     font-size: 15px;
     padding: 4px 20px;
     margin-top: 13px;
+    margin-right: 5px;
   }
 
-  .popup-text-wrapper {
+  .saved-popup-text-wrapper {
     width: 300px;
     height: 200px;
     margin: 40% auto;
@@ -633,6 +702,23 @@ body {
     width: 65%;
     padding: 10px;
     margin-bottom: -9px;
+  }
+
+  .delete-confirm-message {
+    font-size: 17px;
+    padding: 45px 30px 0;
+    margin-bottom: 18px;
+  }
+
+  .cancel-delete-button {
+    font-size: 15px;
+    padding: 4px 25px 6px;
+    margin-right: 30px;
+  }
+
+  .delete-item-button {
+    font-size: 15px;
+    padding: 4px 25px 6px;
   }
 
   /* ----------- mobile items view ----------- */
@@ -784,7 +870,6 @@ body {
     font-size: 17px;
     font-weight: bold;
     padding: 5px 24px;
-    margin-top: 15px;
   }
 
   /* --------- tablet items view ---------- */
@@ -792,12 +877,5 @@ body {
   .items {
     font-size: 40px;
     margin: 35px 0 17px 4%;
-  }
-
-  .add-items-button {
-    right: 7%;
-    bottom: 45px;
-    font-size: 25px;
-    padding: 10px 37px 13px 35px;
   }
 }

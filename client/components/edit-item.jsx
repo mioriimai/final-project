@@ -12,7 +12,8 @@ export default class EditItem extends React.Component {
       updatedBrand: null,
       updatedColor: null,
       updatedNotes: null,
-      saved: false
+      saved: false,
+      deleteConfirmation: false
     };
 
     this.fileInputRef = React.createRef();
@@ -22,7 +23,9 @@ export default class EditItem extends React.Component {
     this.handleColorChange = this.handleColorChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePopupClick = this.handlePopupClick.bind(this);
+    this.handleSavePopupClick = this.handleSavePopupClick.bind(this);
+    this.handleDeleteConfirmPopupClick = this.handleDeleteConfirmPopupClick.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
   }
 
   componentDidMount() {
@@ -137,10 +140,25 @@ export default class EditItem extends React.Component {
       .catch(err => console.error(err));
   }
 
-  handlePopupClick() {
+  handleSavePopupClick() {
     this.setState({
       saved: !this.state.saved
     });
+  }
+
+  handleDeleteConfirmPopupClick() {
+    this.setState({
+      deleteConfirmation: !this.state.deleteConfirmation
+    });
+  }
+
+  handleDeleteItem() {
+    // Use fetch() to send a DELETE request to / api / form-item.
+    fetch(`/api/items/${this.props.itemId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .catch(err => console.error(err));
   }
 
   render() {
@@ -178,8 +196,11 @@ export default class EditItem extends React.Component {
       valueOfNotes = this.state.updatedNotes;
     }
 
-    // popup-window
-    const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
+    // show or hide savedPopup
+    const savedPopup = this.state.saved ? 'pop-up' : 'pop-up hidden';
+
+    // show or hide deleteConfirmPopup
+    const deleteConfirmPopup = this.state.deleteConfirmation ? 'pop-up' : 'pop-up hidden';
 
     return (
 
@@ -238,20 +259,37 @@ export default class EditItem extends React.Component {
                 <div className='row'>
                   <textarea name="notes" id="notes" value={valueOfNotes} onChange={this.handleNotesChange} />
                 </div>
-                <div className='row item-save-button-wrapper'>
-                  <button type='submit' className='item-save-button'>SAVE</button>
+                <div className='row'>
+                  <div className='mobile-column-half'>
+                    <button type='button' className='item-delete-confirm-button' onClick={this.handleDeleteConfirmPopupClick}>
+                      <i className="fa-regular fa-trash-can" />
+                      Delete</button>
+                  </div>
+                  <div className='mobile-column-half'>
+                    <div className='item-save-button-wrapper'>
+                      <button type='submit' className='item-save-button'>SAVE</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </form>
 
-        <div className={popup}>
-          <div className='popup-text-wrapper'>
+        <div className={savedPopup}>
+          <div className='saved-popup-text-wrapper'>
             <h1 className='successfully-saved'>Successfully saved!</h1>
-            <a className='add-more-items' href='#add-item' onClick={this.handlePopupClick}>Add More Items</a>
+            <a className='add-more-items' href='#add-item' onClick={this.handleSavePopupClick}>Add More Items</a>
             <br />
-            <a className='see-items' href='#items' onClick={this.handlePopupClick}>See Items in the Closet</a>
+            <a className='see-items' href='#items' onClick={this.handleSavePopupClick}>See Items in the Closet</a>
+          </div>
+        </div>
+
+        <div className={deleteConfirmPopup}>
+          <div className='saved-popup-text-wrapper'>
+            <h1 className='delete-confirm-message'>Are you sure you want to delete this item? <br/>This process can&rsquo;t be undone.</h1>
+            <button className='cancel-delete-button' type='button' onClick={this.handleDeleteConfirmPopupClick} >Cancel</button>
+            <a className='delete-item-button' href='#items' onClick={this.handleDeleteItem} >Delete</a>
           </div>
         </div>
       </>
