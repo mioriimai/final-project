@@ -195,7 +195,7 @@ export default class FormItem extends React.Component {
         </form>
 
         <div className={popup}>
-          <div className='popup-text-wrapper'>
+          <div className='saved-popup-text-wrapper'>
             <h1 className='successfully-saved'>Successfully saved!</h1>
             <a className='add-more-items' href='#add-item' onClick={this.handlePopupClick}>Add More Items</a>
             <br />
