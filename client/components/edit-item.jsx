@@ -25,6 +25,7 @@ export default class EditItem extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSavePopupClick = this.handleSavePopupClick.bind(this);
     this.handleDeleteConfirmPopupClick = this.handleDeleteConfirmPopupClick.bind(this);
+    // this.handleDeleteItem = this.handleDeleteItem.bind(this);
   }
 
   componentDidMount() {
@@ -150,6 +151,10 @@ export default class EditItem extends React.Component {
       deleteConfirmation: !this.state.deleteConfirmation
     });
   }
+
+  // handleDeleteItem() {
+
+  // }
 
   render() {
     if (!this.state.item) return null;
