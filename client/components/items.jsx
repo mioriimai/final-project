@@ -5,7 +5,7 @@ export default class Items extends React.Component {
     super(props);
     this.state = {
       items: [],
-      showNotes: false
+      itemId: null
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
@@ -19,35 +19,49 @@ export default class Items extends React.Component {
 
   handleMouseEnter(event) {
     this.setState({
-      showNotes: true
+      itemId: event.target.name
     });
   }
 
   handleMouseLeave() {
     this.setState({
-      showNotes: false
+      itemId: null
     });
   }
 
   render() {
-    const hoverClassName = this.state.showNotes ? 'shadow-wrapper' : 'shadow-wrapper hidden';
-    return (
-      <div className='items-container'>
-        <p className='items'>{this.props.content}</p>
-        <a href="#add-item" className='add-items-button'>Add {this.props.content}</a>
 
+    const itemsArray = [];
+    for (let i = 0; i < this.state.items.length; i++) {
+      const targetedItemId = Number(this.state.itemId);
+
+      let hoverClassName = 'shadow-wrapper hidden';
+      if (this.state.items[i].itemId === targetedItemId) {
+        hoverClassName = 'shadow-wrapper';
+      } else {
+        hoverClassName = 'shadow-wrapper hidden';
+      }
+      itemsArray.push(
+        <div key={i} className="item-wrapper">
+          <Item
+      item={this.state.items[i]}
+      handleMouseEnter={this.handleMouseEnter}
+      handleMouseLeave={this.handleMouseLeave}
+      state={this.state}
+      hover={hoverClassName}
+      />
+        </div>
+      );
+    }
+    return (
+      <div className='items-view-container'>
+        <p className='items'>{this.props.content}</p>
+        <a href="#add-item" className='add-items-button'>
+          <i className="fa-solid fa-plus" />
+          Add {this.props.content}
+        </a>
         <div className='item-list-wrapper'>
-          {
-            this.state.items.map(item => (
-              <div key={item.itemId} className="item-wrapper">
-                <Item
-                  item={item}
-                  handleMouseEnter={this.handleMouseEnter}
-                  handleMouseLeave={this.handleMouseLeave}
-                  hoverClassName={hoverClassName}/>
-              </div>
-            ))
-          }
+          {itemsArray}
         </div>
       </div>
     );
@@ -55,21 +69,25 @@ export default class Items extends React.Component {
 }
 
 function Item(props) {
-  const { originalImage, notes, itemId } = props.item;
+  const { image, notes, itemId } = props.item;
 
   return (
-    <a href={`#items?itemId=${itemId}`} className='item-button' >
+    <div className='item-button' >
       <div className='position'>
         <img
-        src={originalImage}
-        alt={`Item ${itemId}`}
-        className="item-image"
-        onMouseEnter={props.handleMouseEnter}
+          src={image}
+          alt={`Item ${itemId}`}
+          className="item-image"
+          onMouseEnter={props.handleMouseEnter}
+          name={`${itemId}`}
         />
-        <div className={props.hoverClassName} onMouseLeave={props.handleMouseLeave} >
+        <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
           <p className='items-notes'>{notes}</p>
+          <a href={`#item?itemId=${itemId}`}>
+            <i className="fa-solid fa-pen item" />
+          </a>
         </div>
       </div>
-    </a>
+    </div>
   );
 }

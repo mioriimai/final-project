@@ -23,23 +23,20 @@ app.use(express.json());
 app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
   const newItem = req.body;
   // varidate the "inputs" first.
-  if ('category' in newItem === false || 'brand' in newItem === false || 'color' in newItem === false || 'notes' in newItem === false || 'userId' in newItem === false || 'bgRemovedImage' in newItem === false) {
+  if ('category' in newItem === false || 'brand' in newItem === false || 'color' in newItem === false || 'notes' in newItem === false || 'userId' in newItem === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   }
-
-  // // create a url for the image by combining '/images' with req.file.filename
-  // const url = path.join('/images', req.file.filename);
 
   const url = req.file.location; // The S3 url to access the uploaded file later
 
   // query the database
   const sql = `
-    insert into "items" ("originalImage", "bgRemovedImage", "category", "brand", "color", "notes", "isFavorite", "userId")
-    values ($1, $2, $3, $4, $5, $6, $7, $8)
+    insert into "items" ("image", "category", "brand", "color", "notes", "isFavorite", "userId")
+    values ($1, $2, $3, $4, $5, $6, $7)
     returning *
   `;
   // send the user input in a separate array instead of putting the user input directory into our query
-  const params = [url, newItem.bgRemovedImage, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.isFavorite, newItem.userId];
+  const params = [url, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.isFavorite, newItem.userId];
 
   db.query(sql, params)
     .then(result => {
@@ -62,10 +59,9 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
 app.get('/api/items', (req, res, next) => {
   // query the database
   const sql = `
-    select "originalImage", "notes", "itemId"
+    select "image", "notes", "itemId"
     from "items"
   `;
-
   db.query(sql)
     .then(result => {
       // the query succeeded
@@ -82,6 +78,121 @@ app.get('/api/items', (req, res, next) => {
         error: 'An unexpected error occurred.'
       });
     });
+});
+
+app.get('/api/items/:itemId', (req, res, next) => {
+  const itemId = Number(req.params.itemId);
+  if (!Number.isInteger(itemId) || itemId <= 0) {
+    throw new ClientError(400, 'itemId mush be a positive integer');
+  }
+  const sql = `
+      select "itemId",
+             "image",
+             "category",
+             "brand",
+             "color",
+             "notes",
+             "isFavorite"
+       from  "items"
+       where "itemId" = $1
+  `;
+  const params = [itemId];
+  db.query(sql, params)
+    .then(result => {
+      const item = result.rows[0];
+      if (!item) {
+        throw new ClientError(404, `cannot find item with itemId ${itemId}`);
+      }
+      res.json(item);
+    })
+    .catch(err => next(err));
+});
+
+app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
+  const updatedItem = req.body;
+
+  const itemId = Number(req.params.itemId);
+  // varidate the "inputs" first.
+  if ('category' in updatedItem === false || 'brand' in updatedItem === false || 'color' in updatedItem === false || 'notes' in updatedItem === false || 'userId' in updatedItem === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  } else if (!Number.isInteger(itemId) || itemId <= 0) {
+    throw new ClientError(400, 'itemId mush be a positive integer');
+  }
+
+  if (req.file === undefined) { // when the image was not updated
+    // query the database
+    const sql = `
+    update "items"
+       set "image" = $1,
+           "category" = $2,
+           "brand" = $3,
+           "color" = $4,
+           "notes" = $5
+     where "itemId" = $6
+    returning *
+   `;
+    // send the user input in a separate array instead of putting the user input directory into our query
+    const params = [updatedItem.image, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
+    db.query(sql, params)
+      .then(result => {
+        const item = result.rows[0];
+        if (!item) {
+          throw new ClientError(404, `cannot find item with itemId ${itemId}`);
+        } else {
+          // the query succeeded
+          // respond to the client with the status code 200 and created newItem object
+          res.status(201).json(item);
+        }
+      })
+      .catch(err => {
+        // the query failed for some reason
+        // possibly due to a syntax error in the SQL statement
+        // print the error to STDERR (the terminal) for debugging purposes
+        console.error(err);
+        // respond to the client with a generic 500 error message
+        res.status(500).json({
+          error: 'An unexpected error occurred.'
+        });
+      });
+
+  } else { // when image was updated
+    const url = req.file.location; // The S3 url to access the uploaded file later
+    // query the database
+    const sql = `
+    update "items"
+       set "image" = $1,
+           "category" = $2,
+           "brand" = $3,
+           "color" = $4,
+           "notes" = $5
+     where "itemId" = $6
+    returning *
+  `;
+    // send the user input in a separate array instead of putting the user input directory into our query
+    const params = [url, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
+
+    db.query(sql, params)
+      .then(result => {
+        const item = result.rows[0];
+        if (!item) {
+          throw new ClientError(404, `cannot find item with itemId ${itemId}`);
+        } else {
+          // the query succeeded
+          // respond to the client with the status code 200 and created newItem object
+          res.status(201).json(item);
+        }
+      })
+      .catch(err => {
+        // the query failed for some reason
+        // possibly due to a syntax error in the SQL statement
+        // print the error to STDERR (the terminal) for debugging purposes
+        console.error(err);
+        // respond to the client with a generic 500 error message
+        res.status(500).json({
+          error: 'An unexpected error occurred.'
+        });
+      });
+  }
 });
 
 app.use(errorMiddleware);

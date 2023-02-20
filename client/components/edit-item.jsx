@@ -1,16 +1,17 @@
 import React from 'react';
 import CreateOptions from './create-options';
 
-export default class FormItem extends React.Component {
+export default class EditItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: '',
-      category: '',
-      brand: '',
-      color: '',
-      notes: '',
+      item: null,
       preview: null,
+      updatedImage: null,
+      updatedCategory: null,
+      updatedBrand: null,
+      updatedColor: null,
+      updatedNotes: null,
       saved: false
     };
 
@@ -22,6 +23,12 @@ export default class FormItem extends React.Component {
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePopupClick = this.handlePopupClick.bind(this);
+  }
+
+  componentDidMount() {
+    fetch(`/api/items/${this.props.itemId}`)
+      .then(res => res.json())
+      .then(item => this.setState({ item }));
   }
 
   handleImageUpload(event) {
@@ -38,31 +45,31 @@ export default class FormItem extends React.Component {
     }
 
     this.setState({
-      image: event.target.files[0].name
+      updatedImage: event.target.files[0].name
     });
   }
 
   handleCategoryChange(event) {
     this.setState({
-      category: event.target.value
+      updatedCategory: event.target.value
     });
   }
 
   handleBrandChange(event) {
     this.setState({
-      brand: event.target.value
+      updatedBrand: event.target.value
     });
   }
 
   handleColorChange(event) {
     this.setState({
-      color: event.target.value
+      updatedColor: event.target.value
     });
   }
 
   handleNotesChange(event) {
     this.setState({
-      notes: event.target.value
+      updatedNotes: event.target.value
     });
   }
 
@@ -74,32 +81,58 @@ export default class FormItem extends React.Component {
     const formDataObject = new FormData();
 
     //  Append entries to the form data object I created.
-    formDataObject.append('image', this.fileInputRef.current.files[0]);
-    formDataObject.append('category', this.state.category);
-    formDataObject.append('brand', this.state.brand);
-    formDataObject.append('color', this.state.color);
-    formDataObject.append('notes', this.state.notes);
-    formDataObject.append('isFavorite', false);
+    let image;
+    if (this.state.updatedImage === null) {
+      image = this.state.item.image;
+    } else {
+      image = this.fileInputRef.current.files[0];
+    }
+
+    let category;
+    if (this.state.updatedCategory === null) {
+      category = this.state.item.category;
+    } else {
+      category = this.state.updatedCategory;
+    }
+
+    let brand;
+    if (this.state.updatedBrand === null) {
+      brand = this.state.item.brand;
+    } else {
+      brand = this.state.updatedBrand;
+    }
+
+    let color;
+    if (this.state.updatedColor === null) {
+      color = this.state.item.color;
+    } else {
+      color = this.state.updatedColor;
+    }
+
+    let notes;
+    if (this.state.updatedNotes === null) {
+      notes = this.state.item.notes;
+    } else {
+      notes = this.state.updatedNotes;
+    }
+    formDataObject.append('image', image);
+    formDataObject.append('category', category);
+    formDataObject.append('brand', brand);
+    formDataObject.append('color', color);
+    formDataObject.append('notes', notes);
     formDataObject.append('userId', 1);
 
     // Use fetch() to send a POST request to / api / form-item.
-    fetch('/api/form-item', {
-      method: 'POST',
+    fetch(`/api/items/${this.props.itemId}`, {
+      method: 'PATCH',
       body: formDataObject
     })
       .then(res => res.json())
       .then(data => {
         this.setState({
-          image: '',
-          category: '',
-          brand: '',
-          color: '',
-          notes: '',
-          preview: null,
           saved: true
         });
         this.fileInputRef.current.value = null;
-
       })
       .catch(err => console.error(err));
   }
@@ -111,42 +144,61 @@ export default class FormItem extends React.Component {
   }
 
   render() {
-    // show image placeholder and hide it when image is selected
+    if (!this.state.item) return null;
+
+    const { image, category, brand, color, notes, itemId } = this.state.item;
+
     const previewImage = this.state.preview;
     let preview = '';
-    let placeholderClassName = 'item-image-placeholder';
-    let uploadMessage = 'upload-from-camera-roll';
+    let showedImageClassName = 'chosen-image';
     if (previewImage != null) {
       preview = (
         <img src={previewImage} className='chosen-image' />
       );
-      placeholderClassName = 'item-image-placeholder hidden';
-      uploadMessage = 'upload-from-camera-roll hidden';
+      showedImageClassName = 'chosen-image hidden';
+    }
+
+    let valueOfCategory = category;
+    if (this.state.updatedCategory !== null) {
+      valueOfCategory = this.state.updatedCategory;
+    }
+
+    let valueOfBrand = brand;
+    if (this.state.updatedBrand !== null) {
+      valueOfBrand = this.state.updatedBrand;
+    }
+
+    let valueOfColor = color;
+    if (this.state.updatedColor !== null) {
+      valueOfColor = this.state.updatedColor;
+    }
+
+    let valueOfNotes = notes;
+    if (this.state.updatedNotes !== null) {
+      valueOfNotes = this.state.updatedNotes;
     }
 
     // popup-window
     const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
 
     return (
+
       <>
         <form onSubmit={this.handleSubmit}>
           <div className='form-item-container'>
             <div className='row'>
               <div className='column-full'>
-                <p className='form-item-title'>New Item</p>
+                <p className='form-item-title'>Edit Item</p>
               </div>
             </div>
             <div className='row'>
               <div className='column-half add-padding-left'>
-                <div className='row'>
-                  <div className='item-image-wrapper'>
-                    <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
-                    <p className={uploadMessage}>Upload from Camera Roll</p>
-                    {preview}
-                  </div>
+                <div className='row item-image-wrapper'>
+                  <img src={ image } alt={ itemId } className={showedImageClassName} />
+                  {preview}
                 </div>
                 <div className='row file-upload-wrapper'>
-                  <input required type="file" name='image' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
+                  <input type="file" name='image' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
                 </div>
               </div>
               <div className='column-half add-padding-right'>
@@ -155,7 +207,7 @@ export default class FormItem extends React.Component {
                     <p className='form-item-category'>Category</p>
                   </div>
                   <div className='column-three-fifth position-right'>
-                    <select name="category" id="category" value={this.state.category} onChange={this.handleCategoryChange}>
+                    <select name="category" id="category" value={valueOfCategory} onChange={this.handleCategoryChange} >
                       <CreateOptions options="category" />
                     </select>
                   </div>
@@ -165,7 +217,7 @@ export default class FormItem extends React.Component {
                     <p className='form-item-brand'>Brand</p>
                   </div>
                   <div className='column-seven-ten position-right'>
-                    <select name="brand" id="brand" value={this.state.brand} onChange={this.handleBrandChange}>
+                    <select name="brand" id="brand" value={valueOfBrand} onChange={this.handleBrandChange} >
                       <CreateOptions options="brand" />
                     </select>
                   </div>
@@ -175,7 +227,7 @@ export default class FormItem extends React.Component {
                     <p className='form-item-color'>Color</p>
                   </div>
                   <div className='column-seven-ten position-right'>
-                    <select name="color" id="color" value={this.state.color} onChange={this.handleColorChange}>
+                    <select name="color" id="color" value={valueOfColor} onChange={this.handleColorChange} >
                       <CreateOptions options="color" />
                     </select>
                   </div>
@@ -184,7 +236,7 @@ export default class FormItem extends React.Component {
                   <label htmlFor="notes" className='form-item-notes'>Notes</label>
                 </div>
                 <div className='row'>
-                  <textarea name="notes" id="notes" value={this.state.notes} onChange={this.handleNotesChange} />
+                  <textarea name="notes" id="notes" value={valueOfNotes} onChange={this.handleNotesChange} />
                 </div>
                 <div className='row item-save-button-wrapper'>
                   <button type='submit' className='item-save-button'>SAVE</button>
