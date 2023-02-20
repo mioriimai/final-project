@@ -23,7 +23,8 @@ export default class EditItem extends React.Component {
     this.handleColorChange = this.handleColorChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePopupClick = this.handlePopupClick.bind(this);
+    this.handleSavePopupClick = this.handleSavePopupClick.bind(this);
+    this.handleDeleteConfirmPopupClick = this.handleDeleteConfirmPopupClick.bind(this);
   }
 
   componentDidMount() {
@@ -138,9 +139,15 @@ export default class EditItem extends React.Component {
       .catch(err => console.error(err));
   }
 
-  handlePopupClick() {
+  handleSavePopupClick() {
     this.setState({
       saved: !this.state.saved
+    });
+  }
+
+  handleDeleteConfirmPopupClick() {
+    this.setState({
+      deleteConfirmation: !this.state.deleteConfirmation
     });
   }
 
@@ -179,8 +186,8 @@ export default class EditItem extends React.Component {
       valueOfNotes = this.state.updatedNotes;
     }
 
-    // popup-window
-    const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
+    // savedpopup-window
+    const savedpopup = this.state.saved ? 'pop-up' : 'pop-up hidden';
 
     return (
 
@@ -256,12 +263,12 @@ export default class EditItem extends React.Component {
           </div>
         </form>
 
-        <div className={popup}>
-          <div className='popup-text-wrapper'>
+        <div className={savedpopup}>
+          <div className='saved-popup-text-wrapper'>
             <h1 className='successfully-saved'>Successfully saved!</h1>
-            <a className='add-more-items' href='#add-item' onClick={this.handlePopupClick}>Add More Items</a>
+            <a className='add-more-items' href='#add-item' onClick={this.handleSavePopupClick}>Add More Items</a>
             <br />
-            <a className='see-items' href='#items' onClick={this.handlePopupClick}>See Items in the Closet</a>
+            <a className='see-items' href='#items' onClick={this.handleSavePopupClick}>See Items in the Closet</a>
           </div>
         </div>
       </>

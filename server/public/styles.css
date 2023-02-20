@@ -341,7 +341,7 @@ body {
   height: 100%;
 }
 
-.popup-text-wrapper {
+.saved-popup-text-wrapper {
   background-color: white;
   text-align: center;
   width: 500px;
@@ -648,7 +648,7 @@ body {
     margin-right: 5px;
   }
 
-  .popup-text-wrapper {
+  .saved-popup-text-wrapper {
     width: 300px;
     height: 200px;
     margin: 40% auto;
