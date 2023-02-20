@@ -186,8 +186,11 @@ export default class EditItem extends React.Component {
       valueOfNotes = this.state.updatedNotes;
     }
 
-    // savedpopup-window
-    const savedpopup = this.state.saved ? 'pop-up' : 'pop-up hidden';
+    // show or hide savedPopup
+    const savedPopup = this.state.saved ? 'pop-up' : 'pop-up hidden';
+
+    // show or hide deleteConfirmPopup
+    const deleteConfirmPopup = this.state.deleteConfirmation ? 'pop-up' : 'pop-up hidden';
 
     return (
 
@@ -263,12 +266,20 @@ export default class EditItem extends React.Component {
           </div>
         </form>
 
-        <div className={savedpopup}>
+        <div className={savedPopup}>
           <div className='saved-popup-text-wrapper'>
             <h1 className='successfully-saved'>Successfully saved!</h1>
             <a className='add-more-items' href='#add-item' onClick={this.handleSavePopupClick}>Add More Items</a>
             <br />
             <a className='see-items' href='#items' onClick={this.handleSavePopupClick}>See Items in the Closet</a>
+          </div>
+        </div>
+
+        <div className={deleteConfirmPopup}>
+          <div className='saved-popup-text-wrapper'>
+            <h1 className='successfully-saved'>Are you sure you want to delete this item?This process can&lsquo;t be undone.</h1>
+            <button className='cancel-delete-button' type='button' /* href='#add-item' onClick={this.handleSavePopupClick} */>Cancel</button>
+            <a className='delete-item-button' /* href='#items' onClick={this.handleSavePopupClick} */>Delete</a>
           </div>
         </div>
       </>
