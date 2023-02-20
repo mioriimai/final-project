@@ -11,6 +11,10 @@
   flex-basis: 50%;
 }
 
+.mobile-column-half {
+  flex-basis: 50%;
+}
+
 .column-two-fifth {
   flex-basis: 40%;
 }

@@ -239,8 +239,17 @@ export default class EditItem extends React.Component {
                 <div className='row'>
                   <textarea name="notes" id="notes" value={valueOfNotes} onChange={this.handleNotesChange} />
                 </div>
-                <div className='row item-save-button-wrapper'>
-                  <button type='submit' className='item-save-button'>SAVE</button>
+                <div className='row'>
+                  <div className='mobile-column-half'>
+                    <button type='button' className='item-delete-confirm-button'>
+                      <i className="fa-regular fa-trash-can" />
+                      Delete</button>
+                  </div>
+                  <div className='mobile-column-half'>
+                    <div className='item-save-button-wrapper'>
+                      <button type='submit' className='item-save-button'>SAVE</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
