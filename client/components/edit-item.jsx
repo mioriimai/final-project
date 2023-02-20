@@ -256,7 +256,7 @@ export default class EditItem extends React.Component {
                 </div>
                 <div className='row'>
                   <div className='mobile-column-half'>
-                    <button type='button' className='item-delete-confirm-button'>
+                    <button type='button' className='item-delete-confirm-button' onClick={this.handleDeleteConfirmPopupClick}>
                       <i className="fa-regular fa-trash-can" />
                       Delete</button>
                   </div>
@@ -282,8 +282,8 @@ export default class EditItem extends React.Component {
 
         <div className={deleteConfirmPopup}>
           <div className='saved-popup-text-wrapper'>
-            <h1 className='successfully-saved'>Are you sure you want to delete this item?This process can&lsquo;t be undone.</h1>
-            <button className='cancel-delete-button' type='button' /* href='#add-item' onClick={this.handleSavePopupClick} */>Cancel</button>
+            <h1 className='successfully-saved'>Are you sure you want to delete this item?This process can&rsquo;t be undone.</h1>
+            <button className='cancel-delete-button' type='button' /* href='#add-item' */ onClick={this.handleDeleteConfirmPopupClick} >Cancel</button>
             <a className='delete-item-button' /* href='#items' onClick={this.handleSavePopupClick} */>Delete</a>
           </div>
         </div>
