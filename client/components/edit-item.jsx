@@ -12,7 +12,8 @@ export default class EditItem extends React.Component {
       updatedBrand: null,
       updatedColor: null,
       updatedNotes: null,
-      saved: false
+      saved: false,
+      deleteConfirmation: false
     };
 
     this.fileInputRef = React.createRef();
