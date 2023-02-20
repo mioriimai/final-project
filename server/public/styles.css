@@ -878,11 +878,4 @@ body {
     font-size: 40px;
     margin: 35px 0 17px 4%;
   }
-
-  .add-items-button {
-    right: 7%;
-    bottom: 45px;
-    font-size: 25px;
-    padding: 10px 37px 13px 35px;
-  }
 }
