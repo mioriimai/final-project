@@ -7,12 +7,13 @@ export default class Items extends React.Component {
     this.state = {
       items: [],
       itemId: null,
-      sortCategory: 'Category',
-      sortBrand: 'Brand',
-      sortColor: 'Color'
+      sortCategory: '',
+      sortBrand: '',
+      sortColor: ''
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleSortCategoryChange = this.handleSortCategoryChange.bind(this);
   }
 
   componentDidMount() {
@@ -33,8 +34,15 @@ export default class Items extends React.Component {
     });
   }
 
+  handleSortCategoryChange(event) {
+    this.setState({
+      sortCategory: event.target.value
+    });
+  }
+
   render() {
 
+    // console.log('this.state:', this.state);
     const itemsArray = [];
     for (let i = 0; i < this.state.items.length; i++) {
       const targetedItemId = Number(this.state.itemId);
@@ -65,14 +73,14 @@ export default class Items extends React.Component {
           </div>
           <div className='mobile-column-full'>
             <form className='sort-wrapper'>
-              <select name="category" id="sort-category">
-                <CreateOptions options="category" usage="sort" value={this.state.sortCategory} />
+              <select name="category" id="sort-category" value={this.state.sortCategory} onChange={this.handleSortCategoryChange}>
+                <CreateOptions options="category" usage="sort" />
               </select>
-              <select name="brand" id="sort-brand">
-                <CreateOptions options="brand" usage="sort" value={this.state.sortCategory} />
+              <select name="brand" id="sort-brand" /* value={this.state.sortBrand} */>
+                <CreateOptions options="brand" usage="sort" />
               </select>
-              <select name="color" id="sort-color">
-                <CreateOptions options="color" usage="sort" value={this.state.sortColor} />
+              <select name="color" id="sort-color" /* value={this.state.sortColor} */>
+                <CreateOptions options="color" usage="sort" />
               </select>
             </form>
           </div>
