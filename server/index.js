@@ -108,11 +108,22 @@ app.get('/api/items/:itemId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/sortedItems', (req, res, next) => {
-  const sortConditions = req.body;
+app.get('/api/items/:category/:brand/:color', (req, res, next) => {
+  // const sortConditions = req.body;
   // varidate the "inputs" first.
-  if ('category' in sortConditions === false || 'brand' in sortConditions === false || 'color' in sortConditions === false) {
-    throw new ClientError(400, 'An invalid/missing information.');
+  // if ('category' in sortConditions === false || 'brand' in sortConditions === false || 'color' in sortConditions === false) {
+  //   throw new ClientError(400, 'An invalid/missing information.');
+  // }
+  const category = req.params.category;
+  const brand = req.params.brand;
+  const color = req.params.color;
+
+  // console.log('category:', category);
+  // console.log('brand:', brand);
+  // console.log('color:', color);
+
+  if (typeof category !== 'string' || typeof brand !== 'string' || typeof color !== 'string') {
+    throw new ClientError(400, 'mush be strings');
   }
   const sql = `
       select "itemId",
@@ -121,14 +132,14 @@ app.get('/api/sortedItems', (req, res, next) => {
        from  "items"
        where "category" = $1 AND "brand" = $2 AND "color" = $3
   `;
-  const params = [sortConditions.category, sortConditions.brand, sortConditions.color];
+  const params = [category, brand, color];
   db.query(sql, params)
     .then(result => {
-      const item = result.rows[0];
-      if (!item) {
+      const items = result.rows[0];
+      if (!items) {
         throw new ClientError(404, 'cannot find item with the conditions');
       }
-      res.json(item);
+      res.json(items);
     })
     .catch(err => next(err));
 });

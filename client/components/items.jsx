@@ -40,6 +40,14 @@ export default class Items extends React.Component {
     this.setState({
       sortCategory: event.target.value
     });
+
+    // Use fetch() to send a GET request
+    fetch(`/api/items/${event.target.value}/${this.state.sortBrand}/${this.state.sortColor}`, {
+      method: 'GET'
+    })
+      .then(res => res.json())
+      .then(items => this.setState({ items }))
+      .catch(err => console.error(err));
   }
 
   handleSortBrandChange(event) {
