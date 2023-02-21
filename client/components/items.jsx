@@ -7,13 +7,14 @@ export default class Items extends React.Component {
     this.state = {
       items: [],
       itemId: null,
-      sortCategory: '',
-      sortBrand: '',
-      sortColor: ''
+      sortCategory: 'Category',
+      sortBrand: 'Brand',
+      sortColor: 'Color'
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleSortCategoryChange = this.handleSortCategoryChange.bind(this);
+    this.handleSortBrandChange = this.handleSortBrandChange.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +38,12 @@ export default class Items extends React.Component {
   handleSortCategoryChange(event) {
     this.setState({
       sortCategory: event.target.value
+    });
+  }
+
+  handleSortBrandChange(event) {
+    this.setState({
+      sortBrand: event.target.value
     });
   }
 
@@ -76,7 +83,7 @@ export default class Items extends React.Component {
               <select name="category" id="sort-category" value={this.state.sortCategory} onChange={this.handleSortCategoryChange}>
                 <CreateOptions options="category" usage="sort" />
               </select>
-              <select name="brand" id="sort-brand" /* value={this.state.sortBrand} */>
+              <select name="brand" id="sort-brand" value={this.state.sortBrand} onChange={this.handleSortBrandChange}>
                 <CreateOptions options="brand" usage="sort" />
               </select>
               <select name="color" id="sort-color" /* value={this.state.sortColor} */>
