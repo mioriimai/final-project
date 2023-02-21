@@ -66,13 +66,13 @@ export default class Items extends React.Component {
           <div className='mobile-column-full'>
             <form className='sort-wrapper'>
               <select name="category" id="sort-category">
-                <CreateOptions options="category" usage="sort"/>
+                <CreateOptions options="category" usage="sort" value={this.state.sortCategory} />
               </select>
               <select name="brand" id="sort-brand">
-                <CreateOptions options="brand" usage="sort"/>
+                <CreateOptions options="brand" usage="sort" value={this.state.sortCategory} />
               </select>
               <select name="color" id="sort-color">
-                <CreateOptions options="color" usage="sort"/>
+                <CreateOptions options="color" usage="sort" value={this.state.sortColor} />
               </select>
             </form>
           </div>
