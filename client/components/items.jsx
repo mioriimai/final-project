@@ -57,18 +57,22 @@ export default class Items extends React.Component {
     return (
       <div className='items-view-container'>
         <div className='row'>
-          <p className='items'>{this.props.content}</p>
-          <form>
-            <select name="category" id="sort-category">
-              <CreateOptions options="category" usage="sort"/>
-            </select>
-            <select name="brand" id="sort-brand">
-              <CreateOptions options="brand" usage="sort"/>
-            </select>
-            <select name="color" id="sort-color">
-              <CreateOptions options="color" usage="sort"/>
-            </select>
-          </form>
+          <div className='mobile-column-full'>
+            <p className='items'>{this.props.content}</p>
+          </div>
+          <div className='mobile-column-full'>
+            <form className='sort-wrapper'>
+              <select name="category" id="sort-category">
+                <CreateOptions options="category" usage="sort"/>
+              </select>
+              <select name="brand" id="sort-brand">
+                <CreateOptions options="brand" usage="sort"/>
+              </select>
+              <select name="color" id="sort-color">
+                <CreateOptions options="color" usage="sort"/>
+              </select>
+            </form>
+          </div>
         </div>
         <a href="#add-item" className='add-items-button'>
           <i className="fa-solid fa-plus" />

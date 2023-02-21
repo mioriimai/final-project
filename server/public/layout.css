@@ -50,6 +50,11 @@
   .column-three-fifth {
     flex-basis: 65%;
   }
+
+  /* ----------- moble items view ---------- */
+  .mobile-column-full {
+    flex-basis: 100%;
+  }
 }
 
 /* tablet screen */

@@ -752,7 +752,23 @@ body {
 
   .items {
     font-size: 28px;
-    margin: 25px 0 12px 4%;
+    margin: 25px 0 0 15px;
+  }
+
+  #sort-category,
+  #sort-brand,
+  #sort-color {
+    font-size: 13px;
+    border-width: 1px;
+    border-radius: 30px;
+    padding: 1px 8px 2px 10px;
+    margin: 13px 5px;
+    width: 95px;
+  }
+
+  .sort-wrapper {
+    width: fit-content;
+    margin: auto;
   }
 
   .add-items-button {
@@ -776,6 +792,10 @@ body {
     width: 100%;
     height: 175px;
     padding: 5px;
+  }
+
+  .item-list-wrapper {
+    margin-top: 8px;
   }
 
   .item-list-wrapper::before {
@@ -806,94 +826,94 @@ body {
     top: 22px;
     font-size: 1.5em;
   }
-}
 
-/* tablet screen */
-@media screen and (min-width: 768px) and (max-width: 1279px) {
-  /* ----------- tablet form item view ---------- */
+  /* tablet screen */
+  @media screen and (min-width: 768px) and (max-width: 1279px) {
+    /* ----------- tablet form item view ---------- */
 
-  .form-item-container {
-    margin: 33px 6%;
+    .form-item-container {
+      margin: 33px 6%;
+    }
+
+    .form-item-title {
+      font-size: 30px;
+      margin: 27px 0 0;
+      padding-left: 7%;
+    }
+
+    .add-padding-left {
+      padding-left: 6%;
+    }
+
+    .add-padding-right {
+      padding-right: 6%;
+      padding-top: 13px;
+    }
+
+    .item-image-wrapper {
+      width: 94%;
+      height: 300px;
+      text-align: center;
+    }
+
+    .item-image-placeholder {
+      width: 200px;
+      margin: 5% auto;
+    }
+
+    .upload-from-camera-roll {
+      font-size: 18px;
+    }
+
+    .file-upload-wrapper {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .form-item-category,
+    .form-item-brand,
+    .form-item-color {
+      font-size: 22px;
+      padding-bottom: 8px;
+    }
+
+    .position-right {
+      padding-right: 10px;
+    }
+
+    #category-dropdown-menu,
+    #brand-dropdown-menu,
+    #color-dropdown-menu {
+      font-size: 19px;
+      padding: 0 5px;
+      text-align: right;
+      padding-bottom: 6px;
+    }
+
+    .each-row {
+      margin-bottom: 10px;
+    }
+
+    .form-item-notes {
+      font-size: 22px;
+      margin: 0;
+      padding-left: 20px;
+      padding-bottom: 8px;
+    }
+
+    #notes {
+      margin-left: 20px;
+      height: 113px;
+      padding: 13px;
+      font-size: 17px;
+    }
+
+    .item-save-button {
+      font-size: 17px;
+      font-weight: bold;
+      padding: 5px 24px;
+    }
+
+    /* --------- tablet items view ---------- */
   }
-
-  .form-item-title {
-    font-size: 30px;
-    margin: 27px 0 0;
-    padding-left: 7%;
-  }
-
-  .add-padding-left {
-    padding-left: 6%;
-  }
-
-  .add-padding-right {
-    padding-right: 6%;
-    padding-top: 13px;
-  }
-
-  .item-image-wrapper {
-    width: 94%;
-    height: 300px;
-    text-align: center;
-  }
-
-  .item-image-placeholder {
-    width: 200px;
-    margin: 5% auto;
-  }
-
-  .upload-from-camera-roll {
-    font-size: 18px;
-  }
-
-  .file-upload-wrapper {
-    width: 80%;
-    margin: 0 auto;
-  }
-
-  .form-item-category,
-  .form-item-brand,
-  .form-item-color {
-    font-size: 22px;
-    padding-bottom: 8px;
-  }
-
-  .position-right {
-    padding-right: 10px;
-  }
-
-  #category-dropdown-menu,
-  #brand-dropdown-menu,
-  #color-dropdown-menu {
-    font-size: 19px;
-    padding: 0 5px;
-    text-align: right;
-    padding-bottom: 6px;
-  }
-
-  .each-row {
-    margin-bottom: 10px;
-  }
-
-  .form-item-notes {
-    font-size: 22px;
-    margin: 0;
-    padding-left: 20px;
-    padding-bottom: 8px;
-  }
-
-  #notes {
-    margin-left: 20px;
-    height: 113px;
-    padding: 13px;
-    font-size: 17px;
-  }
-
-  .item-save-button {
-    font-size: 17px;
-    font-weight: bold;
-    padding: 5px 24px;
-  }
-
-  /* --------- tablet items view ---------- */
 }
