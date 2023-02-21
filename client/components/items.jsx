@@ -1,4 +1,5 @@
 import React from 'react';
+import CreateOptions from './create-options';
 
 export default class Items extends React.Component {
   constructor(props) {
@@ -55,7 +56,20 @@ export default class Items extends React.Component {
     }
     return (
       <div className='items-view-container'>
-        <p className='items'>{this.props.content}</p>
+        <div className='row'>
+          <p className='items'>{this.props.content}</p>
+          <form>
+            <select name="category" id="sort-category">
+              <CreateOptions options="category" usage="sort"/>
+            </select>
+            <select name="brand" id="sort-brand">
+              <CreateOptions options="brand" usage="sort"/>
+            </select>
+            <select name="color" id="sort-color">
+              <CreateOptions options="color" usage="sort"/>
+            </select>
+          </form>
+        </div>
         <a href="#add-item" className='add-items-button'>
           <i className="fa-solid fa-plus" />
           Add {this.props.content}

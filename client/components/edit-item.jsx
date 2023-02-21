@@ -228,7 +228,7 @@ export default class EditItem extends React.Component {
                     <p className='form-item-category'>Category</p>
                   </div>
                   <div className='column-three-fifth position-right'>
-                    <select name="category" id="category" value={valueOfCategory} onChange={this.handleCategoryChange} >
+                    <select name="category" id="category-dropdown-menu" value={valueOfCategory} onChange={this.handleCategoryChange} >
                       <CreateOptions options="category" />
                     </select>
                   </div>
@@ -238,7 +238,7 @@ export default class EditItem extends React.Component {
                     <p className='form-item-brand'>Brand</p>
                   </div>
                   <div className='column-seven-ten position-right'>
-                    <select name="brand" id="brand" value={valueOfBrand} onChange={this.handleBrandChange} >
+                    <select name="brand" id="brand-dropdown-menu" value={valueOfBrand} onChange={this.handleBrandChange} >
                       <CreateOptions options="brand" />
                     </select>
                   </div>
@@ -248,7 +248,7 @@ export default class EditItem extends React.Component {
                     <p className='form-item-color'>Color</p>
                   </div>
                   <div className='column-seven-ten position-right'>
-                    <select name="color" id="color" value={valueOfColor} onChange={this.handleColorChange} >
+                    <select name="color" id="color-dropdown-menu" value={valueOfColor} onChange={this.handleColorChange} >
                       <CreateOptions options="color" />
                     </select>
                   </div>

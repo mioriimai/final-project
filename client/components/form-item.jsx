@@ -155,7 +155,7 @@ export default class FormItem extends React.Component {
                     <p className='form-item-category'>Category</p>
                   </div>
                   <div className='column-three-fifth position-right'>
-                    <select name="category" id="category" value={this.state.category} onChange={this.handleCategoryChange}>
+                    <select name="category" id="category-dropdown-menu" value={this.state.category} onChange={this.handleCategoryChange}>
                       <CreateOptions options="category" />
                     </select>
                   </div>
@@ -165,7 +165,7 @@ export default class FormItem extends React.Component {
                     <p className='form-item-brand'>Brand</p>
                   </div>
                   <div className='column-seven-ten position-right'>
-                    <select name="brand" id="brand" value={this.state.brand} onChange={this.handleBrandChange}>
+                    <select name="brand" id="brand-dropdown-menu" value={this.state.brand} onChange={this.handleBrandChange}>
                       <CreateOptions options="brand" />
                     </select>
                   </div>
@@ -175,7 +175,7 @@ export default class FormItem extends React.Component {
                     <p className='form-item-color'>Color</p>
                   </div>
                   <div className='column-seven-ten position-right'>
-                    <select name="color" id="color" value={this.state.color} onChange={this.handleColorChange}>
+                    <select name="color" id="color-dropdown-menu" value={this.state.color} onChange={this.handleColorChange}>
                       <CreateOptions options="color" />
                     </select>
                   </div>

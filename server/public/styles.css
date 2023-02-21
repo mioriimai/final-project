@@ -243,9 +243,9 @@ body {
   text-overflow: ellipsis;
 }
 
-#category,
-#brand,
-#color {
+#category-dropdown-menu,
+#brand-dropdown-menu,
+#color-dropdown-menu {
   color: #a4a4a4;
   font-family: Alegreya, sans-serif;
   font-size: 20px;
@@ -255,9 +255,9 @@ body {
   padding-bottom: 10px;
 }
 
-#category:hover,
-#brand:hover,
-#color:hover {
+#category-dropdown-menu:hover,
+#brand-dropdown-menu:hover,
+#color-dropdown-menu:hover {
   cursor: pointer;
 }
 
@@ -425,8 +425,30 @@ body {
 .items {
   font-family: "Playfair Display", sans-serif;
   font-weight: bold;
-  font-size: 40px;
-  margin: 30px 0 30px 4%;
+  font-size: 47px;
+  margin: 30px 40px 0 4%;
+}
+
+#sort-category,
+#sort-brand,
+#sort-color {
+  color: #888;
+  background-color: #f3f0e8;
+  font-family: "Alegreya SC", sans-serif;
+  font-size: 18px;
+  border-width: 2px;
+  border-color: #c0c0c0;
+  border-radius: 30px;
+  padding: 1px 15px 2px 20px;
+  margin: 50px 10px 0;
+  width: 140px;
+}
+
+#sort-category:hover,
+#sort-brand:hover,
+#sort-color:hover {
+  cursor: pointer;
+  background-color: #fff;
 }
 
 .add-items-button {
@@ -457,6 +479,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 25px;
 }
 
 .item-list-wrapper::before {
@@ -639,9 +662,9 @@ body {
     margin: 10px 0 0;
   }
 
-  #category,
-  #brand,
-  #color {
+  #category-dropdown-menu,
+  #brand-dropdown-menu,
+  #color-dropdown-menu {
     font-size: 17px;
     border: none;
     padding: 0 5px 0 0;
@@ -839,9 +862,9 @@ body {
     padding-right: 10px;
   }
 
-  #category,
-  #brand,
-  #color {
+  #category-dropdown-menu,
+  #brand-dropdown-menu,
+  #color-dropdown-menu {
     font-size: 19px;
     padding: 0 5px;
     text-align: right;
@@ -873,9 +896,4 @@ body {
   }
 
   /* --------- tablet items view ---------- */
-
-  .items {
-    font-size: 40px;
-    margin: 35px 0 17px 4%;
-  }
 }
