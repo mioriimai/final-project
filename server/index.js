@@ -108,6 +108,31 @@ app.get('/api/items/:itemId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/sortedItems', (req, res, next) => {
+  const sortConditions = req.body;
+  // varidate the "inputs" first.
+  if ('category' in sortConditions === false || 'brand' in sortConditions === false || 'color' in sortConditions === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  }
+  const sql = `
+      select "itemId",
+             "image",
+             "notes"
+       from  "items"
+       where "category" = $1 AND "brand" = $2 AND "color" = $3
+  `;
+  const params = [sortConditions.category, sortConditions.brand, sortConditions.color];
+  db.query(sql, params)
+    .then(result => {
+      const item = result.rows[0];
+      if (!item) {
+        throw new ClientError(404, 'cannot find item with the conditions');
+      }
+      res.json(item);
+    })
+    .catch(err => next(err));
+});
+
 app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   const updatedItem = req.body;
 
