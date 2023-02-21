@@ -6,7 +6,10 @@ export default class Items extends React.Component {
     super(props);
     this.state = {
       items: [],
-      itemId: null
+      itemId: null,
+      sortCategory: 'Category',
+      sortBrand: 'Brand',
+      sortColor: 'Color'
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
