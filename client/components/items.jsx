@@ -41,13 +41,21 @@ export default class Items extends React.Component {
       sortCategory: event.target.value
     });
 
-    // Use fetch() to send a GET request
-    fetch(`/api/items/${event.target.value}/${this.state.sortBrand}/${this.state.sortColor}`, {
-      method: 'GET'
-    })
-      .then(res => res.json())
-      .then(items => this.setState({ items }))
-      .catch(err => console.error(err));
+    if (event.target.value === 'Category' && this.state.sortBrand === 'Brand' && this.state.sortColor === 'Color') {
+      // Use fetch() to send a GET request to get all items
+      fetch('/api/items')
+        .then(res => res.json())
+        .then(items => this.setState({ items }));
+
+    } else {
+      // Use fetch() to send a GET request to get items that meet the conditons
+      fetch(`/api/items/${event.target.value}/${this.state.sortBrand}/${this.state.sortColor}`, {
+        method: 'GET'
+      })
+        .then(res => res.json())
+        .then(items => this.setState({ items }))
+        .catch(err => console.error(err));
+    }
   }
 
   handleSortBrandChange(event) {
@@ -55,13 +63,21 @@ export default class Items extends React.Component {
       sortBrand: event.target.value
     });
 
-    // Use fetch() to send a GET request
-    fetch(`/api/items/${this.state.sortCategory}/${event.target.value}/${this.state.sortColor}`, {
-      method: 'GET'
-    })
-      .then(res => res.json())
-      .then(items => this.setState({ items }))
-      .catch(err => console.error(err));
+    if (this.state.sortCategory === 'Category' && event.target.value === 'Brand' && this.state.sortColor === 'Color') {
+      // Use fetch() to send a GET request to get all items
+      fetch('/api/items')
+        .then(res => res.json())
+        .then(items => this.setState({ items }));
+
+    } else {
+      // Use fetch() to send a GET request to get items that meet the conditons
+      fetch(`/api/items/${this.state.sortCategory}/${event.target.value}/${this.state.sortColor}`, {
+        method: 'GET'
+      })
+        .then(res => res.json())
+        .then(items => this.setState({ items }))
+        .catch(err => console.error(err));
+    }
   }
 
   handleSortColorChange(event) {
@@ -69,18 +85,27 @@ export default class Items extends React.Component {
       sortColor: event.target.value
     });
 
-    // Use fetch() to send a GET request
-    fetch(`/api/items/${this.state.sortCategory}/${this.state.sortBrand}/${event.target.value}`, {
-      method: 'GET'
-    })
-      .then(res => res.json())
-      .then(items => this.setState({ items }))
-      .catch(err => console.error(err));
+    if (this.state.sortCategory === 'Category' && this.state.sortBrand === 'Brand' && event.target.value === 'Color') {
+      // Use fetch() to send a GET request to get all items
+      fetch('/api/items')
+        .then(res => res.json())
+        .then(items => this.setState({ items }));
+
+    } else {
+      // Use fetch() to send a GET request to get items that meet the conditons
+      fetch(`/api/items/${this.state.sortCategory}/${this.state.sortBrand}/${event.target.value}`, {
+        method: 'GET'
+      })
+        .then(res => res.json())
+        .then(items => this.setState({ items }))
+        .catch(err => console.error(err));
+    }
   }
 
   render() {
 
     // console.log('this.state:', this.state);
+    // console.log('this.state.items.length:', this.state.items.length);
     const itemsArray = [];
     for (let i = 0; i < this.state.items.length; i++) {
       const targetedItemId = Number(this.state.itemId);
