@@ -568,10 +568,18 @@ body {
 
 .fa-solid.fa-pen.item {
   color: #6c6b6b;
-  position: absolute;
-  left: 30px;
-  top: 35px;
   font-size: 2.5em;
+  position: absolute;
+  left: 33px;
+  top: 35px;
+}
+
+.fa-regular.fa-heart.item {
+  color: #6c6b6b;
+  font-size: 2.5em;
+  position: absolute;
+  right: 33px;
+  top: 35px;
 }
 
 /* ------------- media query ------------  */
@@ -858,9 +866,15 @@ body {
   }
 
   .fa-solid.fa-pen.item {
+    font-size: 1.4em;
     left: 21px;
     top: 22px;
-    font-size: 1.5em;
+  }
+
+  .fa-regular.fa-heart.item {
+    font-size: 1.4em;
+    right: 21px;
+    top: 22px;
   }
 
   /* tablet screen */

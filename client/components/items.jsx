@@ -126,7 +126,7 @@ export default class Items extends React.Component {
       if (this.state.items[i].itemId === targetedItemId) {
         hoverClassName = 'shadow-wrapper';
       } else {
-        hoverClassName = 'shadow-wrapper hidden';
+        hoverClassName = 'shadow-wrapper'; // add hidden here!
       }
       itemsArray.push(
         <div key={i} className="item-wrapper">
@@ -199,6 +199,7 @@ function Item(props) {
           <p className='items-notes'>{notes}</p>
           <a href={`#item?itemId=${itemId}`}>
             <i className="fa-solid fa-pen item" />
+            <i className="fa-regular fa-heart item" />
           </a>
         </div>
       </div>
