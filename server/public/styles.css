@@ -192,8 +192,9 @@ body {
 .item-image-placeholder {
   opacity: 40%;
   width: 50%;
-  margin: 3% auto;
+  margin: 14% auto;
   object-fit: contain;
+  display: block;
 }
 
 .upload-from-camera-roll {
@@ -201,6 +202,7 @@ body {
   font-family: Alegreya, sans-serif;
   font-size: 20px;
   margin: -30px auto;
+  text-align: center;
 }
 
 .file-upload-wrapper {
@@ -660,7 +662,7 @@ body {
 
   .item-image-placeholder {
     width: 50%;
-    margin: 30px;
+    margin: 30px auto;
   }
 
   .upload-from-camera-roll {
