@@ -126,7 +126,7 @@ export default class Items extends React.Component {
       if (this.state.items[i].itemId === targetedItemId) {
         hoverClassName = 'shadow-wrapper';
       } else {
-        hoverClassName = 'shadow-wrapper'; // add hidden here!
+        hoverClassName = 'shadow-wrapper'; // don't forget to add hidden here!
       }
       itemsArray.push(
         <div key={i} className="item-wrapper">
