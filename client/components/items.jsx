@@ -16,6 +16,7 @@ export default class Items extends React.Component {
     this.handleSortCategoryChange = this.handleSortCategoryChange.bind(this);
     this.handleSortBrandChange = this.handleSortBrandChange.bind(this);
     this.handleSortColorChange = this.handleSortColorChange.bind(this);
+    this.handleSortReset = this.handleSortReset.bind(this);
   }
 
   componentDidMount() {
@@ -100,6 +101,19 @@ export default class Items extends React.Component {
         .then(items => this.setState({ items }))
         .catch(err => console.error(err));
     }
+  }
+
+  handleSortReset() {
+    // Use fetch() to send a GET request to get all items
+    fetch('/api/items')
+      .then(res => res.json())
+      .then(items => this.setState({ items }));
+
+    this.setState({
+      sortCategory: 'Category',
+      sortBrand: 'Brand',
+      sortColor: 'Color'
+    });
   }
 
   render() {
