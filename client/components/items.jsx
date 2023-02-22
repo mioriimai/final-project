@@ -118,8 +118,6 @@ export default class Items extends React.Component {
 
   render() {
 
-    // console.log('this.state:', this.state);
-    // console.log('this.state.items.length:', this.state.items.length);
     const itemsArray = [];
     for (let i = 0; i < this.state.items.length; i++) {
       const targetedItemId = Number(this.state.itemId);
@@ -142,9 +140,17 @@ export default class Items extends React.Component {
         </div>
       );
     }
+
+    let noItemMessage;
+    if (this.state.items.length === 0) {
+      noItemMessage = 'no-item-message';
+    } else {
+      noItemMessage = 'no-item-message hidden';
+    }
+
     return (
       <div className='items-view-container'>
-        <div className='row'>
+        <div className='row spacing'>
           <div className='mobile-column-full'>
             <p className='items'>{this.props.content}</p>
           </div>
@@ -167,6 +173,7 @@ export default class Items extends React.Component {
           <i className="fa-solid fa-plus" />
           Add {this.props.content}
         </a>
+        <p className={noItemMessage}>No items found. Let&rsquo;s add an item!</p>
         <div className='item-list-wrapper'>
           {itemsArray}
         </div>

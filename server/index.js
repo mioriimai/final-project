@@ -61,6 +61,7 @@ app.get('/api/items', (req, res, next) => {
   const sql = `
     select "image", "notes", "itemId"
     from "items"
+    order by "itemId"
   `;
   db.query(sql)
     .then(result => {
@@ -154,6 +155,7 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
              "notes"
        from  "items"
        where ${whereCondition}
+       order by "itemId"
   `;
   const params = paramsArray;
   db.query(sql, params)
