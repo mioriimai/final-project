@@ -767,24 +767,30 @@ body {
   }
 
   .items {
-    font-size: 28px;
+    font-size: 25px;
     margin: 25px 0 0 15px;
   }
 
   #sort-category,
   #sort-brand,
   #sort-color {
-    font-size: 13px;
+    font-size: 10px;
     border-width: 1px;
     border-radius: 30px;
-    padding: 1px 8px 2px 10px;
-    margin: 13px 5px;
-    width: 95px;
+    padding: 1px 8px 2px 7px;
+    margin: 13px 4px 8px;
+    width: 80px;
   }
 
   .sort-wrapper {
     width: fit-content;
     margin: auto;
+  }
+
+  .sort-reset-button {
+    font-size: 12px;
+    padding: 1px 8px 2px;
+    margin-left: 3px;
   }
 
   .add-items-button {
