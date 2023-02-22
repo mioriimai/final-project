@@ -158,11 +158,8 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
   const params = paramsArray;
   db.query(sql, params)
     .then(result => {
-      const items = result.rows[0];
-      if (!items) {
-        throw new ClientError(404, 'cannot find item with the conditions');
-      }
-      res.json(result.rows);
+      const items = result.rows;
+      res.json(items);
     })
     .catch(err => next(err));
 });
