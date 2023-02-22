@@ -451,6 +451,22 @@ body {
   background-color: #fff;
 }
 
+.sort-reset-button {
+  color: #fff;
+  font-family: "Alegreya SC", sans-serif;
+  font-size: 18px;
+  background-color: #c0c0c0;
+  border: none;
+  border-radius: 7px;
+  padding: 2px 10px 4px;
+  margin-left: 10px;
+}
+
+.sort-reset-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 .add-items-button {
   position: fixed;
   z-index: 100;

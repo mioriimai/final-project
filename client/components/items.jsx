@@ -145,6 +145,7 @@ export default class Items extends React.Component {
               <select name="color" id="sort-color" value={this.state.sortColor} onChange={this.handleSortColorChange}>
                 <CreateOptions options="color" usage="sort" />
               </select>
+              <button type='button' className='sort-reset-button'>Reset</button>
             </form>
           </div>
         </div>
