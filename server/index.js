@@ -5,7 +5,6 @@ const errorMiddleware = require('./error-middleware');
 const ClientError = require('./client-error');
 const pg = require('pg');
 const uploadsMiddleware = require('./uploads-middleware');
-// const path = require('path');
 
 // create a database connection object to use the pg package.
 const db = new pg.Pool({
@@ -27,7 +26,8 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
     throw new ClientError(400, 'An invalid/missing information.');
   }
 
-  const url = req.file.location; // The S3 url to access the uploaded file later
+  // The S3 url to access the uploaded file later
+  const url = req.file.location;
 
   // query the database
   const sql = `
@@ -61,6 +61,7 @@ app.get('/api/items', (req, res, next) => {
   const sql = `
     select "image", "notes", "itemId"
     from "items"
+    order by "itemId"
   `;
   db.query(sql)
     .then(result => {
@@ -104,6 +105,63 @@ app.get('/api/items/:itemId', (req, res, next) => {
         throw new ClientError(404, `cannot find item with itemId ${itemId}`);
       }
       res.json(item);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/items/:category/:brand/:color', (req, res, next) => {
+  const category = req.params.category;
+  const brand = req.params.brand;
+  const color = req.params.color;
+
+  if (typeof category !== 'string' || typeof brand !== 'string' || typeof color !== 'string') {
+    throw new ClientError(400, 'mush be strings');
+  }
+
+  let whereCondition;
+  let paramsArray;
+  if (category === 'Category' && brand === 'Brand') { // select items have specific category and brand
+    whereCondition = '"color" = $1';
+    paramsArray = [color];
+
+  } else if (category === 'Category' && color === 'Color') { // select items have specific category and color
+    whereCondition = '"brand" = $1';
+    paramsArray = [brand];
+
+  } else if (category === 'Category') { // select items have specific category
+    whereCondition = '"brand" = $1 AND "color" = $2';
+    paramsArray = [brand, color];
+
+  } else if (brand === 'Brand' && color === 'Color') { // select items have specific brand and color
+    whereCondition = '"category" = $1';
+    paramsArray = [category];
+
+  } else if (brand === 'Brand') { // select items have specific brand
+    whereCondition = '"category" = $1 AND "color" = $2';
+    paramsArray = [category, color];
+
+  } else if (color === 'Color') { // select items have specific color
+    whereCondition = '"category" = $1 AND "brand" = $2';
+    paramsArray = [category, brand];
+
+  } else { // select items have specific category and brand and color
+    whereCondition = '"category" = $1 AND "brand" = $2 AND "color" = $3';
+    paramsArray = [category, brand, color];
+  }
+
+  const sql = `
+      select "itemId",
+             "image",
+             "notes"
+       from  "items"
+       where ${whereCondition}
+       order by "itemId"
+  `;
+  const params = paramsArray;
+  db.query(sql, params)
+    .then(result => {
+      const items = result.rows;
+      res.json(items);
     })
     .catch(err => next(err));
 });

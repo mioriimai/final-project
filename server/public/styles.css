@@ -192,8 +192,9 @@ body {
 .item-image-placeholder {
   opacity: 40%;
   width: 50%;
-  margin: 3% auto;
+  margin: 14% auto;
   object-fit: contain;
+  display: block;
 }
 
 .upload-from-camera-roll {
@@ -201,6 +202,7 @@ body {
   font-family: Alegreya, sans-serif;
   font-size: 20px;
   margin: -30px auto;
+  text-align: center;
 }
 
 .file-upload-wrapper {
@@ -243,9 +245,9 @@ body {
   text-overflow: ellipsis;
 }
 
-#category,
-#brand,
-#color {
+#category-dropdown-menu,
+#brand-dropdown-menu,
+#color-dropdown-menu {
   color: #a4a4a4;
   font-family: Alegreya, sans-serif;
   font-size: 20px;
@@ -255,9 +257,9 @@ body {
   padding-bottom: 10px;
 }
 
-#category:hover,
-#brand:hover,
-#color:hover {
+#category-dropdown-menu:hover,
+#brand-dropdown-menu:hover,
+#color-dropdown-menu:hover {
   cursor: pointer;
 }
 
@@ -425,8 +427,46 @@ body {
 .items {
   font-family: "Playfair Display", sans-serif;
   font-weight: bold;
-  font-size: 40px;
-  margin: 30px 0 30px 4%;
+  font-size: 47px;
+  margin: 30px 45px 0 4%;
+}
+
+#sort-category,
+#sort-brand,
+#sort-color {
+  color: #888;
+  background-color: #f3f0e8;
+  font-family: "Alegreya SC", sans-serif;
+  font-size: 18px;
+  border-width: 2px;
+  border-color: #c0c0c0;
+  border-radius: 30px;
+  padding: 1px 15px 2px 20px;
+  margin: 50px 10px 0;
+  width: 140px;
+}
+
+#sort-category:hover,
+#sort-brand:hover,
+#sort-color:hover {
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.sort-reset-button {
+  color: #fff;
+  font-family: "Alegreya SC", sans-serif;
+  font-size: 18px;
+  background-color: #c0c0c0;
+  border: none;
+  border-radius: 7px;
+  padding: 2px 10px 4px;
+  margin-left: 10px;
+}
+
+.sort-reset-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 .add-items-button {
@@ -457,6 +497,14 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 15px;
+}
+
+.no-item-message {
+  text-align: center;
+  color: #807f7e;
+  font-size: 24px;
+  margin-top: 150px;
 }
 
 .item-list-wrapper::before {
@@ -614,7 +662,7 @@ body {
 
   .item-image-placeholder {
     width: 50%;
-    margin: 30px;
+    margin: 30px auto;
   }
 
   .upload-from-camera-roll {
@@ -639,9 +687,9 @@ body {
     margin: 10px 0 0;
   }
 
-  #category,
-  #brand,
-  #color {
+  #category-dropdown-menu,
+  #brand-dropdown-menu,
+  #color-dropdown-menu {
     font-size: 17px;
     border: none;
     padding: 0 5px 0 0;
@@ -728,8 +776,30 @@ body {
   }
 
   .items {
-    font-size: 28px;
-    margin: 25px 0 12px 4%;
+    font-size: 25px;
+    margin: 25px 0 0 15px;
+  }
+
+  #sort-category,
+  #sort-brand,
+  #sort-color {
+    font-size: 10px;
+    border-width: 1px;
+    border-radius: 30px;
+    padding: 1px 8px 2px 7px;
+    margin: 13px 4px 8px;
+    width: 80px;
+  }
+
+  .sort-wrapper {
+    width: fit-content;
+    margin: auto;
+  }
+
+  .sort-reset-button {
+    font-size: 12px;
+    padding: 1px 8px 2px;
+    margin-left: 3px;
   }
 
   .add-items-button {
@@ -753,6 +823,15 @@ body {
     width: 100%;
     height: 175px;
     padding: 5px;
+  }
+
+  .no-item-message {
+    font-size: 17px;
+    margin-top: 80px;
+  }
+
+  .item-list-wrapper {
+    margin-top: 8px;
   }
 
   .item-list-wrapper::before {
@@ -783,99 +862,94 @@ body {
     top: 22px;
     font-size: 1.5em;
   }
-}
 
-/* tablet screen */
-@media screen and (min-width: 768px) and (max-width: 1279px) {
-  /* ----------- tablet form item view ---------- */
+  /* tablet screen */
+  @media screen and (min-width: 768px) and (max-width: 1279px) {
+    /* ----------- tablet form item view ---------- */
 
-  .form-item-container {
-    margin: 33px 6%;
-  }
+    .form-item-container {
+      margin: 33px 6%;
+    }
 
-  .form-item-title {
-    font-size: 30px;
-    margin: 27px 0 0;
-    padding-left: 7%;
-  }
+    .form-item-title {
+      font-size: 30px;
+      margin: 27px 0 0;
+      padding-left: 7%;
+    }
 
-  .add-padding-left {
-    padding-left: 6%;
-  }
+    .add-padding-left {
+      padding-left: 6%;
+    }
 
-  .add-padding-right {
-    padding-right: 6%;
-    padding-top: 13px;
-  }
+    .add-padding-right {
+      padding-right: 6%;
+      padding-top: 13px;
+    }
 
-  .item-image-wrapper {
-    width: 94%;
-    height: 300px;
-    text-align: center;
-  }
+    .item-image-wrapper {
+      width: 94%;
+      height: 300px;
+      text-align: center;
+    }
 
-  .item-image-placeholder {
-    width: 200px;
-    margin: 5% auto;
-  }
+    .item-image-placeholder {
+      width: 200px;
+      margin: 5% auto;
+    }
 
-  .upload-from-camera-roll {
-    font-size: 18px;
-  }
+    .upload-from-camera-roll {
+      font-size: 18px;
+    }
 
-  .file-upload-wrapper {
-    width: 80%;
-    margin: 0 auto;
-  }
+    .file-upload-wrapper {
+      width: 80%;
+      margin: 0 auto;
+    }
 
-  .form-item-category,
-  .form-item-brand,
-  .form-item-color {
-    font-size: 22px;
-    padding-bottom: 8px;
-  }
+    .form-item-category,
+    .form-item-brand,
+    .form-item-color {
+      font-size: 22px;
+      padding-bottom: 8px;
+    }
 
-  .position-right {
-    padding-right: 10px;
-  }
+    .position-right {
+      padding-right: 10px;
+    }
 
-  #category,
-  #brand,
-  #color {
-    font-size: 19px;
-    padding: 0 5px;
-    text-align: right;
-    padding-bottom: 6px;
-  }
+    #category-dropdown-menu,
+    #brand-dropdown-menu,
+    #color-dropdown-menu {
+      font-size: 19px;
+      padding: 0 5px;
+      text-align: right;
+      padding-bottom: 6px;
+    }
 
-  .each-row {
-    margin-bottom: 10px;
-  }
+    .each-row {
+      margin-bottom: 10px;
+    }
 
-  .form-item-notes {
-    font-size: 22px;
-    margin: 0;
-    padding-left: 20px;
-    padding-bottom: 8px;
-  }
+    .form-item-notes {
+      font-size: 22px;
+      margin: 0;
+      padding-left: 20px;
+      padding-bottom: 8px;
+    }
 
-  #notes {
-    margin-left: 20px;
-    height: 113px;
-    padding: 13px;
-    font-size: 17px;
-  }
+    #notes {
+      margin-left: 20px;
+      height: 113px;
+      padding: 13px;
+      font-size: 17px;
+    }
 
-  .item-save-button {
-    font-size: 17px;
-    font-weight: bold;
-    padding: 5px 24px;
-  }
+    .item-save-button {
+      font-size: 17px;
+      font-weight: bold;
+      padding: 5px 24px;
+    }
 
-  /* --------- tablet items view ---------- */
-
-  .items {
-    font-size: 40px;
-    margin: 35px 0 17px 4%;
+    /* --------- tablet items view ---------- */
   }
 }
