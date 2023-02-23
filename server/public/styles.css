@@ -637,8 +637,25 @@ body {
   height: 36px;
 }
 
+.favorites-items-button-light,
+.favorites-outfits-button-light {
+  color: #888;
+  background-color: white;
+  font-family: "Alegreya SC", sans-serif;
+  font-size: 21px;
+  border: 1.5px solid;
+  border-color: #9c9c9c;
+  border-radius: 30px;
+  margin: 50px 10px 0;
+  padding-bottom: 2px;
+  width: 165px;
+  height: 36px;
+}
+
 .favorites-items-button:hover,
-.favorites-outfits-button:hover {
+.favorites-outfits-button:hover,
+.favorites-items-button-light:hover,
+.favorites-outfits-button-light:hover {
   cursor: pointer;
   opacity: 0.6;
 }
@@ -959,7 +976,9 @@ body {
   }
 
   .favorites-items-button,
-  .favorites-outfits-button {
+  .favorites-outfits-button,
+  .favorites-items-button-light,
+  .favorites-outfits-button-light {
     font-size: 13px;
     border: 1.5px solid;
     margin: 33px 3px 0;

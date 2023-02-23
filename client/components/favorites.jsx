@@ -1,5 +1,4 @@
 import React from 'react';
-// import CreateOptions from './create-options';
 
 export default class FormItem extends React.Component {
   constructor(props) {
@@ -14,6 +13,7 @@ export default class FormItem extends React.Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
     this.handleItemsButtonClick = this.handleItemsButtonClick.bind(this);
+    this.handleOutfitsButtonClick = this.handleOutfitsButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +64,13 @@ export default class FormItem extends React.Component {
   }
 
   handleItemsButtonClick() {
+    this.setState({
+      showItems: !this.state.showItems,
+      showOutfits: !this.state.showOutfits
+    });
+  }
+
+  handleOutfitsButtonClick() {
     this.setState({
       showItems: !this.state.showItems,
       showOutfits: !this.state.showOutfits
@@ -128,13 +135,23 @@ export default class FormItem extends React.Component {
       addButton = 'Outfits';
     }
 
+    let itemsButton;
+    let outfitsButton;
+    if (this.state.showItems === true) {
+      itemsButton = 'favorites-items-button';
+      outfitsButton = 'favorites-outfits-button-light';
+    } else if (this.state.showOutfits === true) {
+      itemsButton = 'favorites-items-button-light';
+      outfitsButton = 'favorites-outfits-button';
+    }
+
     return (
       <div className='items-view-container'>
         <div className='row spacing'>
           <div className='favorites-title-and-buttons-wrapper'>
             <p className='favorites'>Favorites</p>
-            <button type='button' className='favorites-items-button' onClick={this.handleItemsButtonClick}>Items</button>
-            <button type='button' className='favorites-outfits-button'>Outfits</button>
+            <button type='button' className={itemsButton} onClick={this.handleItemsButtonClick}>Items</button>
+            <button type='button' className={outfitsButton} onClick={this.handleOutfitsButtonClick}>Outfits</button>
           </div>
           {/* <div className='mobile-column-full'>
             <form className='sort-wrapper'>
