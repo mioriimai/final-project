@@ -165,7 +165,7 @@ export default class Items extends React.Component {
       if (this.state.items[i].itemId === targetedItemId) {
         hoverClassName = 'shadow-wrapper';
       } else {
-        hoverClassName = 'shadow-wrapper hidden'; // don't forget to add hidden here!
+        hoverClassName = 'shadow-wrapper hidden';
       }
 
       let isNotFavorite;
