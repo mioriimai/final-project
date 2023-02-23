@@ -59,7 +59,7 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
 app.get('/api/items', (req, res, next) => {
   // query the database
   const sql = `
-    select "image", "notes", "itemId"
+    select "image", "notes", "itemId", "favorite"
     from "items"
     order by "itemId"
   `;
@@ -152,7 +152,8 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
   const sql = `
       select "itemId",
              "image",
-             "notes"
+             "notes",
+             "favorite"
        from  "items"
        where ${whereCondition}
        order by "itemId"
