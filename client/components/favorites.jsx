@@ -10,6 +10,7 @@ export default class FormItem extends React.Component {
       showItems: true,
       showOutfits: false
     };
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
   }
 
   componentDidMount() {
@@ -18,6 +19,12 @@ export default class FormItem extends React.Component {
         .then(res => res.json())
         .then(favoriteItems => this.setState({ favoriteItems }));
     }
+  }
+
+  handleMouseEnter(event) {
+    this.setState({
+      itemId: event.target.name
+    });
   }
 
   render() {
