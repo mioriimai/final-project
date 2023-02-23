@@ -568,10 +568,96 @@ body {
 
 .fa-solid.fa-pen.item {
   color: #6c6b6b;
-  position: absolute;
-  left: 30px;
-  top: 35px;
   font-size: 2.5em;
+  position: absolute;
+  left: 33px;
+  top: 35px;
+}
+
+.fa-regular.fa-heart.item {
+  color: #6c6b6b;
+  font-size: 3.2em;
+  position: absolute;
+  right: 33px;
+  top: 35px;
+}
+
+.fa-solid.fa-heart.item {
+  color: #e78f8f;
+  font-size: 3.2em;
+  position: absolute;
+  right: 33px;
+  top: 35px;
+}
+
+.fa-regular.fa-heart.item:hover,
+.fa-solid.fa-heart.item:hover,
+.fa-solid.fa-pen.item:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.hover-favorite-icon {
+  background-color: transparent;
+  border: none;
+}
+
+.fa-solid.fa-heart.item-stay {
+  color: #e78f8f;
+  font-size: 2.6em;
+  position: absolute;
+  right: 33px;
+  top: 35px;
+}
+
+/* ------------- favorites view --------------- */
+.favorites {
+  font-family: "Playfair Display", sans-serif;
+  font-weight: bold;
+  font-size: 47px;
+  margin: 30px 45px 0 4%;
+}
+
+.favorites-title-and-buttons-wrapper {
+  display: inline-flex;
+}
+
+.favorites-items-button,
+.favorites-outfits-button {
+  color: white;
+  background-color: #383838;
+  font-family: "Alegreya SC", sans-serif;
+  font-size: 21px;
+  border: 1.5px solid;
+  border-color: #9c9c9c;
+  border-radius: 30px;
+  margin: 50px 10px 0;
+  padding-bottom: 2px;
+  width: 165px;
+  height: 36px;
+}
+
+.favorites-items-button-light,
+.favorites-outfits-button-light {
+  color: #888;
+  background-color: white;
+  font-family: "Alegreya SC", sans-serif;
+  font-size: 21px;
+  border: 1.5px solid;
+  border-color: #9c9c9c;
+  border-radius: 30px;
+  margin: 50px 10px 0;
+  padding-bottom: 2px;
+  width: 165px;
+  height: 36px;
+}
+
+.favorites-items-button:hover,
+.favorites-outfits-button:hover,
+.favorites-items-button-light:hover,
+.favorites-outfits-button-light:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 /* ------------- media query ------------  */
@@ -776,7 +862,7 @@ body {
   }
 
   .items {
-    font-size: 25px;
+    font-size: 26px;
     margin: 25px 0 0 15px;
   }
 
@@ -858,9 +944,47 @@ body {
   }
 
   .fa-solid.fa-pen.item {
-    left: 21px;
+    font-size: 1.4em;
+    left: 20px;
     top: 22px;
-    font-size: 1.5em;
+  }
+
+  .fa-regular.fa-heart.item {
+    font-size: 1.4em;
+    right: 20px;
+    top: 22px;
+  }
+
+  .fa-solid.fa-heart.item {
+    font-size: 1.4em;
+    right: 20px;
+    top: 22px;
+  }
+
+  .fa-solid.fa-heart.item-stay {
+    color: #e78f8f;
+    font-size: 1.1em;
+    right: 20px;
+    top: 22px;
+  }
+
+  /* ------------- mobile favorites view --------------- */
+
+  .favorites {
+    font-size: 26px;
+    margin: 25px 16px 0;
+  }
+
+  .favorites-items-button,
+  .favorites-outfits-button,
+  .favorites-items-button-light,
+  .favorites-outfits-button-light {
+    font-size: 13px;
+    border: 1.5px solid;
+    margin: 33px 3px 0;
+    padding-bottom: 2px;
+    width: 85px;
+    height: 23px;
   }
 
   /* tablet screen */

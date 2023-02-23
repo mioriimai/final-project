@@ -17,13 +17,13 @@ create table "public"."users" (
 );
 create table "public"."items" (
   "itemId"              serial,
-  "image"       text           not null,
+  "image"               text      not null,
   "category"            text,
   "brand"               text,
   "color"               text,
   "notes"               text,
-  "userId"              serial         not null,
-  "isFavorite"          BOOLEAN,
+  "userId"              serial    not null,
+  "favorite"          BOOLEAN,
   "createdAt"      timestamptz(6) not null default now(),
   primary key ("itemId")
 );

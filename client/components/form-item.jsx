@@ -79,7 +79,7 @@ export default class FormItem extends React.Component {
     formDataObject.append('brand', this.state.brand);
     formDataObject.append('color', this.state.color);
     formDataObject.append('notes', this.state.notes);
-    formDataObject.append('isFavorite', false);
+    formDataObject.append('favorite', false);
     formDataObject.append('userId', 1);
 
     // Use fetch() to send a POST request to / api / form-item.
