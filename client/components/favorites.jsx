@@ -11,6 +11,7 @@ export default class FormItem extends React.Component {
       showOutfits: false
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +25,12 @@ export default class FormItem extends React.Component {
   handleMouseEnter(event) {
     this.setState({
       itemId: event.target.name
+    });
+  }
+
+  handleMouseLeave() {
+    this.setState({
+      itemId: null
     });
   }
 
