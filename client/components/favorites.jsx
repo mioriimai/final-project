@@ -11,6 +11,14 @@ export default class FormItem extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (this.state.showItems === true) {
+      fetch('/api/favoriteItems')
+        .then(res => res.json())
+        .then(items => this.setState({ items }));
+    }
+  }
+
   // render() {
 
   // }
