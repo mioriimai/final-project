@@ -13,6 +13,7 @@ export default class FormItem extends React.Component {
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
+    this.handleItemsButtonClick = this.handleItemsButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -60,6 +61,13 @@ export default class FormItem extends React.Component {
         .then(res => res.json())
         .then(favoriteItems => this.setState({ favoriteItems }));
     }
+  }
+
+  handleItemsButtonClick() {
+    this.setState({
+      showItems: !this.state.showItems,
+      showOutfits: !this.state.showOutfits
+    });
   }
 
   render() {
@@ -125,7 +133,7 @@ export default class FormItem extends React.Component {
         <div className='row spacing'>
           <div className='favorites-title-and-buttons-wrapper'>
             <p className='favorites'>Favorites</p>
-            <button type='button' className='favorites-items-button'>Items</button>
+            <button type='button' className='favorites-items-button' onClick={this.handleItemsButtonClick}>Items</button>
             <button type='button' className='favorites-outfits-button'>Outfits</button>
           </div>
           {/* <div className='mobile-column-full'>

@@ -637,6 +637,12 @@ body {
   height: 36px;
 }
 
+.favorites-items-button:hover,
+.favorites-outfits-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
