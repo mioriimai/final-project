@@ -4,11 +4,15 @@ export default class FormItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
+      favoritesItems: [],
       itemId: null,
       showItems: true,
-      outFits: false
+      showOutfits: false
     };
   }
+
+  // render() {
+
+  // }
 
 }

@@ -109,6 +109,31 @@ app.get('/api/items/:itemId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+/* ------------------------------------------------------
+   Clients can GET item's info that have favorite = true.
+--------------------------------------------------------- */
+app.get('/api/favoriteItems', (req, res, next) => {
+  const sql = `
+    select "image", "notes", "itemId", "favorite"
+    from "items"
+    where "favorite" = $1
+    order by "itemId"
+  `;
+  const favorite = true;
+  const params = [favorite];
+  db.query(sql, params)
+    .then(result => {
+      const item = result.rows[0];
+      if (!item) {
+        throw new ClientError(404, 'there is no favorite item.');
+      }
+      // the query succeeded
+      // respond to the client with the status code 200 and all rows from the "items" table
+      res.status(200).json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/items/:category/:brand/:color', (req, res, next) => {
   const category = req.params.category;
   const brand = req.params.brand;
