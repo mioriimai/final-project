@@ -134,6 +134,9 @@ app.get('/api/favoriteItems', (req, res, next) => {
     .catch(err => next(err));
 });
 
+/* -----------------------------------------------------------------------
+   Clients can GET items that meet specific category and brand and color.
+------------------------------------------------------------------------- */
 app.get('/api/items/:category/:brand/:color', (req, res, next) => {
   const category = req.params.category;
   const brand = req.params.brand;

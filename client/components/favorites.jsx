@@ -5,6 +5,7 @@ export default class FormItem extends React.Component {
     super(props);
     this.state = {
       favoriteItems: [],
+      favoriteOutfits: [],
       itemId: null,
       showItems: true,
       showOutfits: false
@@ -64,21 +65,24 @@ export default class FormItem extends React.Component {
   }
 
   handleItemsButtonClick() {
-    this.setState({
-      showItems: !this.state.showItems,
-      showOutfits: !this.state.showOutfits
-    });
+    if (this.state.showItems === false) {
+      this.setState({
+        showItems: !this.state.showItems,
+        showOutfits: !this.state.showOutfits
+      });
+    }
   }
 
   handleOutfitsButtonClick() {
-    this.setState({
-      showItems: !this.state.showItems,
-      showOutfits: !this.state.showOutfits
-    });
+    if (this.state.showOutfits === false) {
+      this.setState({
+        showItems: !this.state.showItems,
+        showOutfits: !this.state.showOutfits
+      });
+    }
   }
 
   render() {
-    // console.log('this.state:', this.state);
 
     const itemsArray = [];
     for (let i = 0; i < this.state.favoriteItems.length; i++) {
@@ -153,20 +157,6 @@ export default class FormItem extends React.Component {
             <button type='button' className={itemsButton} onClick={this.handleItemsButtonClick}>Items</button>
             <button type='button' className={outfitsButton} onClick={this.handleOutfitsButtonClick}>Outfits</button>
           </div>
-          {/* <div className='mobile-column-full'>
-            <form className='sort-wrapper'>
-              <select name="category" id="sort-category" value={this.state.sortCategory} onChange={this.handleSortCategoryChange}>
-                <CreateOptions options="category" usage="sort" />
-              </select>
-              <select name="brand" id="sort-brand" value={this.state.sortBrand} onChange={this.handleSortBrandChange}>
-                <CreateOptions options="brand" usage="sort" />
-              </select>
-              <select name="color" id="sort-color" value={this.state.sortColor} onChange={this.handleSortColorChange}>
-                <CreateOptions options="color" usage="sort" />
-              </select>
-              <button type='button' className='sort-reset-button' onClick={this.handleSortReset}>Reset</button>
-            </form>
-          </div> */}
         </div>
         <a href="#add-item" className='add-items-button'>
           <i className="fa-solid fa-plus" />
