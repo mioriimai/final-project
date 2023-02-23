@@ -12,6 +12,7 @@ export default class FormItem extends React.Component {
     };
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +33,33 @@ export default class FormItem extends React.Component {
     this.setState({
       itemId: null
     });
+  }
+
+  handleFavoriteClick() {
+    let favoriteStatus;
+    const targetedItemId = Number(this.state.itemId);
+    for (let i = 0; i < this.state.favoriteItems.length; i++) {
+      if (this.state.favoriteItems[i].itemId === targetedItemId) {
+        favoriteStatus = this.state.favoriteItems[i].favorite;
+      }
+    }
+    const status = { favorite: !favoriteStatus };
+
+    // Use fetch() to send a PATCH request to update item's favorite status
+    fetch(`/api/itemFavoriteUpdate/${this.state.itemId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(status)
+    });
+
+    // Use fetch() to send a GET request to get all item that have favorite=true.
+    if (this.state.showItems === true) {
+      fetch('/api/favoriteItems')
+        .then(res => res.json())
+        .then(favoriteItems => this.setState({ favoriteItems }));
+    }
   }
 
   render() {
@@ -96,7 +124,7 @@ export default class FormItem extends React.Component {
       <div className='items-view-container'>
         <div className='row spacing'>
           <div className='mobile-column-full'>
-            <p className='items'>{this.props.content}</p>
+            <p className='items'>Favorites</p>
           </div>
           {/* <div className='mobile-column-full'>
             <form className='sort-wrapper'>
