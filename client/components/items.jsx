@@ -17,7 +17,7 @@ export default class Items extends React.Component {
     this.handleSortBrandChange = this.handleSortBrandChange.bind(this);
     this.handleSortColorChange = this.handleSortColorChange.bind(this);
     this.handleSortReset = this.handleSortReset.bind(this);
-    // this.handleFavoriteClick = this.handleFavoriteClick(this);
+    this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
   }
 
   componentDidMount() {
@@ -117,9 +117,41 @@ export default class Items extends React.Component {
     });
   }
 
-  // handleFavoriteClick() {
+  handleFavoriteClick() {
+    let favoriteStatus;
+    const targetedItemId = Number(this.state.itemId);
+    for (let i = 0; i < this.state.items.length; i++) {
+      if (this.state.items[i].itemId === targetedItemId) {
+        favoriteStatus = this.state.items[i].favorite;
+      }
+    }
+    const status = { favorite: !favoriteStatus };
 
-  // }
+    // Use fetch() to send a PATCH request to update item's favorite status
+    fetch(`/api/itemFavoriteUpdate/${this.state.itemId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(status)
+    });
+
+    if (this.state.sortCategory === 'Category' && this.state.sortBrand === 'Brand' && this.state.sortColor === 'Color') {
+      // Use fetch() to send a GET request to get all items
+      fetch('/api/items')
+        .then(res => res.json())
+        .then(items => this.setState({ items }));
+
+    } else {
+      // Use fetch() to send a GET request to get items that meet the conditons
+      fetch(`/api/items/${this.state.sortCategory}/${this.state.sortBrand}/${this.state.sortColor}`, {
+        method: 'GET'
+      })
+        .then(res => res.json())
+        .then(items => this.setState({ items }))
+        .catch(err => console.error(err));
+    }
+  }
 
   render() {
 
@@ -135,14 +167,32 @@ export default class Items extends React.Component {
       } else {
         hoverClassName = 'shadow-wrapper hidden'; // don't forget to add hidden here!
       }
+
+      let isNotFavorite;
+      let isFavorite;
+      let favoriteIcon;
+      if (this.state.items[i].favorite === false) {
+        isNotFavorite = 'hover-favorite-icon';
+        isFavorite = 'hover-favorite-icon hidden';
+        favoriteIcon = 'favorite-icon hidden';
+      } else if (this.state.items[i].favorite === true) {
+        isNotFavorite = 'hover-favorite-icon hidden';
+        isFavorite = 'hover-favorite-icon';
+        favoriteIcon = 'favorite-icon';
+      }
+
       itemsArray.push(
         <div key={i} className="item-wrapper">
           <Item
-      item={this.state.items[i]}
-      handleMouseEnter={this.handleMouseEnter}
-      handleMouseLeave={this.handleMouseLeave}
-      state={this.state}
-      hover={hoverClassName}
+            item={this.state.items[i]}
+            handleMouseEnter={this.handleMouseEnter}
+            handleMouseLeave={this.handleMouseLeave}
+            state={this.state}
+            hover={hoverClassName}
+            isNotFavoriteIcon={isNotFavorite}
+            isFavoriteIcon={isFavorite}
+            favoriteIcon={favoriteIcon}
+            handleFavoriteClick={this.handleFavoriteClick}
       />
         </div>
       );
@@ -202,12 +252,16 @@ function Item(props) {
           onMouseEnter={props.handleMouseEnter}
           name={`${itemId}`}
         />
+        <div className={props.favoriteIcon}>
+          <i className='fa-solid fa-heart item-stay ' />
+        </div>
         <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
           <p className='items-notes'>{notes}</p>
           <a href={`#item?itemId=${itemId}`}>
             <i className="fa-solid fa-pen item" />
-            <i className="fa-regular fa-heart item" />
           </a>
+          <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart item' /></button>
+          <button type='button' className={props.isFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-solid fa-heart item' /></button>
         </div>
       </div>
     </div>
