@@ -17,6 +17,7 @@ export default class Items extends React.Component {
     this.handleSortBrandChange = this.handleSortBrandChange.bind(this);
     this.handleSortColorChange = this.handleSortColorChange.bind(this);
     this.handleSortReset = this.handleSortReset.bind(this);
+    // this.handleFavoriteClick = this.handleFavoriteClick(this);
   }
 
   componentDidMount() {
@@ -115,6 +116,10 @@ export default class Items extends React.Component {
       sortColor: 'Color'
     });
   }
+
+  // handleFavoriteClick() {
+
+  // }
 
   render() {
 

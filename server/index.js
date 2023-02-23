@@ -31,12 +31,12 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
 
   // query the database
   const sql = `
-    insert into "items" ("image", "category", "brand", "color", "notes", "isFavorite", "userId")
+    insert into "items" ("image", "category", "brand", "color", "notes", "favorite", "userId")
     values ($1, $2, $3, $4, $5, $6, $7)
     returning *
   `;
   // send the user input in a separate array instead of putting the user input directory into our query
-  const params = [url, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.isFavorite, newItem.userId];
+  const params = [url, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.favorite, newItem.userId];
 
   db.query(sql, params)
     .then(result => {
@@ -93,7 +93,7 @@ app.get('/api/items/:itemId', (req, res, next) => {
              "brand",
              "color",
              "notes",
-             "isFavorite"
+             "favorite"
        from  "items"
        where "itemId" = $1
   `;
@@ -167,6 +167,48 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
     .catch(err => next(err));
 });
 
+/* -------------------------------------------------------
+   Clients can PATECH item's info(favorite) by its itemId.
+-------------------------------------------------------- */
+app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
+  const favoriteState = req.body;
+  const itemId = Number(req.params.itemId);
+  if (!Number.isInteger(itemId) || itemId <= 0) {
+    throw new ClientError(400, 'itemId mush be a positive integer');
+  } else if ('favorite' in favoriteState === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  }
+  const sql = `
+       update "items"
+       set   "favorite" = $1
+       where "itemId" = $2
+       returning *
+  `;
+  const params = [favoriteState.favorite, itemId];
+  db.query(sql, params)
+    .then(result => {
+      const item = result.rows[0];
+      if (!item) {
+        throw new ClientError(404, `cannot find item with itemId ${itemId}`);
+      } else {
+        // the query succeeded
+        // respond to the client with the status code 200 and created newItem object
+        res.status(201).json(item);
+      }
+    })
+    .catch(err => {
+      // the query failed for some reason
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+/* -----------------------------------------------------
+   Clients can PATECH edited item's info by its itemId.
+------------------------------------------------------ */
 app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   const updatedItem = req.body;
 
