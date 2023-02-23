@@ -123,8 +123,10 @@ export default class FormItem extends React.Component {
     return (
       <div className='items-view-container'>
         <div className='row spacing'>
-          <div className='mobile-column-full'>
+          <div className='favorites-title-and-buttons-wrapper'>
             <p className='items'>Favorites</p>
+            <button type='button' className='favorites-items-button'>Items</button>
+            <button type='button' className='favorites-outfits-button'>Outfits</button>
           </div>
           {/* <div className='mobile-column-full'>
             <form className='sort-wrapper'>

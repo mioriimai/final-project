@@ -610,6 +610,26 @@ body {
   top: 35px;
 }
 
+/* ------------- favorites view --------------- */
+.favorites-title-and-buttons-wrapper {
+  display: inline-flex;
+}
+
+.favorites-items-button,
+.favorites-outfits-button {
+  color: white;
+  background-color: #383838;
+  font-family: "Alegreya SC", sans-serif;
+  font-size: 21px;
+  border: 1.5px solid;
+  border-color: #9c9c9c;
+  border-radius: 30px;
+  margin: 50px 10px 0;
+  padding-bottom: 2px;
+  width: 165px;
+  height: 36px;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
