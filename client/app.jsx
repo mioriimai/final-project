@@ -3,6 +3,7 @@ import Home from './pages/home';
 import FormItem from './components/form-item';
 import EditItem from './components/edit-item';
 import ListView from './pages/list-view';
+import Favorites from './components/favorites';
 import Navbar from './components/navbar';
 import parseRoute from './lib/parse-route';
 import PageContainer from './components/page-container';
@@ -37,6 +38,8 @@ export default class App extends React.Component {
     if (route.path === 'item') {
       const itemId = route.params.get('itemId');
       return <EditItem itemId={itemId} />;
+    } if (route.path === 'favorites') {
+      return <Favorites />;
     }
   }
 
