@@ -124,7 +124,7 @@ export default class FormItem extends React.Component {
       <div className='items-view-container'>
         <div className='row spacing'>
           <div className='favorites-title-and-buttons-wrapper'>
-            <p className='items'>Favorites</p>
+            <p className='favorites'>Favorites</p>
             <button type='button' className='favorites-items-button'>Items</button>
             <button type='button' className='favorites-outfits-button'>Outfits</button>
           </div>
