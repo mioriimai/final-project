@@ -14,6 +14,7 @@ export default class FormOutfit extends React.Component {
     this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   handleAddButtonClick() {
@@ -46,9 +47,23 @@ export default class FormOutfit extends React.Component {
     });
   }
 
+  handleItemClick() {
+    this.setState({
+      addItemPopup: false
+    });
+    fetch(`/api/items/${this.state.itemId}`)
+      .then(res => res.json())
+      .then(chosenItems => {
+        chosenItems.deltaX = 0;
+        chosenItems.deltaY = 0;
+        this.state.chosenItems.push(chosenItems);
+      });
+  }
+
   render() {
 
     // console.log('this.state:', this.state);
+
     const itemsArray = [];
     for (let i = 0; i < this.state.items.length; i++) {
       const targetedItemId = Number(this.state.itemId);
@@ -68,7 +83,7 @@ export default class FormOutfit extends React.Component {
             handleMouseLeave={this.handleMouseLeave}
             state={this.state}
             hover={hoverClassName}
-            handlePopupLeaveButtonClick={this.handlePopupLeaveButtonClick}
+            handleItemClick={this.handleItemClick}
           />
         </div>
       );
@@ -143,7 +158,7 @@ function Item(props) {
           onMouseEnter={props.handleMouseEnter}
           name={`${itemId}`}
         />
-        <div className={props.hover} onMouseLeave={props.handleMouseLeave} onClick={props.handlePopupLeaveButtonClick}/>
+        <div className={props.hover} onMouseLeave={props.handleMouseLeave} onClick={props.handleItemClick}/>
       </div>
     </div>
   );

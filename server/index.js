@@ -19,6 +19,9 @@ const app = express();
 app.use(staticMiddleware);
 app.use(express.json());
 
+/* -------------------------------------------
+   Clients can POST a new item with its info.
+--------------------------------------------- */
 app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
   const newItem = req.body;
   // varidate the "inputs" first.
@@ -56,6 +59,9 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
     });
 });
 
+/* ---------------------------
+   Clients can GET all items.
+------------------------------ */
 app.get('/api/items', (req, res, next) => {
   // query the database
   const sql = `
@@ -81,6 +87,9 @@ app.get('/api/items', (req, res, next) => {
     });
 });
 
+/* -------------------------------------------
+   Clients can GET a item's info by itemId.
+--------------------------------------------- */
 app.get('/api/items/:itemId', (req, res, next) => {
   const itemId = Number(req.params.itemId);
   if (!Number.isInteger(itemId) || itemId <= 0) {
