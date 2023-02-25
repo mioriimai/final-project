@@ -11,13 +11,20 @@ export default class FormOutfit extends React.Component {
       chosenItems: []
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
+    this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   handleAddButtonClick() {
     this.setState({
-      addItemPopup: !this.state.addItemPopup
+      addItemPopup: true
+    });
+  }
+
+  handlePopupLeaveButtonClick() {
+    this.setState({
+      addItemPopup: false
     });
   }
 
