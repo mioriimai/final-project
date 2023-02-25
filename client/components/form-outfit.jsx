@@ -7,9 +7,11 @@ export default class FormOutfit extends React.Component {
     this.state = {
       addItemPopup: false,
       items: [],
+      itemId: null,
       chosenItems: []
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
   }
 
   handleAddButtonClick() {
@@ -24,7 +26,37 @@ export default class FormOutfit extends React.Component {
       .then(items => this.setState({ items }));
   }
 
+  handleMouseEnter(event) {
+    this.setState({
+      itemId: event.target.name
+    });
+  }
+
   render() {
+
+    const itemsArray = [];
+    for (let i = 0; i < this.state.items.length; i++) {
+      const targetedItemId = Number(this.state.itemId);
+
+      let hoverClassName = 'shadow-wrapper hidden';
+      if (this.state.items[i].itemId === targetedItemId) {
+        hoverClassName = 'shadow-wrapper';
+      } else {
+        hoverClassName = 'shadow-wrapper hidden';
+      }
+
+      itemsArray.push(
+        <div key={i} className="item-wrapper">
+          <Item
+            item={this.state.items[i]}
+            // handleMouseEnter={this.handleMouseEnter}
+            // handleMouseLeave={this.handleMouseLeave}
+            state={this.state}
+            hover={hoverClassName}
+          />
+        </div>
+      );
+    }
 
     return (
       <>
@@ -69,4 +101,33 @@ export default class FormOutfit extends React.Component {
       </>
     );
   }
+}
+
+function Item(props) {
+  const { image, itemId } = props.item;
+
+  return (
+    <div className='item-button' >
+      <div className='position'>
+        <img
+          src={image}
+          // alt={`Item ${itemId}`}
+          className="item-image"
+          onMouseEnter={props.handleMouseEnter}
+          name={`${itemId}`}
+        />
+        {/* <div className={props.favoriteIcon}>
+          <i className='fa-solid fa-heart item-stay ' />
+        </div> */}
+        <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
+          {/* <p className='items-notes'>{notes}</p>
+          <a href={`#item?itemId=${itemId}`}>
+            <i className="fa-solid fa-pen item" />
+          </a>
+          <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart item' /></button>
+          <button type='button' className={props.isFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-solid fa-heart item' /></button> */}
+        </div>
+      </div>
+    </div>
+  );
 }
