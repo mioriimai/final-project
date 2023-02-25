@@ -41,6 +41,7 @@ export default class FormOutfit extends React.Component {
 
   render() {
 
+    // console.log('this.state:', this.state);
     const itemsArray = [];
     for (let i = 0; i < this.state.items.length; i++) {
       const targetedItemId = Number(this.state.itemId);
@@ -56,8 +57,8 @@ export default class FormOutfit extends React.Component {
         <div key={i} className="item-wrapper">
           <Item
             item={this.state.items[i]}
-            // handleMouseEnter={this.handleMouseEnter}
-            // handleMouseLeave={this.handleMouseLeave}
+            handleMouseEnter={this.handleMouseEnter}
+            handleMouseLeave={this.handleMouseLeave}
             state={this.state}
             hover={hoverClassName}
           />
@@ -100,8 +101,10 @@ export default class FormOutfit extends React.Component {
         </form>
 
         <div className='choose-item-popup'>
-          <div className='choose-item-items-container'>
-            <p>test</p>
+          <div className='choose-item-view-container'>
+            <div className='choose-items-wrapper'>
+              {itemsArray}
+            </div>
           </div>
         </div>
 
