@@ -12,6 +12,7 @@ export default class FormOutfit extends React.Component {
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   handleAddButtonClick() {
@@ -29,6 +30,12 @@ export default class FormOutfit extends React.Component {
   handleMouseEnter(event) {
     this.setState({
       itemId: event.target.name
+    });
+  }
+
+  handleMouseLeave() {
+    this.setState({
+      itemId: null
     });
   }
 
