@@ -103,8 +103,6 @@ body {
   transition: 0.5s all ease-in-out;
   width: 100%;
   height: 100%;
-
-  /* background-color: #707070; */
   background-color: black;
   position: fixed;
   z-index: 150;
@@ -658,6 +656,33 @@ body {
 .favorites-outfits-button-light:hover {
   cursor: pointer;
   opacity: 0.6;
+}
+
+/* ------------- form outfit view ----------- */
+.form-outfit-container {
+  margin: 0 80px;
+}
+
+.form-outfit-white-box {
+  background-color: white;
+  max-width: 1300px;
+  min-width: 1020px;
+  height: 1000px;
+  margin: 40px auto;
+}
+
+.form-outfit-title {
+  font-family: Alegreya, sans-serif;
+  font-size: 35px;
+  margin: 40px 0 15px 60px;
+}
+
+.outfit-box {
+  border: 1px solid #c0c0c0;
+  border-radius: 10px;
+  width: 440px;
+  height: 460px;
+  margin: auto;
 }
 
 /* ------------- media query ------------  */
