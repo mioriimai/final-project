@@ -683,6 +683,14 @@ body {
   width: 440px;
   height: 460px;
   margin: auto;
+  position: relative;
+  overflow: auto;
+  padding: 0;
+}
+
+.test {
+  width: 20px;
+  margin: 0;
 }
 
 /* ------------- media query ------------  */
