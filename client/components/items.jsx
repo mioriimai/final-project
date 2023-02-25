@@ -155,8 +155,6 @@ export default class Items extends React.Component {
 
   render() {
 
-    // console.log('this.state:', this.state);
-
     const itemsArray = [];
     for (let i = 0; i < this.state.items.length; i++) {
       const targetedItemId = Number(this.state.itemId);
