@@ -688,6 +688,14 @@ body {
   padding: 0;
 }
 
+.outfit-box-inner {
+  width: 435px;
+  height: 455px;
+  padding: 10px;
+  margin: 1.5px;
+  vertical-align: middle;
+}
+
 .test-element {
   width: 170px;
   height: 170px;
@@ -713,13 +721,17 @@ body {
   opacity: 0.6;
 }
 
-.choose-item-popup {
+.add-item-popup {
   background-color: rgb(0 0 0 / 50%);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  overscroll-behavior: contain;
+  overflow-y: scroll;
+  padding-top: 70px;
 }
 
 .fa-solid.fa-circle-arrow-right {
@@ -728,6 +740,71 @@ body {
   position: absolute;
   right: 40px;
   top: 30px;
+  cursor: pointer;
+}
+
+.add-item-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px 30px;
+}
+
+.add-item-list-wrapper::before {
+  content: "";
+  display: block;
+  width: 250px;
+  height: 300px;
+  order: 1;
+  margin: 10px 10px 20px;
+}
+
+.add-item-list-wrapper::after {
+  content: "";
+  display: block;
+  width: 250px;
+  height: 300px;
+  margin: 10px 10px 20px;
+}
+
+.add-item-wrapper {
+  padding: 0;
+  width: 250px;
+  margin: 10px 10px 20px;
+}
+
+.add-item-image {
+  object-fit: contain;
+  background-color: white;
+  border-radius: 25px;
+  width: 100%;
+  height: 300px;
+  padding: 10px;
+}
+
+.add-outfit-shadow-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(244, 220, 159, 30%);
+  width: 100%;
+  height: 300px;
+  border-radius: 25px;
+}
+
+/* .fa-solid.fa-plus.chose-item {
+  font-size: 150px;
+  color: #a1a0a0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+} */
+
+.non-scroll {
+  height: calc(100vh + 1px);
+  width: 1px;
+  background-color: transparent;
 }
 
 /* ------------- media query ------------  */
@@ -1055,6 +1132,98 @@ body {
     padding-bottom: 2px;
     width: 85px;
     height: 23px;
+  }
+
+  /* ------------- mobile form outfit view --------------- */
+  .form-outfit-container {
+    margin: 0 25px;
+  }
+
+  .form-outfit-white-box {
+    min-width: initial;
+    height: 1000px;
+    width: 100%;
+    margin: 30px auto;
+  }
+
+  .form-outfit-title {
+    font-size: 25px;
+    margin: 15px 0 15px 25px;
+  }
+
+  .outfit-box {
+    width: 280px;
+    height: 300px;
+  }
+
+  .outfit-box-inner {
+    width: 275px;
+    height: 295px;
+    padding: 0;
+    margin: 1.5px;
+    vertical-align: middle;
+  }
+
+  .test-element {
+    width: 125px;
+    height: 125px;
+  }
+
+  .add-item-to-outfit-button {
+    font-size: 22px;
+    margin: 20px auto;
+    padding: 8px 35px;
+  }
+
+  .fa-solid.fa-plus.outfit {
+    margin-right: 10px;
+  }
+
+  .add-item-popup {
+    padding-top: 50px;
+  }
+
+  .add-item-list-wrapper {
+    margin: 10px 20px;
+  }
+
+  .fa-solid.fa-circle-arrow-right {
+    font-size: 35px;
+    right: 25px;
+    top: 20px;
+  }
+
+  .add-item-list-wrapper::before {
+    content: "";
+    display: block;
+    width: 140px;
+    height: 170px;
+    order: 1;
+    margin: 10px 10px 20px;
+  }
+
+  .add-item-list-wrapper::after {
+    content: "";
+    display: block;
+    width: 140px;
+    height: 170px;
+    margin: 10px 10px 20px;
+  }
+
+  .add-item-wrapper {
+    padding: 0;
+    width: 140px;
+    margin: 10px;
+  }
+
+  .add-item-image {
+    width: 100%;
+    height: 170px;
+    padding: 5px;
+  }
+
+  .add-outfit-shadow-wrapper {
+    height: 170px;
   }
 
   /* tablet screen */

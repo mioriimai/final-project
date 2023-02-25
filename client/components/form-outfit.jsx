@@ -55,22 +55,30 @@ export default class FormOutfit extends React.Component {
 
       let hoverClassName = 'shadow-wrapper hidden';
       if (this.state.items[i].itemId === targetedItemId) {
-        hoverClassName = 'shadow-wrapper';
+        hoverClassName = 'add-outfit-shadow-wrapper';
       } else {
-        hoverClassName = 'shadow-wrapper hidden';
+        hoverClassName = 'add-outfit-shadow-wrapper hidden';
       }
 
       itemsArray.push(
-        <div key={i} className="item-wrapper">
+        <div key={i} className="add-item-wrapper">
           <Item
             item={this.state.items[i]}
             handleMouseEnter={this.handleMouseEnter}
             handleMouseLeave={this.handleMouseLeave}
             state={this.state}
             hover={hoverClassName}
+            handlePopupLeaveButtonClick={this.handlePopupLeaveButtonClick}
           />
         </div>
       );
+    }
+
+    let addItemPopup;
+    if (this.state.addItemPopup === true) {
+      addItemPopup = 'add-item-popup';
+    } else if (this.state.addItemPopup === false) {
+      addItemPopup = 'hidden';
     }
 
     return (
@@ -86,7 +94,7 @@ export default class FormOutfit extends React.Component {
               <div className='row'>
                 <div className='column-half'>
                   <div className='outfit-box'>
-                    <div style={{ width: '435px', height: '455px', padding: '10px', margin: '1.5px', verticalAlign: 'middle' }}>
+                    <div className='outfit-box-inner'>
                       <Draggable bounds="parent">
                         <div className='test-element' style={{
                           background: 'url("/images/IMG_5668-removebg-preview.png")',
@@ -107,12 +115,13 @@ export default class FormOutfit extends React.Component {
           </div>
         </form>
 
-        <div className='choose-item-popup'>
-          <div className='choose-item-view-container'>
-            <i className='fa-solid fa-circle-arrow-right' />
-            <div className='choose-items-wrapper'>
+        <div className={addItemPopup}>
+          <div className='add-item-view-container'>
+            <i className='fa-solid fa-circle-arrow-right' onClick={this.handlePopupLeaveButtonClick} />
+            <div className='add-item-list-wrapper'>
               {itemsArray}
             </div>
+            <div className='non-scroll' />
           </div>
         </div>
 
@@ -130,21 +139,11 @@ function Item(props) {
         <img
           src={image}
           // alt={`Item ${itemId}`}
-          className="item-image"
+          className="add-item-image"
           onMouseEnter={props.handleMouseEnter}
           name={`${itemId}`}
         />
-        {/* <div className={props.favoriteIcon}>
-          <i className='fa-solid fa-heart item-stay ' />
-        </div> */}
-        <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
-          {/* <p className='items-notes'>{notes}</p>
-          <a href={`#item?itemId=${itemId}`}>
-            <i className="fa-solid fa-pen item" />
-          </a>
-          <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart item' /></button>
-          <button type='button' className={props.isFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-solid fa-heart item' /></button> */}
-        </div>
+        <div className={props.hover} onMouseLeave={props.handleMouseLeave} onClick={props.handlePopupLeaveButtonClick}/>
       </div>
     </div>
   );
