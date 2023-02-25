@@ -4,7 +4,16 @@ import Draggable from 'react-draggable';
 export default class FormOutfit extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      addItemPopup: false
+    };
+    this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
+  }
+
+  handleAddButtonClick() {
+    this.setState({
+      addItemPopup: !this.state.addItemPopup
+    });
   }
 
   render() {
