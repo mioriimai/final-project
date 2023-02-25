@@ -102,6 +102,7 @@ export default class FormOutfit extends React.Component {
 
         <div className='choose-item-popup'>
           <div className='choose-item-view-container'>
+            <i className='fa-solid fa-circle-arrow-right' />
             <div className='choose-items-wrapper'>
               {itemsArray}
             </div>

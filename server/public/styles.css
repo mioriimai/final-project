@@ -722,6 +722,14 @@ body {
   height: 100%;
 }
 
+.fa-solid.fa-circle-arrow-right {
+  color: white;
+  font-size: 40px;
+  position: absolute;
+  right: 40px;
+  top: 30px;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
