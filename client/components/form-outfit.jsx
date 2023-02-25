@@ -8,6 +8,7 @@ export default class FormOutfit extends React.Component {
   }
 
   render() {
+
     return (
       <form>
         <div className='form-outfit-container'>
@@ -22,9 +23,18 @@ export default class FormOutfit extends React.Component {
                 <div className='outfit-box'>
                   <div style={{ width: '435px', height: '455px', padding: '10px', margin: '1.5px', verticalAlign: 'middle' }}>
                     <Draggable bounds="parent">
-                      <p className='test'>test</p>
+                      <div className='test-element' style={{
+                        background: 'url("/images/IMG_5668-removebg-preview.png")',
+                        backgroundSize: 'contain',
+                        backgroundRepeat: 'no-repeat'
+                      }} />
                     </Draggable>
                   </div>
+                </div>
+              </div>
+              <div className='column-half'>
+                <div className='row'>
+                  <button type='button' className='add-item-to-outfit-button'><i className='fa-solid fa-plus outfit' />Add an Item</button>
                 </div>
               </div>
             </div>
