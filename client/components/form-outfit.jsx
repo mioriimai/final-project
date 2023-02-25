@@ -43,7 +43,7 @@ export default class FormOutfit extends React.Component {
               </div>
               <div className='column-half'>
                 <div className='row'>
-                  <button type='button' className='add-item-to-outfit-button'><i className='fa-solid fa-plus outfit' />Add an Item</button>
+                  <button type='button' className='add-item-to-outfit-button' onClick={this.handleAddButtonClick}><i className='fa-solid fa-plus outfit' />Add an Item</button>
                 </div>
               </div>
             </div>

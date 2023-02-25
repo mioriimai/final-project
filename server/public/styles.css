@@ -708,6 +708,11 @@ body {
   margin-right: 15px;
 }
 
+.add-item-to-outfit-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
