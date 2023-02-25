@@ -162,7 +162,7 @@ export default class FormItem extends React.Component {
           <i className="fa-solid fa-plus" />
           Add {addButton}
         </a>
-        <p className={noItemMessage}>No items found. Let&rsquo;s add an item!</p>
+        <p className={noItemMessage}>There is no item in your favorite list.</p>
         <div className='item-list-wrapper'>
           {itemsArray}
         </div>

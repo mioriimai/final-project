@@ -123,13 +123,10 @@ app.get('/api/favoriteItems', (req, res, next) => {
   const params = [favorite];
   db.query(sql, params)
     .then(result => {
-      const item = result.rows[0];
-      if (!item) {
-        throw new ClientError(404, 'there is no favorite item.');
-      }
+      const items = result.rows;
       // the query succeeded
       // respond to the client with the status code 200 and all rows from the "items" table
-      res.status(200).json(result.rows);
+      res.status(200).json(items);
     })
     .catch(err => next(err));
 });
