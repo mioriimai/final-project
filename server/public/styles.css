@@ -683,6 +683,7 @@ body {
   width: 440px;
   height: 460px;
   margin: auto;
+  margin-left: 65px;
   position: relative;
   overflow: auto;
   padding: 0;
@@ -697,12 +698,8 @@ body {
 }
 
 .rnd {
-  width: 170px;
-  height: 200px;
   margin: 0;
   position: relative;
-
-  /* border: 1px solid #000; */
 }
 
 .fa-regular.fa-circle-xmark.chosen-item {
@@ -712,14 +709,6 @@ body {
   right: 15px;
   top: 15px;
 }
-
-/* .test-element {
-  width: 170px;
-  height: 200px;
-  margin: 0;
-
-  border: 1px solid #000;
-} */
 
 .add-item-to-outfit-button {
   font-family: Alegreya, sans-serif;
@@ -810,15 +799,6 @@ body {
   height: 300px;
   border-radius: 25px;
 }
-
-/* .fa-solid.fa-plus.chose-item {
-  font-size: 150px;
-  color: #a1a0a0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-} */
 
 .non-scroll {
   height: calc(100vh + 1px);
@@ -1200,6 +1180,7 @@ body {
   .outfit-box {
     width: 280px;
     height: 300px;
+    margin: auto;
   }
 
   .outfit-box-inner {
@@ -1210,15 +1191,14 @@ body {
     vertical-align: middle;
   }
 
-  .test-element {
-    width: 125px;
-    height: 125px;
+  .fa-regular.fa-circle-xmark.chosen-item {
+    font-size: 20px;
   }
 
   .add-item-to-outfit-button {
-    font-size: 22px;
-    margin: 20px auto;
-    padding: 8px 35px;
+    font-size: 24px;
+    margin: 40px auto 0;
+    padding: 10px 40px;
   }
 
   .fa-solid.fa-plus.outfit {
@@ -1270,6 +1250,26 @@ body {
 
   .add-outfit-shadow-wrapper {
     height: 170px;
+  }
+
+  .up-to-ten-message {
+    margin: 15px auto 40px;
+    font-size: 16px;
+  }
+
+  .outfit-notes {
+    font-size: 22px;
+    margin: 0;
+    padding-left: 40px;
+    padding-bottom: 10px;
+  }
+
+  #outfit-notes {
+    margin: 0 auto;
+    width: 85%;
+    height: 120px;
+    padding: 15px;
+    font-size: 17px;
   }
 
   /* tablet screen */

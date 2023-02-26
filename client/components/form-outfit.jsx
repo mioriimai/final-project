@@ -19,6 +19,7 @@ export default class FormOutfit extends React.Component {
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleOnDrag = this.handleOnDrag.bind(this);
     this.handleDeleteChoseItemClick = this.handleDeleteChoseItemClick.bind(this);
+    this.handleNotesChange = this.handleNotesChange.bind(this);
   }
 
   componentDidMount() {
@@ -97,6 +98,12 @@ export default class FormOutfit extends React.Component {
     });
   }
 
+  handleNotesChange(event) {
+    this.setState({
+      notes: event.target.value
+    });
+  }
+
   render() {
 
     // console.log('this.state:', this.state);
@@ -112,17 +119,36 @@ export default class FormOutfit extends React.Component {
         hoverDeleteChosenItem = 'delete-chosen-item-icon-wrapper hidden';
       }
 
+      let defaultSize;
+      if (window.innerWidth > 768) {
+        defaultSize = {
+          x: 0,
+          y: 0,
+          width: '200px',
+          height: '220px',
+          margin: 0
+        };
+      } else if (window.innerWidth < 768) {
+        defaultSize = {
+          x: 0,
+          y: 0,
+          width: '130px',
+          height: '150px',
+          margin: 0
+        };
+      }
+
       chosenItemsArray.push(
         <Rnd className='rnd'
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
-        default={{
+        default={/* {
           x: 0,
           y: 0,
           width: '170px',
           height: '200px',
           margin: 0
-        }}
+        } */defaultSize}
         style={{
           backgroundImage: `url(${this.state.chosenItems[i].image})`,
           backgroundSize: 'contain',
@@ -220,7 +246,7 @@ export default class FormOutfit extends React.Component {
                     <label htmlFor="notes" className='outfit-notes'>Notes</label>
                   </div>
                   <div className='row'>
-                    <textarea name="notes" id='outfit-notes' />
+                    <textarea name="notes" id='outfit-notes' value={this.state.notes} onChange={this.handleNotesChange} />
                   </div>
                 </div>
               </div>
