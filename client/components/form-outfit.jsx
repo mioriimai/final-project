@@ -266,6 +266,15 @@ export default class FormOutfit extends React.Component {
             <div className='non-scroll' />
           </div>
         </div>
+
+        <div className='pop-up'>
+          <div className='saved-popup-text-wrapper'>
+            <h1 className='successfully-saved'>Successfully saved!</h1>
+            <a className='add-more-items' href='#add-item' onClick={this.handlePopupClick}>Add More Outfits</a>
+            <br />
+            <a className='see-items' href='#items' onClick={this.handlePopupClick}>See Your Outfits</a>
+          </div>
+        </div>
       </>
     );
   }

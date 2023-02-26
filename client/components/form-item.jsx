@@ -199,7 +199,7 @@ export default class FormItem extends React.Component {
             <h1 className='successfully-saved'>Successfully saved!</h1>
             <a className='add-more-items' href='#add-item' onClick={this.handlePopupClick}>Add More Items</a>
             <br />
-            <a className='see-items' href='#items' onClick={this.handlePopupClick}>See Items in the Closet</a>
+            <a className='see-items' href='#items' onClick={this.handlePopupClick}>See Your Items</a>
           </div>
         </div>
       </>
