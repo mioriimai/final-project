@@ -16,6 +16,7 @@ export default class FormOutfit extends React.Component {
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleOnDrag = this.handleOnDrag.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +63,31 @@ export default class FormOutfit extends React.Component {
       });
   }
 
+  handleOnDrag(event, direction, ref, delta, position) {
+    // create an object with update delta x and y
+    let updateobject;
+    for (let i = 0; i < this.state.chosenItems.length; i++) {
+      const itemId = Number(event.target.id);
+      if (itemId === this.state.chosenItems[i].itemId) {
+        updateobject = this.state.chosenItems[i];
+        updateobject.deltaX = direction.x;
+        updateobject.deltaY = direction.y;
+      }
+    }
+    // create a new array with the updated object
+    const newChoseItems = this.state.chosenItems.map(v => {
+      if (v.id === updateobject.itemId) {
+        return updateobject;
+      }
+      return v;
+    });
+
+    this.setState({
+      itemId: event.target.id,
+      chosenItems: newChoseItems
+    });
+  }
+
   render() {
 
     // console.log('this.state:', this.state);
@@ -81,8 +107,9 @@ export default class FormOutfit extends React.Component {
 
     const chosenItemsArray = [];
     for (let i = 0; i < this.state.chosenItems.length; i++) {
+
       chosenItemsArray.push(
-        <Rnd className="rnd"
+        <Rnd className='rnd'
         default={{
           x: 0,
           y: 0,
@@ -106,9 +133,10 @@ export default class FormOutfit extends React.Component {
           bottomLeft: true,
           topLeft: true
         }}
-        bounds="parent"
+        bounds='parent'
+        id={`${this.state.chosenItems[i].itemId}`}
         // onResize={this.onResize}
-        // onDrag={this.onDrag}
+        onDrag={this.handleOnDrag}
          />);
     }
 
@@ -167,38 +195,6 @@ export default class FormOutfit extends React.Component {
                         }} />
                       </Draggable> */}
 
-                      {/* <Rnd
-                        className="rnd"
-                        default={{
-                          x: 0,
-                          y: 0,
-                          width: '170px',
-                          height: '170px',
-                          margin: 0
-                        }}
-                        style={{
-                          background: 'url("/images/IMG_5668-removebg-preview.png")',
-                          backgroundSize: 'contain',
-                          backgroundRepeat: 'no-repeat'
-                        }}
-                        dragAxis="both"
-                        enableResizing={{
-                          top: true,
-                          right: true,
-                          bottom: true,
-                          left: true,
-                          topRight: false,
-                          bottomRight: true,
-                          bottomLeft: true,
-                          topLeft: true
-                        }}
-                        bounds="parent"
-                        // resizeGrid={[20, 0]}
-                        // dragGrid={[20, 0]}
-                        // minWidth="20"
-                        onResize={this.onResize}
-                        onDrag={this.onDrag}
-                      /> */}
                     </div>
                   </div>
                 </div>
