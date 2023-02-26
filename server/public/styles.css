@@ -696,19 +696,30 @@ body {
   vertical-align: middle;
 }
 
-/* .rnd {
+.rnd {
   width: 170px;
   height: 200px;
   margin: 0;
-  border: 1px solid #a4a4a4;
-} */
-.test-element {
+  position: relative;
+
+  /* border: 1px solid #000; */
+}
+
+.fa-regular.fa-circle-xmark.chosen-item {
+  color: #7c7c7c;
+  font-size: 25px;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+/* .test-element {
   width: 170px;
   height: 200px;
   margin: 0;
 
-  /* border: 1px solid #000; */
-}
+  border: 1px solid #000;
+} */
 
 .add-item-to-outfit-button {
   font-family: Alegreya, sans-serif;

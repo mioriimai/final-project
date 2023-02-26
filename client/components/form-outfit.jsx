@@ -133,7 +133,10 @@ export default class FormOutfit extends React.Component {
         bounds='parent'
         id={`${this.state.chosenItems[i].itemId}`}
         onDrag={this.handleOnDrag}
-         />);
+         >
+          <i className='fa-regular fa-circle-xmark chosen-item' />
+        </Rnd>
+      );
     }
 
     const itemsArray = [];
