@@ -667,7 +667,7 @@ body {
   background-color: white;
   max-width: 1300px;
   min-width: 1020px;
-  height: 1000px;
+  height: 630px;
   margin: 40px auto;
 }
 
@@ -683,7 +683,7 @@ body {
   width: 440px;
   height: 460px;
   margin: auto;
-  margin-left: 65px;
+  margin-left: 18%;
   position: relative;
   overflow: auto;
   padding: 0;
@@ -831,6 +831,24 @@ body {
   color: #a4a4a4;
   padding: 15px;
   font-size: 18px;
+}
+
+.outfit-save-button-wrapper {
+  display: block;
+  text-align: right;
+}
+
+.outfit-save-button {
+  color: white;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #8f8f8f;
+  border: none;
+  border-radius: 30px;
+  padding: 5px 25px;
+  margin-top: 15px;
+  margin-right: 70px;
 }
 
 /* ------------- media query ------------  */
@@ -1167,7 +1185,7 @@ body {
 
   .form-outfit-white-box {
     min-width: initial;
-    height: 1000px;
+    height: 780px;
     width: 100%;
     margin: 30px auto;
   }
@@ -1270,6 +1288,13 @@ body {
     height: 120px;
     padding: 15px;
     font-size: 17px;
+  }
+
+  .outfit-save-button {
+    font-size: 18px;
+    padding: 5px 25px;
+    margin-top: 15px;
+    margin-right: 30px;
   }
 
   /* tablet screen */

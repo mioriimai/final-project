@@ -248,6 +248,9 @@ export default class FormOutfit extends React.Component {
                   <div className='row'>
                     <textarea name="notes" id='outfit-notes' value={this.state.notes} onChange={this.handleNotesChange} />
                   </div>
+                  <div className='row outfit-save-button-wrapper'>
+                    <button type='submit' className='outfit-save-button'>SAVE</button>
+                  </div>
                 </div>
               </div>
             </div>
