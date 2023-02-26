@@ -1,5 +1,4 @@
 import React from 'react';
-// import Draggable from 'react-draggable';
 import { Rnd } from 'react-rnd';
 
 export default class FormOutfit extends React.Component {
@@ -11,6 +10,7 @@ export default class FormOutfit extends React.Component {
       itemId: null,
       chosenItems: []
     };
+
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
@@ -63,47 +63,35 @@ export default class FormOutfit extends React.Component {
       });
   }
 
-  handleOnDrag(event, direction, ref, delta, position) {
+  handleOnDrag(event, ui) {
     // create an object with update delta x and y
-    let updateobject;
+    let updateObject;
     for (let i = 0; i < this.state.chosenItems.length; i++) {
       const itemId = Number(event.target.id);
       if (itemId === this.state.chosenItems[i].itemId) {
-        updateobject = this.state.chosenItems[i];
-        updateobject.deltaX = direction.x;
-        updateobject.deltaY = direction.y;
+        updateObject = this.state.chosenItems[i];
+        updateObject.deltaX = ui.x;
+        updateObject.deltaY = ui.y;
+
       }
     }
-    // create a new array with the updated object
-    const newChoseItems = this.state.chosenItems.map(v => {
-      if (v.id === updateobject.itemId) {
-        return updateobject;
+    // update the array with updateObject
+    const newChosenItems = this.state.chosenItems.map(v => {
+      if (v.id === updateObject.itemId) {
+        return updateObject;
       }
       return v;
     });
 
     this.setState({
       itemId: event.target.id,
-      chosenItems: newChoseItems
+      chosenItems: newChosenItems
     });
   }
 
   render() {
 
     // console.log('this.state:', this.state);
-
-    // create draggable elements
-    // const chosenItemsArray = [];
-    // for (let i = 0; i < this.state.chosenItems.length; i++) {
-    //   chosenItemsArray.push(
-    //     <Draggable bounds="parent">
-    //       <div className='test-element' style={{
-    //         background: `url(${this.state.chosenItems[i].image})`,
-    //         backgroundSize: 'contain',
-    //         backgroundRepeat: 'no-repeat'
-    //       }} />
-    //     </Draggable>);
-    // }
 
     const chosenItemsArray = [];
     for (let i = 0; i < this.state.chosenItems.length; i++) {
@@ -118,24 +106,32 @@ export default class FormOutfit extends React.Component {
           margin: 0
         }}
         style={{
-          background: `url(${this.state.chosenItems[i].image})`,
+          backgroundImage: `url(${this.state.chosenItems[i].image})`,
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat'
         }}
         dragAxis="both"
         enableResizing={{
-          top: true,
-          right: true,
-          bottom: true,
-          left: true,
+          top: false,
+          right: false,
+          bottom: false,
+          left: false,
           topRight: false,
-          bottomRight: true,
-          bottomLeft: true,
-          topLeft: true
+          bottomRight: false,
+          bottomLeft: false,
+          topLeft: false
         }}
+          // resizeHandleClasses={{
+          //   top: `${this.state.chosenItems[i].itemId}`,
+          //   right: `${this.state.chosenItems[i].itemId}`,
+          //   bottom: `${this.state.chosenItems[i].itemId}`,
+          //   left: `${this.state.chosenItems[i].itemId}`,
+          //   bottomRight: `${this.state.chosenItems[i].itemId}`,
+          //   bottomLeft: `${this.state.chosenItems[i].itemId}`,
+          //   topLeft: `${this.state.chosenItems[i].itemId}`
+          // }}
         bounds='parent'
         id={`${this.state.chosenItems[i].itemId}`}
-        // onResize={this.onResize}
         onDrag={this.handleOnDrag}
          />);
     }
@@ -187,14 +183,6 @@ export default class FormOutfit extends React.Component {
                   <div className='outfit-box'>
                     <div className='outfit-box-inner'>
                       {chosenItemsArray}
-                      {/* <Draggable bounds="parent">
-                        <div className='test-element' style={{
-                          background: 'url("/images/IMG_5668-removebg-preview.png")',
-                          backgroundSize: 'contain',
-                          backgroundRepeat: 'no-repeat'
-                        }} />
-                      </Draggable> */}
-
                     </div>
                   </div>
                 </div>

@@ -696,10 +696,18 @@ body {
   vertical-align: middle;
 }
 
-.rnd {
+/* .rnd {
   width: 170px;
   height: 200px;
   margin: 0;
+  border: 1px solid #a4a4a4;
+} */
+.test-element {
+  width: 170px;
+  height: 200px;
+  margin: 0;
+
+  /* border: 1px solid #000; */
 }
 
 .add-item-to-outfit-button {
