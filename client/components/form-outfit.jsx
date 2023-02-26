@@ -17,6 +17,7 @@ export default class FormOutfit extends React.Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleOnDrag = this.handleOnDrag.bind(this);
+    this.handleDeleteChoseItemClick = this.handleDeleteChoseItemClick.bind(this);
   }
 
   componentDidMount() {
@@ -38,9 +39,15 @@ export default class FormOutfit extends React.Component {
   }
 
   handleMouseEnter(event) {
-    this.setState({
-      itemId: event.target.name
-    });
+    if (event.target.name === undefined) {
+      this.setState({
+        itemId: event.target.id
+      });
+    } else {
+      this.setState({
+        itemId: event.target.name
+      });
+    }
   }
 
   handleMouseLeave() {
@@ -64,27 +71,27 @@ export default class FormOutfit extends React.Component {
   }
 
   handleOnDrag(event, ui) {
-    // create an object with update delta x and y
-    let updateObject;
-    for (let i = 0; i < this.state.chosenItems.length; i++) {
-      const itemId = Number(event.target.id);
-      if (itemId === this.state.chosenItems[i].itemId) {
-        updateObject = this.state.chosenItems[i];
-        updateObject.deltaX = ui.x;
-        updateObject.deltaY = ui.y;
 
+    const copyChosenItems = [...this.state.chosenItems];
+    const newChosenItems = [];
+    const targetItemId = Number(event.target.id);
+    copyChosenItems.forEach(item => {
+      if (item.itemId === targetItemId) {
+        newChosenItems.push({ ...item, deltaX: ui.x, deltaY: ui.y });
+      } else {
+        newChosenItems.push(item);
       }
-    }
-    // update the array with updateObject
-    const newChosenItems = this.state.chosenItems.map(v => {
-      if (v.id === updateObject.itemId) {
-        return updateObject;
-      }
-      return v;
     });
-
     this.setState({
-      itemId: event.target.id,
+      chosenItems: newChosenItems
+    });
+  }
+
+  handleDeleteChoseItemClick() {
+    const copyChosenItems = [...this.state.chosenItems];
+    const targetId = Number(this.state.itemId);
+    const newChosenItems = copyChosenItems.filter(v => v.itemId !== targetId);
+    this.setState({
       chosenItems: newChosenItems
     });
   }
@@ -95,9 +102,19 @@ export default class FormOutfit extends React.Component {
 
     const chosenItemsArray = [];
     for (let i = 0; i < this.state.chosenItems.length; i++) {
+      const targetedItemId = Number(this.state.itemId);
+
+      let hoverDeleteChosenItem = 'delete-chosen-item-icon-wrapper hidden';
+      if (this.state.chosenItems[i].itemId === targetedItemId) {
+        hoverDeleteChosenItem = 'delete-chosen-item-icon-wrapper';
+      } else {
+        hoverDeleteChosenItem = 'delete-chosen-item-icon-wrapper hidden';
+      }
 
       chosenItemsArray.push(
         <Rnd className='rnd'
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
         default={{
           x: 0,
           y: 0,
@@ -134,7 +151,9 @@ export default class FormOutfit extends React.Component {
         id={`${this.state.chosenItems[i].itemId}`}
         onDrag={this.handleOnDrag}
          >
-          <i className='fa-regular fa-circle-xmark chosen-item' />
+          <div className={hoverDeleteChosenItem} >
+            <i className='fa-regular fa-circle-xmark chosen-item' onClick={this.handleDeleteChoseItemClick}/>
+          </div>
         </Rnd>
       );
     }
@@ -183,8 +202,8 @@ export default class FormOutfit extends React.Component {
               </div>
               <div className='row'>
                 <div className='column-half'>
-                  <div className='outfit-box'>
-                    <div className='outfit-box-inner'>
+                  <div className='outfit-box' >
+                    <div className='outfit-box-inner' >
                       {chosenItemsArray}
                     </div>
                   </div>
@@ -208,7 +227,6 @@ export default class FormOutfit extends React.Component {
             <div className='non-scroll' />
           </div>
         </div>
-
       </>
     );
   }
