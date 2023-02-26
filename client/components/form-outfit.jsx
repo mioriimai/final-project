@@ -9,7 +9,8 @@ export default class FormOutfit extends React.Component {
       items: [],
       itemId: null,
       chosenItems: [],
-      notes: ''
+      notes: '',
+      saved: false
     };
 
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
@@ -20,6 +21,7 @@ export default class FormOutfit extends React.Component {
     this.handleOnDrag = this.handleOnDrag.bind(this);
     this.handleDeleteChoseItemClick = this.handleDeleteChoseItemClick.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
+    this.handleSaveConfirmPopupClick = this.handleSaveConfirmPopupClick.bind(this);
   }
 
   componentDidMount() {
@@ -101,6 +103,12 @@ export default class FormOutfit extends React.Component {
   handleNotesChange(event) {
     this.setState({
       notes: event.target.value
+    });
+  }
+
+  handleSaveConfirmPopupClick() {
+    this.setState({
+      saved: !this.state.saved
     });
   }
 
@@ -217,6 +225,9 @@ export default class FormOutfit extends React.Component {
       addItemPopup = 'hidden';
     }
 
+    // save confirm popup-window
+    const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
+
     return (
       <>
         <form>
@@ -267,12 +278,12 @@ export default class FormOutfit extends React.Component {
           </div>
         </div>
 
-        <div className='pop-up'>
+        <div className={popup}>
           <div className='saved-popup-text-wrapper'>
             <h1 className='successfully-saved'>Successfully saved!</h1>
-            <a className='add-more-items' href='#add-item' onClick={this.handlePopupClick}>Add More Outfits</a>
+            <a className='add-more-items' href='#add-outfit' onClick={this.handleSaveConfirmPopupClick}>Add More Outfits</a>
             <br />
-            <a className='see-items' href='#items' onClick={this.handlePopupClick}>See Your Outfits</a>
+            <a className='see-items' href='#outfits' onClick={this.handleSaveConfirmPopupClick}>See Your Outfits</a>
           </div>
         </div>
       </>
