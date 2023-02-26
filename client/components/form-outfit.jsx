@@ -1,5 +1,6 @@
 import React from 'react';
-import Draggable from 'react-draggable';
+// import Draggable from 'react-draggable';
+import { Rnd } from 'react-rnd';
 
 export default class FormOutfit extends React.Component {
   constructor(props) {
@@ -17,6 +18,12 @@ export default class FormOutfit extends React.Component {
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
+  componentDidMount() {
+    fetch('/api/items')
+      .then(res => res.json())
+      .then(items => this.setState({ items }));
+  }
+
   handleAddButtonClick() {
     this.setState({
       addItemPopup: true
@@ -27,12 +34,6 @@ export default class FormOutfit extends React.Component {
     this.setState({
       addItemPopup: false
     });
-  }
-
-  componentDidMount() {
-    fetch('/api/items')
-      .then(res => res.json())
-      .then(items => this.setState({ items }));
   }
 
   handleMouseEnter(event) {
@@ -48,21 +49,68 @@ export default class FormOutfit extends React.Component {
   }
 
   handleItemClick() {
-    this.setState({
-      addItemPopup: false
-    });
     fetch(`/api/items/${this.state.itemId}`)
       .then(res => res.json())
       .then(chosenItems => {
         chosenItems.deltaX = 0;
         chosenItems.deltaY = 0;
-        this.state.chosenItems.push(chosenItems);
+        const newChoseItems = [...this.state.chosenItems, chosenItems];
+        this.setState({
+          chosenItems: newChoseItems,
+          addItemPopup: false
+        });
       });
   }
 
   render() {
 
     // console.log('this.state:', this.state);
+
+    // create draggable elements
+    // const chosenItemsArray = [];
+    // for (let i = 0; i < this.state.chosenItems.length; i++) {
+    //   chosenItemsArray.push(
+    //     <Draggable bounds="parent">
+    //       <div className='test-element' style={{
+    //         background: `url(${this.state.chosenItems[i].image})`,
+    //         backgroundSize: 'contain',
+    //         backgroundRepeat: 'no-repeat'
+    //       }} />
+    //     </Draggable>);
+    // }
+
+    const chosenItemsArray = [];
+    for (let i = 0; i < this.state.chosenItems.length; i++) {
+      chosenItemsArray.push(
+        <Rnd className="rnd"
+        default={{
+          x: 0,
+          y: 0,
+          width: '170px',
+          height: '200px',
+          margin: 0
+        }}
+        style={{
+          background: `url(${this.state.chosenItems[i].image})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat'
+        }}
+        dragAxis="both"
+        enableResizing={{
+          top: true,
+          right: true,
+          bottom: true,
+          left: true,
+          topRight: false,
+          bottomRight: true,
+          bottomLeft: true,
+          topLeft: true
+        }}
+        bounds="parent"
+        // onResize={this.onResize}
+        // onDrag={this.onDrag}
+         />);
+    }
 
     const itemsArray = [];
     for (let i = 0; i < this.state.items.length; i++) {
@@ -110,13 +158,47 @@ export default class FormOutfit extends React.Component {
                 <div className='column-half'>
                   <div className='outfit-box'>
                     <div className='outfit-box-inner'>
-                      <Draggable bounds="parent">
+                      {chosenItemsArray}
+                      {/* <Draggable bounds="parent">
                         <div className='test-element' style={{
                           background: 'url("/images/IMG_5668-removebg-preview.png")',
                           backgroundSize: 'contain',
                           backgroundRepeat: 'no-repeat'
                         }} />
-                      </Draggable>
+                      </Draggable> */}
+
+                      {/* <Rnd
+                        className="rnd"
+                        default={{
+                          x: 0,
+                          y: 0,
+                          width: '170px',
+                          height: '170px',
+                          margin: 0
+                        }}
+                        style={{
+                          background: 'url("/images/IMG_5668-removebg-preview.png")',
+                          backgroundSize: 'contain',
+                          backgroundRepeat: 'no-repeat'
+                        }}
+                        dragAxis="both"
+                        enableResizing={{
+                          top: true,
+                          right: true,
+                          bottom: true,
+                          left: true,
+                          topRight: false,
+                          bottomRight: true,
+                          bottomLeft: true,
+                          topLeft: true
+                        }}
+                        bounds="parent"
+                        // resizeGrid={[20, 0]}
+                        // dragGrid={[20, 0]}
+                        // minWidth="20"
+                        onResize={this.onResize}
+                        onDrag={this.onDrag}
+                      /> */}
                     </div>
                   </div>
                 </div>
