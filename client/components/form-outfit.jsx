@@ -8,7 +8,8 @@ export default class FormOutfit extends React.Component {
       addItemPopup: false,
       items: [],
       itemId: null,
-      chosenItems: []
+      chosenItems: [],
+      notes: ''
     };
 
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
@@ -211,6 +212,15 @@ export default class FormOutfit extends React.Component {
                 <div className='column-half'>
                   <div className='row'>
                     <button type='button' className='add-item-to-outfit-button' onClick={this.handleAddButtonClick}><i className='fa-solid fa-plus outfit' />Add an Item</button>
+                  </div>
+                  <div className='row'>
+                    <p className='up-to-ten-message'>You can add up to 10 items.</p>
+                  </div>
+                  <div className='row'>
+                    <label htmlFor="notes" className='outfit-notes'>Notes</label>
+                  </div>
+                  <div className='row'>
+                    <textarea name="notes" id='outfit-notes' />
                   </div>
                 </div>
               </div>

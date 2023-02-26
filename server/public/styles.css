@@ -727,7 +727,7 @@ body {
   background-color: #f3f0e8;
   border: none;
   border-radius: 30px;
-  margin: auto;
+  margin: 10px auto 0;
   padding: 10px 40px;
 }
 
@@ -824,6 +824,33 @@ body {
   height: calc(100vh + 1px);
   width: 1px;
   background-color: transparent;
+}
+
+.up-to-ten-message {
+  margin: 20px auto 60px;
+  font-family: "Playfair Display", sans-serif;
+  color: #515151;
+  font-size: 20px;
+}
+
+.outfit-notes {
+  font-family: "Alegreya SC", sans-serif;
+  font-size: 25px;
+  margin: 0;
+  padding-left: 75px;
+  padding-bottom: 10px;
+}
+
+#outfit-notes {
+  margin: 5px auto;
+  border: 1px solid #c0c0c0;
+  border-radius: 10px;
+  width: 70%;
+  height: 180px;
+  font-family: Alegreya, Arial, Helvetica, sans-serif;
+  color: #a4a4a4;
+  padding: 15px;
+  font-size: 18px;
 }
 
 /* ------------- media query ------------  */
