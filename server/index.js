@@ -234,6 +234,38 @@ app.post('/api/form-outfit', uploadsMiddleware, (req, res, next) => {
     });
 });
 
+/* ---------------------------------------------------------------------------
+    Clients can POST items that are used for outfit to the outfitItems table.
+----------------------------------------------------------------------------- */
+app.post('/api/store-item-for-outfit', uploadsMiddleware, (req, res, next) => {
+  const item = req.body;
+  // varidate the "inputs" first.
+  if ('userId' in item === false || 'outfitId' in item === false || 'itemId' in item === false || 'deltaX' in item === false || 'deltaY' in item === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  }
+  // query the database
+  const sql = `
+    insert into "outfitItems" ("outfitId", "itemId", "userId", "deltaX", "deltaY")
+    values ($1, $2, $3, $4, $5)
+    returning *
+  `;
+  const params = [item.outfitId, item.itemId, item.userId, item.deltaX, item.deltaY];
+
+  db.query(sql, params)
+    .then(result => {
+      // the query succeeded
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(err => {
+      // the query failed for some reason
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 /* -------------------------------------------------------
    Clients can PATECH item's info(favorite) by its itemId.
 --------------------------------------------------------- */
