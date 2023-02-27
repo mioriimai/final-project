@@ -120,7 +120,7 @@ export default class FormItem extends React.Component {
       preview = (
         <img src={previewImage} className='chosen-image' />
       );
-      placeholderClassName = 'item-image-placeholder hidden';
+      placeholderClassName = 'hidden';
       uploadMessage = 'upload-from-camera-roll hidden';
     }
 
@@ -140,7 +140,9 @@ export default class FormItem extends React.Component {
               <div className='column-half add-padding-left'>
                 <div className='row'>
                   <div className='item-image-wrapper'>
-                    <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName}/>
+
+                    <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName} />
+
                     <p className={uploadMessage}>Upload from Camera Roll</p>
                     {preview}
                   </div>
