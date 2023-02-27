@@ -665,7 +665,7 @@ body {
 
 .form-outfit-white-box {
   background-color: white;
-  max-width: 1300px;
+  max-width: 1200px;
   min-width: 1020px;
   height: 630px;
   margin: 40px auto;
@@ -674,7 +674,7 @@ body {
 .form-outfit-title {
   font-family: Alegreya, sans-serif;
   font-size: 35px;
-  margin: 40px 0 15px 60px;
+  margin: 40px 0 15px 90px;
 }
 
 .outfit-box {

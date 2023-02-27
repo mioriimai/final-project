@@ -134,12 +134,15 @@ export default class FormOutfit extends React.Component {
         // Create a `new` FormData object.
         const formDataItem = new FormData();
 
+        const deltaX = Math.round(this.state.chosenItems[i].deltaX);
+        const deltaY = Math.round(this.state.chosenItems[i].deltaY);
+
         //  Append entries to the form data object I created.
         formDataItem.append('userId', 1);
         formDataItem.append('outfitId', this.state.savedOutfitId);
         formDataItem.append('itemId', this.state.chosenItems[i].itemId);
-        formDataItem.append('deltaX', this.state.chosenItems[i].deltaX);
-        formDataItem.append('deltaY', this.state.chosenItems[i].deltaY);
+        formDataItem.append('deltaX', deltaX);
+        formDataItem.append('deltaY', deltaY);
 
         fetch('/api/store-item-for-outfit', {
           method: 'POST',
@@ -156,12 +159,15 @@ export default class FormOutfit extends React.Component {
         // Create a `new` FormData object.
         const formDataItem = new FormData();
 
+        const deltaX = Math.round(this.state.chosenItems[i].deltaX);
+        const deltaY = Math.round(this.state.chosenItems[i].deltaY);
+
         //  Append entries to the form data object I created.
         formDataItem.append('userId', 1);
         formDataItem.append('outfitId', this.state.savedOutfitId);
         formDataItem.append('itemId', this.state.chosenItems[i].itemId);
-        formDataItem.append('deltaX', this.state.chosenItems[i].deltaX);
-        formDataItem.append('deltaY', this.state.chosenItems[i].deltaY);
+        formDataItem.append('deltaX', deltaX);
+        formDataItem.append('deltaY', deltaY);
 
         fetch('/api/store-item-for-outfit', {
           method: 'POST',
