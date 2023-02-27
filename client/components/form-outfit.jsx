@@ -238,7 +238,8 @@ export default class FormOutfit extends React.Component {
       }
 
       chosenItemsArray.push(
-        <Rnd className='rnd'
+        <Rnd key={i}
+             className='rnd'
              onMouseEnter={this.handleMouseEnter}
              onMouseLeave={this.handleMouseLeave}
              default={defaultSize}
