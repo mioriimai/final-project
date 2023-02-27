@@ -77,19 +77,10 @@ export default class FormOutfit extends React.Component {
         chosenItems.deltaX = 0;
         chosenItems.deltaY = 0;
         const newChoseItems = [...this.state.chosenItems, chosenItems];
-
-        // if (this.state.chosenItems.length <= 9) {
         this.setState({
           chosenItems: newChoseItems,
           addItemPopup: false
         });
-        // } else if (this.state.chosenItems.length > 9) {
-        //   this.setState({
-        //     chosenItems: newChoseItems,
-        //     addItemPopup: false,
-        //     reachedToTen: true
-        //   });
-        // }
       });
   }
 
@@ -216,8 +207,6 @@ export default class FormOutfit extends React.Component {
   }
 
   render() {
-
-    // console.log('this.state:', this.state);
 
     const chosenItemsArray = [];
     for (let i = 0; i < this.state.chosenItems.length; i++) {
