@@ -203,7 +203,6 @@ export default class FormOutfit extends React.Component {
         });
       })
       .catch(err => console.error(err));
-
   }
 
   render() {
@@ -240,29 +239,29 @@ export default class FormOutfit extends React.Component {
 
       chosenItemsArray.push(
         <Rnd className='rnd'
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-        default={defaultSize}
-        style={{
-          backgroundImage: `url(${this.state.chosenItems[i].image})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat'
-        }}
-        dragAxis="both"
-        enableResizing={{
-          top: false,
-          right: false,
-          bottom: false,
-          left: false,
-          topRight: false,
-          bottomRight: false,
-          bottomLeft: false,
-          topLeft: false
-        }}
-        bounds='parent'
-        id={`${this.state.chosenItems[i].itemId}`}
-        onDrag={this.handleOnDrag}
-         >
+             onMouseEnter={this.handleMouseEnter}
+             onMouseLeave={this.handleMouseLeave}
+             default={defaultSize}
+             style={{
+               backgroundImage: `url(${this.state.chosenItems[i].image})`,
+               backgroundSize: 'contain',
+               backgroundRepeat: 'no-repeat'
+             }}
+             dragAxis="both"
+             enableResizing={{
+               top: false,
+               right: false,
+               bottom: false,
+               left: false,
+               topRight: false,
+               bottomRight: false,
+               bottomLeft: false,
+               topLeft: false
+             }}
+             bounds='parent'
+             id={`${this.state.chosenItems[i].itemId}`}
+             onDrag={this.handleOnDrag}
+          >
           <div className={hoverDeleteChosenItem} >
             <i className='fa-regular fa-circle-xmark chosen-item' onClick={this.handleDeleteChoseItemClick}/>
           </div>
