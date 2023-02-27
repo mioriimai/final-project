@@ -700,6 +700,7 @@ body {
 .rnd {
   margin: 0;
   position: relative;
+  cursor: pointer;
 }
 
 .fa-regular.fa-circle-xmark.chosen-item {
@@ -810,7 +811,24 @@ body {
   margin: 20px auto 60px;
   font-family: "Playfair Display", sans-serif;
   color: #515151;
-  font-size: 20px;
+  font-size: 18px;
+}
+
+.fa-regular.fa-lightbulb {
+  margin-right: 10px;
+  font-size: 22px;
+}
+
+.reached-to-ten-message {
+  margin: 20px auto 60px;
+  font-family: "Playfair Display", sans-serif;
+  color: #c34d4d;
+  font-size: 18px;
+}
+
+.fa-solid.fa-circle-exclamation {
+  margin-right: 10px;
+  font-size: 22px;
 }
 
 .outfit-notes {
@@ -1278,7 +1296,22 @@ body {
 
   .up-to-ten-message {
     margin: 15px auto 40px;
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .fa-regular.fa-lightbulb {
+    margin-right: 7px;
+    font-size: 20px;
+  }
+
+  .reached-to-ten-message {
+    margin: 15px auto 40px;
+    font-size: 14px;
+  }
+
+  .fa-solid.fa-circle-exclamation {
+    margin-right: 7px;
+    font-size: 20px;
   }
 
   .outfit-notes {

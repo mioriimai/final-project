@@ -11,7 +11,8 @@ export default class FormOutfit extends React.Component {
       chosenItems: [],
       notes: '',
       saved: false,
-      savedOutfitId: null
+      savedOutfitId: null,
+      reachedToTen: false
     };
 
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
@@ -33,9 +34,16 @@ export default class FormOutfit extends React.Component {
   }
 
   handleAddButtonClick() {
-    this.setState({
-      addItemPopup: true
-    });
+
+    if (this.state.chosenItems.length < 10) {
+      this.setState({
+        addItemPopup: true
+      });
+    } else if (this.state.chosenItems.length >= 10) {
+      this.setState({
+        addItemPopup: false
+      });
+    }
   }
 
   handlePopupLeaveButtonClick() {
@@ -69,10 +77,19 @@ export default class FormOutfit extends React.Component {
         chosenItems.deltaX = 0;
         chosenItems.deltaY = 0;
         const newChoseItems = [...this.state.chosenItems, chosenItems];
+
+        // if (this.state.chosenItems.length <= 9) {
         this.setState({
           chosenItems: newChoseItems,
           addItemPopup: false
         });
+        // } else if (this.state.chosenItems.length > 9) {
+        //   this.setState({
+        //     chosenItems: newChoseItems,
+        //     addItemPopup: false,
+        //     reachedToTen: true
+        //   });
+        // }
       });
   }
 
@@ -290,6 +307,16 @@ export default class FormOutfit extends React.Component {
       addItemPopup = 'hidden';
     }
 
+    let upToTenMessage;
+    let reachedToTenMessage;
+    if (this.state.chosenItems.length <= 9) {
+      upToTenMessage = 'up-to-ten-message';
+      reachedToTenMessage = 'hidden';
+    } else if (this.state.chosenItems.length > 9) {
+      upToTenMessage = 'hidden';
+      reachedToTenMessage = 'reached-to-ten-message';
+    }
+
     // save confirm popup-window
     const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
 
@@ -316,7 +343,8 @@ export default class FormOutfit extends React.Component {
                     <button type='button' className='add-item-to-outfit-button' onClick={this.handleAddButtonClick}><i className='fa-solid fa-plus outfit' />Add an Item</button>
                   </div>
                   <div className='row'>
-                    <p className='up-to-ten-message'>You can add up to 10 items.</p>
+                    <p className={upToTenMessage}><i className='fa-regular fa-lightbulb' />You can add up to 10 items.</p>
+                    <p className={reachedToTenMessage}><i className='fa-solid fa-circle-exclamation' />You reached to 10 items.</p>
                   </div>
                   <div className='row'>
                     <label htmlFor="notes" className='outfit-notes'>Notes</label>
