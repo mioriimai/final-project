@@ -19,43 +19,9 @@ const app = express();
 app.use(staticMiddleware);
 app.use(express.json());
 
-app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
-  const newItem = req.body;
-  // varidate the "inputs" first.
-  if ('category' in newItem === false || 'brand' in newItem === false || 'color' in newItem === false || 'notes' in newItem === false || 'userId' in newItem === false) {
-    throw new ClientError(400, 'An invalid/missing information.');
-  }
-
-  // The S3 url to access the uploaded file later
-  const url = req.file.location;
-
-  // query the database
-  const sql = `
-    insert into "items" ("image", "category", "brand", "color", "notes", "favorite", "userId")
-    values ($1, $2, $3, $4, $5, $6, $7)
-    returning *
-  `;
-  // send the user input in a separate array instead of putting the user input directory into our query
-  const params = [url, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.favorite, newItem.userId];
-
-  db.query(sql, params)
-    .then(result => {
-      // the query succeeded
-      // respond to the client with the status code 200 and created newItem object
-      res.status(201).json(result.rows[0]);
-    })
-    .catch(err => {
-      // the query failed for some reason
-      // possibly due to a syntax error in the SQL statement
-      // print the error to STDERR (the terminal) for debugging purposes
-      console.error(err);
-      // respond to the client with a generic 500 error message
-      res.status(500).json({
-        error: 'An unexpected error occurred.'
-      });
-    });
-});
-
+/* -------------------------------
+      Clients can GET all items.
+----------------------------------- */
 app.get('/api/items', (req, res, next) => {
   // query the database
   const sql = `
@@ -81,6 +47,9 @@ app.get('/api/items', (req, res, next) => {
     });
 });
 
+/* -------------------------------------------
+   Clients can GET a item's info by itemId.
+--------------------------------------------- */
 app.get('/api/items/:itemId', (req, res, next) => {
   const itemId = Number(req.params.itemId);
   if (!Number.isInteger(itemId) || itemId <= 0) {
@@ -123,13 +92,10 @@ app.get('/api/favoriteItems', (req, res, next) => {
   const params = [favorite];
   db.query(sql, params)
     .then(result => {
-      const item = result.rows[0];
-      if (!item) {
-        throw new ClientError(404, 'there is no favorite item.');
-      }
+      const items = result.rows;
       // the query succeeded
       // respond to the client with the status code 200 and all rows from the "items" table
-      res.status(200).json(result.rows);
+      res.status(200).json(items);
     })
     .catch(err => next(err));
 });
@@ -195,9 +161,114 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
     .catch(err => next(err));
 });
 
+/* -------------------------------------------
+   Clients can POST a new item with its info.
+--------------------------------------------- */
+app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
+  const newItem = req.body;
+  // varidate the "inputs" first.
+  if ('category' in newItem === false || 'brand' in newItem === false || 'color' in newItem === false || 'notes' in newItem === false || 'userId' in newItem === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  }
+
+  // The S3 url to access the uploaded file later
+  const url = req.file.location;
+
+  // query the database
+  const sql = `
+    insert into "items" ("image", "category", "brand", "color", "notes", "favorite", "userId")
+    values ($1, $2, $3, $4, $5, $6, $7)
+    returning *
+  `;
+  // send the user input in a separate array instead of putting the user input directory into our query
+  const params = [url, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.favorite, newItem.userId];
+
+  db.query(sql, params)
+    .then(result => {
+      // the query succeeded
+      // respond to the client with the status code 200 and created newItem object
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(err => {
+      // the query failed for some reason
+      // possibly due to a syntax error in the SQL statement
+      // print the error to STDERR (the terminal) for debugging purposes
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+/* -------------------------------------------
+   Clients can POST a outfit with its info.
+--------------------------------------------- */
+app.post('/api/form-outfit', uploadsMiddleware, (req, res, next) => {
+  const newOutfit = req.body;
+  // varidate the "inputs" first.
+  if ('userId' in newOutfit === false || 'notes' in newOutfit === false || 'favorite' in newOutfit === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  }
+  // query the database
+  const sql = `
+    insert into "outfits" ("notes", "favorite", "userId")
+    values ($1, $2, $3)
+    returning *
+  `;
+
+  const params = [newOutfit.notes, newOutfit.favorite, newOutfit.userId];
+
+  db.query(sql, params)
+    .then(result => {
+      // the query succeeded
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(err => {
+      // the query failed for some reason
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+/* ---------------------------------------------------------------------------
+    Clients can POST items that are used for outfit to the outfitItems table.
+----------------------------------------------------------------------------- */
+app.post('/api/store-item-for-outfit', uploadsMiddleware, (req, res, next) => {
+  const item = req.body;
+  // varidate the "inputs" first.
+  if ('userId' in item === false || 'outfitId' in item === false || 'itemId' in item === false || 'deltaX' in item === false || 'deltaY' in item === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  }
+  // query the database
+  const sql = `
+    insert into "outfitItems" ("outfitId", "itemId", "userId", "deltaX", "deltaY")
+    values ($1, $2, $3, $4, $5)
+    returning *
+  `;
+  const params = [item.outfitId, item.itemId, item.userId, item.deltaX, item.deltaY];
+
+  db.query(sql, params)
+    .then(result => {
+      // the query succeeded
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(err => {
+      // the query failed for some reason
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 /* -------------------------------------------------------
    Clients can PATECH item's info(favorite) by its itemId.
--------------------------------------------------------- */
+--------------------------------------------------------- */
 app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
   const favoriteState = req.body;
   const itemId = Number(req.params.itemId);
@@ -323,6 +394,10 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
       });
   }
 });
+
+/* -----------------------------------------
+   Clients can DELETE an item by its itemId.
+-------------------------------------------- */
 
 app.delete('/api/items/:itemId', (req, res, next) => {
   const itemId = Number(req.params.itemId);

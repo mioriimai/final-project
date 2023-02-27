@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './pages/home';
 import FormItem from './components/form-item';
+import FormOutfit from './components/form-outfit';
 import EditItem from './components/edit-item';
 import ListView from './pages/list-view';
 import Favorites from './components/favorites';
@@ -38,9 +39,14 @@ export default class App extends React.Component {
     if (route.path === 'item') {
       const itemId = route.params.get('itemId');
       return <EditItem itemId={itemId} />;
-    } if (route.path === 'favorites') {
+    }
+    if (route.path === 'favorites') {
       return <Favorites />;
     }
+    if (route.path === 'add-outfit') {
+      return <FormOutfit />;
+    }
+
   }
 
   render() {
