@@ -11,7 +11,7 @@ export default class EditItem extends React.Component {
       updatedCategory: null,
       updatedBrand: null,
       updatedColor: null,
-      updatedNotes: null,
+      updatedNotes: '',
       saved: false,
       deleteConfirmation: false
     };
