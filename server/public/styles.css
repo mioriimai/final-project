@@ -831,6 +831,7 @@ body {
   color: #a4a4a4;
   padding: 15px;
   font-size: 18px;
+  cursor: pointer;
 }
 
 .outfit-save-button-wrapper {
@@ -849,6 +850,11 @@ body {
   padding: 5px 25px;
   margin-top: 15px;
   margin-right: 70px;
+}
+
+.outfit-save-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 /* ------------- media query ------------  */

@@ -10,7 +10,8 @@ export default class FormOutfit extends React.Component {
       itemId: null,
       chosenItems: [],
       notes: '',
-      saved: false
+      saved: false,
+      savedOutfitId: null
     };
 
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
@@ -22,6 +23,7 @@ export default class FormOutfit extends React.Component {
     this.handleDeleteChoseItemClick = this.handleDeleteChoseItemClick.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSaveConfirmPopupClick = this.handleSaveConfirmPopupClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -112,6 +114,36 @@ export default class FormOutfit extends React.Component {
     });
   }
 
+  handleSubmit(event) {
+    // prevent the default form submission behavior.
+    event.preventDefault();
+
+    // Create a `new` FormData object.
+    const formData = new FormData();
+
+    //  Append entries to the form data object.
+    formData.append('userId', '1');
+    formData.append('favorite', false);
+    formData.append('notes', this.state.notes);
+
+    // Use fetch() to send a POST request to / api / form-outfit.
+    fetch('/api/form-outfit', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          chosenItems: [],
+          notes: '',
+          saved: true,
+          savedOutfitId: data.outfitId
+        });
+      })
+      .catch(err => console.error(err));
+
+  }
+
   render() {
 
     // console.log('this.state:', this.state);
@@ -150,13 +182,7 @@ export default class FormOutfit extends React.Component {
         <Rnd className='rnd'
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
-        default={/* {
-          x: 0,
-          y: 0,
-          width: '170px',
-          height: '200px',
-          margin: 0
-        } */defaultSize}
+        default={defaultSize}
         style={{
           backgroundImage: `url(${this.state.chosenItems[i].image})`,
           backgroundSize: 'contain',
@@ -173,15 +199,6 @@ export default class FormOutfit extends React.Component {
           bottomLeft: false,
           topLeft: false
         }}
-          // resizeHandleClasses={{
-          //   top: `${this.state.chosenItems[i].itemId}`,
-          //   right: `${this.state.chosenItems[i].itemId}`,
-          //   bottom: `${this.state.chosenItems[i].itemId}`,
-          //   left: `${this.state.chosenItems[i].itemId}`,
-          //   bottomRight: `${this.state.chosenItems[i].itemId}`,
-          //   bottomLeft: `${this.state.chosenItems[i].itemId}`,
-          //   topLeft: `${this.state.chosenItems[i].itemId}`
-          // }}
         bounds='parent'
         id={`${this.state.chosenItems[i].itemId}`}
         onDrag={this.handleOnDrag}
@@ -230,7 +247,7 @@ export default class FormOutfit extends React.Component {
 
     return (
       <>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <div className='form-outfit-container'>
             <div className='form-outfit-white-box'>
               <div className='row'>
@@ -299,7 +316,6 @@ function Item(props) {
       <div className='position'>
         <img
           src={image}
-          // alt={`Item ${itemId}`}
           className="add-item-image"
           onMouseEnter={props.handleMouseEnter}
           name={`${itemId}`}
