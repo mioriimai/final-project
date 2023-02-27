@@ -109,9 +109,58 @@ export default class FormOutfit extends React.Component {
   }
 
   handleSaveConfirmPopupClick() {
-    this.setState({
-      saved: !this.state.saved
-    });
+
+    // Use fetch to send a post request to /api/store-item-for-outfit.
+    for (let i = 0; i < this.state.chosenItems.length; i++) {
+
+      if (i < this.state.chosenItems.length - 1) {
+        // Create a `new` FormData object.
+        const formDataItem = new FormData();
+
+        //  Append entries to the form data object I created.
+        formDataItem.append('userId', 1);
+        formDataItem.append('outfitId', this.state.savedOutfitId);
+        formDataItem.append('itemId', this.state.chosenItems[i].itemId);
+        formDataItem.append('deltaX', this.state.chosenItems[i].deltaX);
+        formDataItem.append('deltaY', this.state.chosenItems[i].deltaY);
+
+        fetch('/api/store-item-for-outfit', {
+          method: 'POST',
+          body: formDataItem
+        })
+          .then(res => res.json())
+          .then(data => {
+            this.setState({
+            });
+          })
+          .catch(err => console.error(err));
+
+      } else if (i === this.state.chosenItems.length - 1) { // post the last item in the array
+        // Create a `new` FormData object.
+        const formDataItem = new FormData();
+
+        //  Append entries to the form data object I created.
+        formDataItem.append('userId', 1);
+        formDataItem.append('outfitId', this.state.savedOutfitId);
+        formDataItem.append('itemId', this.state.chosenItems[i].itemId);
+        formDataItem.append('deltaX', this.state.chosenItems[i].deltaX);
+        formDataItem.append('deltaY', this.state.chosenItems[i].deltaY);
+
+        fetch('/api/store-item-for-outfit', {
+          method: 'POST',
+          body: formDataItem
+        })
+          .then(res => res.json())
+          .then(data => {
+            this.setState({
+              saved: !this.state.saved,
+              chosenItems: [],
+              savedOutfitId: null
+            });
+          })
+          .catch(err => console.error(err));
+      }
+    }
   }
 
   handleSubmit(event) {
@@ -134,7 +183,6 @@ export default class FormOutfit extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
-          chosenItems: [],
           notes: '',
           saved: true,
           savedOutfitId: data.outfitId
