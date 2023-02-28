@@ -180,7 +180,7 @@ export default class Items extends React.Component {
       }
 
       itemsArray.push(
-        <div key={i} className="item-wrapper">
+        <div key={i} className='item-wrapper'>
           <Item
             item={this.state.items[i]}
             handleMouseEnter={this.handleMouseEnter}

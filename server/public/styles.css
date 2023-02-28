@@ -690,6 +690,7 @@ body {
 }
 
 .outfit-box-inner {
+  position: relative;
   width: 435px;
   height: 455px;
   padding: 10px;
@@ -873,6 +874,38 @@ body {
 .outfit-save-button:hover {
   cursor: pointer;
   opacity: 0.6;
+}
+
+/* ----------- outfits view ------------ */
+.outfits-view-container {
+  margin: 5px auto;
+  max-width: 1700px;
+  padding: 0 5%;
+}
+
+.outfits {
+  font-family: "Playfair Display", sans-serif;
+  font-weight: bold;
+  font-size: 47px;
+  margin: 30px 45px 0 4%;
+}
+
+.outfit-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.outfit-wrapper {
+  margin: 20px 30px;
+}
+
+.outfit-box.no-margin {
+  margin-left: 0;
+  background-color: white;
+  border: none;
+  border-radius: 30px;
 }
 
 /* ------------- media query ------------  */
@@ -1334,6 +1367,20 @@ body {
     padding: 5px 25px;
     margin-top: 15px;
     margin-right: 30px;
+  }
+
+  /* ----------- mobile outfits view -------- */
+  .outfits {
+    font-size: 26px;
+    margin: 25px 0 0 15px;
+  }
+
+  .outfit-list-wrapper {
+    margin-top: 0;
+  }
+
+  .outfit-wrapper {
+    margin: 18px 10px;
   }
 
   /* tablet screen */
