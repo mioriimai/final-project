@@ -10,6 +10,7 @@ export default class Outfits extends React.Component {
     };
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +29,12 @@ export default class Outfits extends React.Component {
     });
   }
 
+  handleMouseLeave() {
+    this.setState({
+      outfitId: null
+    });
+  }
+
   render() {
 
     // console.log('this.state:', this.state);
@@ -41,12 +48,21 @@ export default class Outfits extends React.Component {
           itemsArray.push(this.state.itemsForOutfit[n]);
         }
       }
+      const targetedOutfitId = Number(this.state.outfitId);
+      let hoverClassName = 'outfit-shadow-wrapper hidden';
+      if (this.state.outfits[i].outfitId === targetedOutfitId) {
+        hoverClassName = 'outfit-shadow-wrapper';
+      } else {
+        hoverClassName = 'outfit-shadow-wrapper hidden';
+      }
       outfitsArray.push(
         <div key={i} className='outfit-wrapper'>
           <Outfit
             items={itemsArray}
-            outfitId={this.state.outfits[i].outfitId}
+            outfit={this.state.outfits[i]}
             handleMouseEnter={this.handleMouseEnter}
+            handleMouseLeave={this.handleMouseLeave}
+            hover={hoverClassName}
             />
         </div>
       );
@@ -106,8 +122,9 @@ function Outfit(props) {
 
     imageArray.push(
       <img key={r}
+        id={items[r].outfitId}
       src={items[r].image}
-      alt={`outfit${r}`}
+        alt={`outfit${items[r].outfitId}`}
       className='test'
       style={{
         position: 'absolute',
@@ -116,17 +133,28 @@ function Outfit(props) {
         width: `${width}`,
         height: `${height}`
       }}
-      // onMouseEnter={this.handleMouseEnter}
-      // onMouseLeave={this.handleMouseLeave}
       />
     );
   }
 
+  const { outfitId, notes } = props.outfit;
+
   return (
 
-    <div className='outfit-box no-margin'>
-      <div className='outfit-box-inner' id={props.outfitId} onMouseEnter={props.handleMouseEnter}>
+    <div className='outfit-box-wrapper'>
+      <div className='outfit-box-inner ' id={outfitId} onMouseEnter={props.handleMouseEnter}>
         {imageArray}
+        {/* <div className={props.favoriteIcon}>
+          <i className='fa-solid fa-heart item-stay ' />
+        </div> */}
+        <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
+          <p className='show-outfit-notes'>{notes}</p>
+          {/* <a href={`#item?itemId=${itemId}`}>
+            <i className="fa-solid fa-pen item" />
+          </a> */}
+          {/* <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart item' /></button>
+          <button type='button' className={props.isFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-solid fa-heart item' /></button> */}
+        </div>
       </div>
     </div>
   );
