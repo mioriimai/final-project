@@ -162,9 +162,9 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
 });
 
 /* -------------------------------------------------
-      Clients can GET all outfits with its info.
+      Clients can GET all outfits with all info.
 --------------------------------------------------- */
-app.get('/api/outfits', (req, res, next) => {
+app.get('/api/outfitItems', (req, res, next) => {
   const sql = `
         select "outfitItems"."outfitId",
                "outfitItems"."itemId",
@@ -179,6 +179,27 @@ app.get('/api/outfits', (req, res, next) => {
         join "items" using ("itemId")
         order by "outfitId"
         `;
+  db.query(sql)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+/* -------------------------------------------------
+      Clients can GET all rows in outfits table.
+--------------------------------------------------- */
+app.get('/api/outfits', (req, res, next) => {
+  const sql = `
+    select "outfitId", "notes", "userId", "favorite"
+    from "outfits"
+    order by "outfitId"
+  `;
   db.query(sql)
     .then(result => {
       res.status(200).json(result.rows);
