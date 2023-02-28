@@ -897,6 +897,14 @@ body {
   margin-top: 15px;
 }
 
+.outfit-list-wrapper::after {
+  content: "";
+  display: block;
+  width: 440px;
+  height: 460px;
+  margin: 20px 30px;
+}
+
 .outfit-wrapper {
   margin: 20px 30px;
 }
