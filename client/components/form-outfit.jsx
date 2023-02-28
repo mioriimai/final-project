@@ -86,12 +86,25 @@ export default class FormOutfit extends React.Component {
 
   handleOnDrag(event, ui) {
 
+    // to change delta X and Y and perventage
+    let width;
+    let height;
+    if (window.innerWidth > 768) {
+      width = 440;
+      height = 460;
+    } else if (window.innerWidth < 768) {
+      width = 280;
+      height = 300;
+    }
+
     const copyChosenItems = [...this.state.chosenItems];
     const newChosenItems = [];
     const targetItemId = Number(event.target.id);
     copyChosenItems.forEach(item => {
       if (item.itemId === targetItemId) {
-        newChosenItems.push({ ...item, deltaX: ui.x, deltaY: ui.y });
+        const xPercent = Math.round(ui.x / width * 100);
+        const yPercent = Math.round(ui.y / height * 100);
+        newChosenItems.push({ ...item, deltaX: xPercent, deltaY: yPercent });
       } else {
         newChosenItems.push(item);
       }
@@ -238,7 +251,8 @@ export default class FormOutfit extends React.Component {
       }
 
       chosenItemsArray.push(
-        <Rnd className='rnd'
+        <Rnd key={i}
+             className='rnd'
              onMouseEnter={this.handleMouseEnter}
              onMouseLeave={this.handleMouseLeave}
              default={defaultSize}

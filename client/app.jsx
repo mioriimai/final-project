@@ -3,7 +3,8 @@ import Home from './pages/home';
 import FormItem from './components/form-item';
 import FormOutfit from './components/form-outfit';
 import EditItem from './components/edit-item';
-import ListView from './pages/list-view';
+import Items from './components/items';
+import Outfits from './components/outfits';
 import Favorites from './components/favorites';
 import Navbar from './components/navbar';
 import parseRoute from './lib/parse-route';
@@ -34,7 +35,7 @@ export default class App extends React.Component {
       return <FormItem title="New Item" />;
     }
     if (route.path === 'items') {
-      return <ListView />;
+      return <Items />;
     }
     if (route.path === 'item') {
       const itemId = route.params.get('itemId');
@@ -45,6 +46,9 @@ export default class App extends React.Component {
     }
     if (route.path === 'add-outfit') {
       return <FormOutfit />;
+    }
+    if (route.path === 'outfits') {
+      return <Outfits />;
     }
 
   }

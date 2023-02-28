@@ -161,6 +161,57 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
     .catch(err => next(err));
 });
 
+/* -------------------------------------------------
+      Clients can GET all outfits with all info.
+--------------------------------------------------- */
+app.get('/api/outfitItems', (req, res, next) => {
+  const sql = `
+        select "outfitItems"."outfitId",
+               "outfitItems"."itemId",
+               "outfitItems"."deltaX",
+               "outfitItems"."deltaY",
+               "outfits"."userId",
+               "outfits"."notes" as "outfitNotes",
+               "outfits"."favorite",
+               "items"."image"
+        from "outfitItems"
+        join "outfits" using ("outfitId")
+        join "items" using ("itemId")
+        order by "outfitId"
+        `;
+  db.query(sql)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+/* -------------------------------------------------
+      Clients can GET all rows in outfits table.
+--------------------------------------------------- */
+app.get('/api/outfits', (req, res, next) => {
+  const sql = `
+    select "outfitId", "notes", "userId", "favorite"
+    from "outfits"
+    order by "outfitId"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 /* -------------------------------------------
    Clients can POST a new item with its info.
 --------------------------------------------- */

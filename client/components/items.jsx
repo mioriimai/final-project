@@ -180,7 +180,7 @@ export default class Items extends React.Component {
       }
 
       itemsArray.push(
-        <div key={i} className="item-wrapper">
+        <div key={i} className='item-wrapper'>
           <Item
             item={this.state.items[i]}
             handleMouseEnter={this.handleMouseEnter}
@@ -207,7 +207,7 @@ export default class Items extends React.Component {
       <div className='items-view-container'>
         <div className='row spacing'>
           <div className='mobile-column-full'>
-            <p className='items'>{this.props.content}</p>
+            <p className='items'>Items</p>
           </div>
           <div className='mobile-column-full'>
             <form className='sort-wrapper'>
@@ -226,7 +226,7 @@ export default class Items extends React.Component {
         </div>
         <a href="#add-item" className='add-items-button'>
           <i className="fa-solid fa-plus" />
-          Add {this.props.content}
+          Add Items
         </a>
         <p className={noItemMessage}>No items found. Let&rsquo;s add an item!</p>
         <div className='item-list-wrapper'>
