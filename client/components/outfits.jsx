@@ -40,8 +40,6 @@ export default class Outfits extends React.Component {
       );
     }
 
-    // console.log('this.state:', this.state);
-
     let noItemMessage;
     if (this.state.outfits.length === 0) {
       noItemMessage = 'no-item-message';
