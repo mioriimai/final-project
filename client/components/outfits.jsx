@@ -8,6 +8,8 @@ export default class Outfits extends React.Component {
       itemsForOutfit: [],
       outfitId: null
     };
+
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
   }
 
   componentDidMount() {
@@ -20,7 +22,15 @@ export default class Outfits extends React.Component {
       .then(outfits => this.setState({ outfits }));
   }
 
+  handleMouseEnter(event) {
+    this.setState({
+      outfitId: event.target.id
+    });
+  }
+
   render() {
+
+    // console.log('this.state:', this.state);
 
     const outfitsArray = [];
     for (let i = 0; i < this.state.outfits.length; i++) {
@@ -35,6 +45,8 @@ export default class Outfits extends React.Component {
         <div key={i} className='outfit-wrapper'>
           <Outfit
             items={itemsArray}
+            outfitId={this.state.outfits[i].outfitId}
+            handleMouseEnter={this.handleMouseEnter}
             />
         </div>
       );
@@ -113,7 +125,7 @@ function Outfit(props) {
   return (
 
     <div className='outfit-box no-margin'>
-      <div className='outfit-box-inner'>
+      <div className='outfit-box-inner' id={props.outfitId} onMouseEnter={props.handleMouseEnter}>
         {imageArray}
       </div>
     </div>
