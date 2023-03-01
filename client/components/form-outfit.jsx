@@ -86,7 +86,7 @@ export default class FormOutfit extends React.Component {
 
   handleOnDrag(event, ui) {
 
-    // to change delta X and Y and perventage
+    // change delta X and Y and perventage
     let width;
     let height;
     if (window.innerWidth > 768) {

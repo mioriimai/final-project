@@ -20,6 +20,7 @@ export default class EditOutfit extends React.Component {
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleOnDrag = this.handleOnDrag.bind(this);
   }
 
   componentDidMount() {
@@ -86,6 +87,36 @@ export default class EditOutfit extends React.Component {
       });
   }
 
+  handleOnDrag(event, ui) {
+    // change delta X and Y and perventage
+    let width;
+    let height;
+    if (window.innerWidth > 768) {
+      width = 440;
+      height = 460;
+    } else if (window.innerWidth < 768) {
+      width = 280;
+      height = 300;
+    }
+
+    // update chosenItem array with new deltaX and Y
+    const copyChosenItems = [...this.state.chosenItems];
+    const newChosenItems = [];
+    const targetItemId = Number(event.target.id);
+    copyChosenItems.forEach(item => {
+      if (item.itemId === targetItemId) {
+        const xPercent = Math.round(ui.x / width * 100);
+        const yPercent = Math.round(ui.y / height * 100);
+        newChosenItems.push({ ...item, deltaX: xPercent, deltaY: yPercent });
+      } else {
+        newChosenItems.push(item);
+      }
+    });
+    this.setState({
+      chosenItems: newChosenItems
+    });
+  }
+
   render() {
 
     // console.log('this.state:', this.state);
@@ -103,20 +134,22 @@ export default class EditOutfit extends React.Component {
       }
 
       let defaultSize;
-      const left = `${this.state.chosenItems[i].deltaX}%`;
-      const top = `${this.state.chosenItems[i].deltaY}%`;
       if (window.innerWidth > 768) {
+        const newX = this.state.chosenItems[i].deltaX * 440 / 100;
+        const newY = this.state.chosenItems[i].deltaY * 460 / 100;
         defaultSize = {
-          // x: 0,
-          // y: 0,
+          x: newX,
+          y: newY,
           width: '200px',
           height: '220px',
           margin: 0
         };
       } else if (window.innerWidth < 768) {
+        const newXForMobile = this.state.chosenItems[i].deltaX * 280 / 100;
+        const newYForMobile = this.state.chosenItems[i].deltaY * 300 / 100;
         defaultSize = {
-          // x: 0,
-          // y: 0,
+          x: newXForMobile,
+          y: newYForMobile,
           width: '130px',
           height: '150px',
           margin: 0
@@ -132,9 +165,7 @@ export default class EditOutfit extends React.Component {
           style={{
             backgroundImage: `url(${this.state.chosenItems[i].image})`,
             backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            left: `${left}`,
-            top: `${top}`
+            backgroundRepeat: 'no-repeat'
           }}
           dragAxis="both"
           enableResizing={{
