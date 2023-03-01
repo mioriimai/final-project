@@ -508,6 +508,45 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   }
 });
 
+/* ---------------------------------------------------------
+   Clients can PATECH outfit's info(notes) by its outfitId.
+----------------------------------------------------------- */
+app.patch('/api/outfits/:outfitId', (req, res, next) => {
+  const newNotes = req.body;
+  const outfitId = Number(req.params.outfitId);
+  if (!Number.isInteger(outfitId) || outfitId <= 0) {
+    throw new ClientError(400, 'outfitId mush be a positive integer');
+  } else if ('notes' in newNotes === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  }
+  const sql = `
+       update "outfits"
+       set   "notes" = $1
+       where "outfitId" = $2
+       returning *
+  `;
+  const params = [newNotes.notes, outfitId];
+  db.query(sql, params)
+    .then(result => {
+      const outfit = result.rows[0];
+      if (!outfit) {
+        throw new ClientError(404, `cannot find outfit with outfitId ${outfitId}`);
+      } else {
+        // the query succeeded
+        // respond to the client with the status code 200 and created newItem object
+        res.status(201).json(outfit);
+      }
+    })
+    .catch(err => {
+      // the query failed for some reason
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 /* -----------------------------------------
    Clients can DELETE an item by its itemId.
 -------------------------------------------- */
