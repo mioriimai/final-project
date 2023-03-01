@@ -211,14 +211,42 @@ app.get('/api/outfits', (req, res, next) => {
       });
     });
 });
+/* -------------------------------------------------------------
+  Clients can GET a specifit outfit with its info by outfitId.
+--------------------------------------------------------------- */
+app.get('/api/outfits/:outfitId', (req, res, next) => {
+  const outfitId = Number(req.params.outfitId);
+  if (!Number.isInteger(outfitId) || outfitId <= 0) {
+    throw new ClientError(400, 'outfitId mush be a positive integer');
+  }
 
+  const sql = `
+       select "outfitId",
+              "userId",
+              "notes"
+        from "outfits"
+        where "outfitId" = $1
+       `;
+
+  const params = [outfitId];
+  db.query(sql, params)
+    .then(result => {
+      const item = result.rows[0];
+      if (!item) {
+        throw new ClientError(404, `cannot find outfit with outfitId ${outfitId}`);
+      }
+      res.json(item);
+    })
+    .catch(err => next(err));
+
+});
 /* -------------------------------------------------------------------------
   Clients can GET all items for a specifit outfit with its info by outfitId.
 --------------------------------------------------------------------------- */
 app.get('/api/outfitItems/:outfitId', (req, res, next) => {
   const outfitId = Number(req.params.outfitId);
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
-    throw new ClientError(400, 'itemId mush be a positive integer');
+    throw new ClientError(400, 'outfifId mush be a positive integer');
   }
 
   const sql = `
@@ -227,7 +255,6 @@ app.get('/api/outfitItems/:outfitId', (req, res, next) => {
              "outfitItems"."deltaX",
              "outfitItems"."deltaY",
              "outfits"."userId",
-             "outfits"."notes" as "outfitNotes",
              "items"."image"
         from  "outfitItems"
         join "outfits" using ("outfitId")

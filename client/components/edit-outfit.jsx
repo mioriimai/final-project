@@ -5,9 +5,15 @@ export default class EditOutfit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      outfit: [],
       items: [],
       chosenItems: [],
-      itemId: null
+      itemId: null,
+      addItemPopup: false,
+      updatedNotes: null,
+      saved: false,
+      savedOutfitId: null,
+      reachedToTen: false
     };
   }
 
@@ -16,12 +22,18 @@ export default class EditOutfit extends React.Component {
       .then(res => res.json())
       .then(chosenItems => this.setState({ chosenItems }));
 
+    fetch(`/api/outfits/${this.props.outfitId}`)
+      .then(res => res.json())
+      .then(outfit => this.setState({ outfit }));
+
     fetch('/api/items')
       .then(res => res.json())
       .then(items => this.setState({ items }));
   }
 
   render() {
+
+    // console.log('this.state:', this.state);
 
     // create array for the images of chose items
     const chosenItemsArray = [];
