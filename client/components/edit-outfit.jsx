@@ -22,6 +22,7 @@ export default class EditOutfit extends React.Component {
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleOnDrag = this.handleOnDrag.bind(this);
     this.handleDeleteChoseItemClick = this.handleDeleteChoseItemClick.bind(this);
+    this.handleNotesChange = this.handleNotesChange.bind(this);
   }
 
   componentDidMount() {
@@ -124,6 +125,12 @@ export default class EditOutfit extends React.Component {
     const newChosenItems = copyChosenItems.filter(v => v.itemId !== targetId);
     this.setState({
       chosenItems: newChosenItems
+    });
+  }
+
+  handleNotesChange(event) {
+    this.setState({
+      updatedNotes: event.target.value
     });
   }
 
@@ -249,6 +256,11 @@ export default class EditOutfit extends React.Component {
       uploadMessage = 'upload-from-camera-roll hidden';
     }
 
+    let valueOfNotes = this.state.outfit.notes;
+    if (this.state.updatedNotes !== null) {
+      valueOfNotes = this.state.updatedNotes;
+    }
+
     // save confirm popup-window
     const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
 
@@ -285,7 +297,7 @@ export default class EditOutfit extends React.Component {
                     <label htmlFor="notes" className='outfit-notes'>Notes</label>
                   </div>
                   <div className='row'>
-                    <textarea name="notes" id='outfit-notes' value={this.state.notes} /* onChange={this.handleNotesChange} */ />
+                    <textarea name="notes" id='outfit-notes' value={valueOfNotes} onChange={this.handleNotesChange} />
                   </div>
                   <div className='row outfit-save-button-wrapper'>
                     <button type='submit' className='outfit-save-button'>SAVE</button>
