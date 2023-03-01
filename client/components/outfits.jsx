@@ -149,9 +149,9 @@ function Outfit(props) {
         </div> */}
         <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
           <p className='show-outfit-notes'>{notes}</p>
-          {/* <a href={`#item?itemId=${itemId}`}>
+          <a href={`#outfit?outfitId=${outfitId}`}>
             <i className="fa-solid fa-pen item" />
-          </a> */}
+          </a>
           {/* <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart item' /></button>
           <button type='button' className={props.isFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-solid fa-heart item' /></button> */}
         </div>
