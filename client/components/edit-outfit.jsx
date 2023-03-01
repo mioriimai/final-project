@@ -134,6 +134,10 @@ export default class EditOutfit extends React.Component {
     });
   }
 
+  // handleSaveConfirmPopupClick() {
+
+  // }
+
   render() {
 
     // console.log('this.state:', this.state);
