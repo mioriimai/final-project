@@ -50,6 +50,10 @@ export default class App extends React.Component {
     if (route.path === 'outfits') {
       return <Outfits />;
     }
+    // if (route.path === 'outfit') {
+    //   const outfitId = route.params.get('outfitId');
+    //   return <EditOutfit outfitId={outfitId} />;
+    // }
 
   }
 
