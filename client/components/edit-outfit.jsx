@@ -17,6 +17,7 @@ export default class EditOutfit extends React.Component {
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +50,18 @@ export default class EditOutfit extends React.Component {
     this.setState({
       addItemPopup: false
     });
+  }
+
+  handleMouseEnter(event) {
+    if (event.target.name === undefined) {
+      this.setState({
+        itemId: event.target.id
+      });
+    } else {
+      this.setState({
+        itemId: event.target.name
+      });
+    }
   }
 
   render() {
@@ -91,8 +104,8 @@ export default class EditOutfit extends React.Component {
       chosenItemsArray.push(
         <Rnd key={i}
           className='rnd'
-          /* onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave} */
+          onMouseEnter={this.handleMouseEnter}
+          /*  onMouseLeave={this.handleMouseLeave} */
           default={defaultSize}
           style={{
             backgroundImage: `url(${this.state.chosenItems[i].image})`,
@@ -139,7 +152,7 @@ export default class EditOutfit extends React.Component {
         <div key={i} className="add-item-wrapper">
           <Item
             item={this.state.items[i]}
-            // handleMouseEnter={this.handleMouseEnter}
+            handleMouseEnter={this.handleMouseEnter}
             // handleMouseLeave={this.handleMouseLeave}
             state={this.state}
             hover={hoverClassName}
