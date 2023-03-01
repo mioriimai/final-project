@@ -325,6 +325,14 @@ export default class FormOutfit extends React.Component {
       reachedToTenMessage = 'reached-to-ten-message';
     }
 
+    // show image placeholder and hide it when image is selected
+    let placeholderClassName = 'item-image-placeholder';
+    let uploadMessage = 'upload-from-camera-roll';
+    if (this.state.chosenItems.length > 0) {
+      placeholderClassName = 'hidden';
+      uploadMessage = 'upload-from-camera-roll hidden';
+    }
+
     // save confirm popup-window
     const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
 
@@ -343,6 +351,9 @@ export default class FormOutfit extends React.Component {
                   <div className='outfit-box' >
                     <div className='outfit-box-inner' >
                       {chosenItemsArray}
+                      <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName} />
+
+                      <p className={uploadMessage}>Add an item to create outfit.</p>
                     </div>
                   </div>
                 </div>
