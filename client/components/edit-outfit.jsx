@@ -16,6 +16,7 @@ export default class EditOutfit extends React.Component {
       reachedToTen: false
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
+    this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +43,12 @@ export default class EditOutfit extends React.Component {
         addItemPopup: false
       });
     }
+  }
+
+  handlePopupLeaveButtonClick() {
+    this.setState({
+      addItemPopup: false
+    });
   }
 
   render() {
@@ -177,7 +184,7 @@ export default class EditOutfit extends React.Component {
             <div className='form-outfit-white-box'>
               <div className='row'>
                 <div className='column-full'>
-                  <p className='form-outfit-title'>New Outfit</p>
+                  <p className='form-outfit-title'>Edit Outfit</p>
                 </div>
               </div>
               <div className='row'>
@@ -216,7 +223,7 @@ export default class EditOutfit extends React.Component {
 
         <div className={addItemPopup}>
           <div className='add-item-view-container'>
-            <i className='fa-solid fa-circle-arrow-right' /* onClick={this.handlePopupLeaveButtonClick} */ />
+            <i className='fa-solid fa-circle-arrow-right' onClick={this.handlePopupLeaveButtonClick} />
             <div className='add-item-list-wrapper'>
               {itemsArray}
             </div>
