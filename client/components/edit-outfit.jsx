@@ -19,6 +19,7 @@ export default class EditOutfit extends React.Component {
     this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +70,20 @@ export default class EditOutfit extends React.Component {
     this.setState({
       itemId: null
     });
+  }
+
+  handleItemClick() {
+    fetch(`/api/items/${this.state.itemId}`)
+      .then(res => res.json())
+      .then(chosenItems => {
+        chosenItems.deltaX = 0;
+        chosenItems.deltaY = 0;
+        const newChoseItems = [...this.state.chosenItems, chosenItems];
+        this.setState({
+          chosenItems: newChoseItems,
+          addItemPopup: false
+        });
+      });
   }
 
   render() {
@@ -163,7 +178,7 @@ export default class EditOutfit extends React.Component {
             handleMouseLeave={this.handleMouseLeave}
             state={this.state}
             hover={hoverClassName}
-            // handleItemClick={this.handleItemClick}
+            handleItemClick={this.handleItemClick}
           />
         </div>
       );
@@ -196,7 +211,6 @@ export default class EditOutfit extends React.Component {
     // save confirm popup-window
     const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
 
-    // console.log('this.state:', this.state);
     return (
       <>
         <form /* onSubmit={this.handleSubmit} */>
