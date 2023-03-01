@@ -931,9 +931,9 @@ body {
 .show-outfit-notes {
   color: rgb(255, 255, 255);
   font-family: Alegreya, sans-serif;
-  font-size: 28px;
+  font-size: 30px;
   text-align: center;
-  margin: 125px 25px;
+  margin: 140px 25px;
 }
 
 /* ------------- media query ------------  */
@@ -1405,10 +1405,34 @@ body {
 
   .outfit-list-wrapper {
     margin-top: 0;
+    margin-bottom: 40px;
   }
 
   .outfit-wrapper {
     margin: 18px 10px;
+  }
+
+  .outfit-list-wrapper::after {
+    content: none;
+  }
+
+  .outfit-box-wrapper {
+    width: 280px;
+    height: 300px;
+    margin: auto;
+  }
+
+  .outfit-shadow-wrapper {
+    left: -1.5px;
+    top: 0;
+    width: 280px;
+    height: 300px;
+  }
+
+  .show-outfit-notes {
+    font-size: 22px;
+    text-align: center;
+    margin: 100px 25px;
   }
 
   /* tablet screen */
