@@ -12,7 +12,6 @@ export default class EditOutfit extends React.Component {
       itemId: null,
       addItemPopup: false,
       saved: false,
-      savedOutfitId: null,
       reachedToTen: false
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
@@ -23,6 +22,8 @@ export default class EditOutfit extends React.Component {
     this.handleOnDrag = this.handleOnDrag.bind(this);
     this.handleDeleteChoseItemClick = this.handleDeleteChoseItemClick.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
+    this.handleSaveConfirmPopupClick = this.handleSaveConfirmPopupClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -134,9 +135,81 @@ export default class EditOutfit extends React.Component {
     });
   }
 
-  // handleSaveConfirmPopupClick() {
+  handleSaveConfirmPopupClick() {
 
-  // }
+    // Use fetch to send a post request to /api/store-item-for-outfit.
+    for (let i = 0; i < this.state.chosenItems.length; i++) {
+
+      if (i < this.state.chosenItems.length - 1) {
+        // Create a `new` FormData object.
+        const formDataItem = new FormData();
+
+        const deltaX = Math.round(this.state.chosenItems[i].deltaX);
+        const deltaY = Math.round(this.state.chosenItems[i].deltaY);
+
+        //  Append entries to the form data object I created.
+        formDataItem.append('userId', 1);
+        formDataItem.append('outfitId', this.props.outfitId);
+        formDataItem.append('itemId', this.state.chosenItems[i].itemId);
+        formDataItem.append('deltaX', deltaX);
+        formDataItem.append('deltaY', deltaY);
+
+        fetch('/api/store-item-for-outfit', {
+          method: 'POST',
+          body: formDataItem
+        })
+          .then(res => res.json())
+          // .then(data => {
+          //   this.setState({
+          //   });
+          // })
+          .catch(err => console.error(err));
+
+      } else if (i === this.state.chosenItems.length - 1) { // post the last item in the array
+        // Create a `new` FormData object.
+        const formDataItem = new FormData();
+
+        const deltaX = Math.round(this.state.chosenItems[i].deltaX);
+        const deltaY = Math.round(this.state.chosenItems[i].deltaY);
+
+        //  Append entries to the form data object I created.
+        formDataItem.append('userId', 1);
+        formDataItem.append('outfitId', this.props.outfitId);
+        formDataItem.append('itemId', this.state.chosenItems[i].itemId);
+        formDataItem.append('deltaX', deltaX);
+        formDataItem.append('deltaY', deltaY);
+
+        fetch('/api/store-item-for-outfit', {
+          method: 'POST',
+          body: formDataItem
+        })
+          .then(res => res.json())
+          .then(data => {
+            this.setState({
+              chosenItems: [],
+              notes: ''
+            });
+          })
+          .catch(err => console.error(err));
+      }
+    }
+  }
+
+  handleSubmit(event) {
+    // prevent the default form submission behavior.
+    event.preventDefault();
+
+    fetch(`/api/outfitItems/${this.props.outfitId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          saved: true
+        });
+      })
+      .catch(err => console.error(err));
+  }
 
   render() {
 
@@ -270,7 +343,7 @@ export default class EditOutfit extends React.Component {
 
     return (
       <>
-        <form /* onSubmit={this.handleSubmit} */>
+        <form onSubmit={this.handleSubmit}>
           <div className='form-outfit-container'>
             <div className='form-outfit-white-box'>
               <div className='row'>
@@ -325,9 +398,9 @@ export default class EditOutfit extends React.Component {
         <div className={popup}>
           <div className='saved-popup-text-wrapper'>
             <h1 className='successfully-saved'>Successfully saved!</h1>
-            <a className='add-more-items' href='#add-outfit' /* onClick={this.handleSaveConfirmPopupClick} */>Add More Outfits</a>
+            <a className='add-more-items' href='#add-outfit' onClick={this.handleSaveConfirmPopupClick}>Add More Outfits</a>
             <br />
-            <a className='see-items' href='#outfits' /* onClick={this.handleSaveConfirmPopupClick} */>See Your Outfits</a>
+            <a className='see-items' href='#outfits' onClick={this.handleSaveConfirmPopupClick}>See Your Outfits</a>
           </div>
         </div>
       </>

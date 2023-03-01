@@ -553,10 +553,6 @@ app.delete('/api/outfitItems/:outfitId', (req, res, next) => {
   const params = [outfitId];
   db.query(sql, params)
     .then(result => {
-      const item = result.rows[0];
-      if (!item) {
-        throw new ClientError(404, `cannot find item with outfitId ${outfitId}`);
-      }
       res.json(result.rows);
     })
     .catch(err => next(err));
