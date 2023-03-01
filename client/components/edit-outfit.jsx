@@ -48,18 +48,20 @@ export default class EditOutfit extends React.Component {
       }
 
       let defaultSize;
+      const left = `${this.state.chosenItems[i].deltaX}%`;
+      const top = `${this.state.chosenItems[i].deltaY}%`;
       if (window.innerWidth > 768) {
         defaultSize = {
-          x: 0,
-          y: 0,
+          // x: 0,
+          // y: 0,
           width: '200px',
           height: '220px',
           margin: 0
         };
       } else if (window.innerWidth < 768) {
         defaultSize = {
-          x: 0,
-          y: 0,
+          // x: 0,
+          // y: 0,
           width: '130px',
           height: '150px',
           margin: 0
@@ -75,7 +77,9 @@ export default class EditOutfit extends React.Component {
           style={{
             backgroundImage: `url(${this.state.chosenItems[i].image})`,
             backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat'
+            backgroundRepeat: 'no-repeat',
+            left: `${left}`,
+            top: `${top}`
           }}
           dragAxis="both"
           enableResizing={{
