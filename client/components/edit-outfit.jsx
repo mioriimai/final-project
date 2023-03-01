@@ -18,6 +18,7 @@ export default class EditOutfit extends React.Component {
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +65,12 @@ export default class EditOutfit extends React.Component {
     }
   }
 
+  handleMouseLeave() {
+    this.setState({
+      itemId: null
+    });
+  }
+
   render() {
 
     // console.log('this.state:', this.state);
@@ -105,7 +112,7 @@ export default class EditOutfit extends React.Component {
         <Rnd key={i}
           className='rnd'
           onMouseEnter={this.handleMouseEnter}
-          /*  onMouseLeave={this.handleMouseLeave} */
+           onMouseLeave={this.handleMouseLeave}
           default={defaultSize}
           style={{
             backgroundImage: `url(${this.state.chosenItems[i].image})`,
@@ -153,7 +160,7 @@ export default class EditOutfit extends React.Component {
           <Item
             item={this.state.items[i]}
             handleMouseEnter={this.handleMouseEnter}
-            // handleMouseLeave={this.handleMouseLeave}
+            handleMouseLeave={this.handleMouseLeave}
             state={this.state}
             hover={hoverClassName}
             // handleItemClick={this.handleItemClick}
