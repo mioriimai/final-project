@@ -21,6 +21,7 @@ export default class EditOutfit extends React.Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleItemClick = this.handleItemClick.bind(this);
     this.handleOnDrag = this.handleOnDrag.bind(this);
+    this.handleDeleteChoseItemClick = this.handleDeleteChoseItemClick.bind(this);
   }
 
   componentDidMount() {
@@ -112,6 +113,15 @@ export default class EditOutfit extends React.Component {
         newChosenItems.push(item);
       }
     });
+    this.setState({
+      chosenItems: newChosenItems
+    });
+  }
+
+  handleDeleteChoseItemClick() {
+    const copyChosenItems = [...this.state.chosenItems];
+    const targetId = Number(this.state.itemId);
+    const newChosenItems = copyChosenItems.filter(v => v.itemId !== targetId);
     this.setState({
       chosenItems: newChosenItems
     });
