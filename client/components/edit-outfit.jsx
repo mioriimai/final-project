@@ -8,13 +8,14 @@ export default class EditOutfit extends React.Component {
       outfit: [],
       items: [],
       chosenItems: [],
+      updatedNotes: null,
       itemId: null,
       addItemPopup: false,
-      updatedNotes: null,
       saved: false,
       savedOutfitId: null,
       reachedToTen: false
     };
+    this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +30,18 @@ export default class EditOutfit extends React.Component {
     fetch('/api/items')
       .then(res => res.json())
       .then(items => this.setState({ items }));
+  }
+
+  handleAddButtonClick() {
+    if (this.state.chosenItems.length < 10) {
+      this.setState({
+        addItemPopup: true
+      });
+    } else if (this.state.chosenItems.length >= 10) {
+      this.setState({
+        addItemPopup: false
+      });
+    }
   }
 
   render() {
@@ -180,7 +193,7 @@ export default class EditOutfit extends React.Component {
                 </div>
                 <div className='column-half'>
                   <div className='row'>
-                    <button type='button' className='add-item-to-outfit-button' /* onClick={this.handleAddButtonClick} */><i className='fa-solid fa-plus outfit' />Add an Item</button>
+                    <button type='button' className='add-item-to-outfit-button' onClick={this.handleAddButtonClick}><i className='fa-solid fa-plus outfit' />Add an Item</button>
                   </div>
                   <div className='row'>
                     <p className={upToTenMessage}><i className='fa-regular fa-lightbulb' />You can add up to 10 items.</p>
