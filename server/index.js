@@ -212,6 +212,41 @@ app.get('/api/outfits', (req, res, next) => {
     });
 });
 
+/* -------------------------------------------------------------------------
+  Clients can GET all items for a specifit outfit with its info by outfitId.
+--------------------------------------------------------------------------- */
+app.get('/api/outfitItems/:outfitId', (req, res, next) => {
+  const outfitId = Number(req.params.outfitId);
+  if (!Number.isInteger(outfitId) || outfitId <= 0) {
+    throw new ClientError(400, 'itemId mush be a positive integer');
+  }
+
+  const sql = `
+      select "outfitItems"."outfitId",
+             "outfitItems"."itemId",
+             "outfitItems"."deltaX",
+             "outfitItems"."deltaY",
+             "outfits"."userId",
+             "outfits"."notes" as "outfitNotes",
+             "items"."image"
+        from  "outfitItems"
+        join "outfits" using ("outfitId")
+        join "items" using ("itemId")
+       where "outfitId" = $1
+  `;
+  const params = [outfitId];
+  db.query(sql, params)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 /* -------------------------------------------
    Clients can POST a new item with its info.
 --------------------------------------------- */
