@@ -3,6 +3,7 @@ import Home from './pages/home';
 import FormItem from './components/form-item';
 import FormOutfit from './components/form-outfit';
 import EditItem from './components/edit-item';
+import EditOutfit from './components/edit-outfit';
 import Items from './components/items';
 import Outfits from './components/outfits';
 import Favorites from './components/favorites';
@@ -50,10 +51,10 @@ export default class App extends React.Component {
     if (route.path === 'outfits') {
       return <Outfits />;
     }
-    // if (route.path === 'outfit') {
-    //   const outfitId = route.params.get('outfitId');
-    //   return <EditOutfit outfitId={outfitId} />;
-    // }
+    if (route.path === 'outfit') {
+      const outfitId = route.params.get('outfitId');
+      return <EditOutfit outfitId={outfitId} />;
+    }
 
   }
 
