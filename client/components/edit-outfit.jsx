@@ -240,6 +240,22 @@ export default class EditOutfit extends React.Component {
     });
   }
 
+  handleDeleteItem() {
+    // Use fetch() to send a DELETE request to /api/outfits.
+    fetch(`/api/outfits/${this.props.outfitId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .catch(err => console.error(err));
+
+    // Use fetch() to send a DELETE request to /api/outfitItems.
+    fetch(`/api/outfitItems/${this.props.outfitId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .catch(err => console.error(err));
+  }
+
   render() {
 
     // console.log('this.state:', this.state);
