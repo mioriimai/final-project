@@ -423,7 +423,6 @@ app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
 ------------------------------------------------------ */
 app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   const updatedItem = req.body;
-
   const itemId = Number(req.params.itemId);
   // varidate the "inputs" first.
   if ('category' in updatedItem === false || 'brand' in updatedItem === false || 'color' in updatedItem === false || 'notes' in updatedItem === false || 'userId' in updatedItem === false) {
@@ -511,7 +510,7 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
 /* ---------------------------------------------------------
    Clients can PATECH outfit's info(notes) by its outfitId.
 ----------------------------------------------------------- */
-app.patch('/api/outfits/:outfitId', (req, res, next) => {
+app.patch('/api/outfitsNotes/:outfitId', (req, res, next) => {
   const newNotes = req.body;
   const outfitId = Number(req.params.outfitId);
   if (!Number.isInteger(outfitId) || outfitId <= 0) {

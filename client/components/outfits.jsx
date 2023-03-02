@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default class Outfits extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -13,14 +14,12 @@ export default class Outfits extends React.Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
-  componentDidMount() {
-    fetch('/api/outfitItems')
-      .then(res => res.json())
-      .then(itemsForOutfit => this.setState({ itemsForOutfit }));
-
-    fetch('/api/outfits')
-      .then(res => res.json())
-      .then(outfits => this.setState({ outfits }));
+  async componentDidMount() {
+    const outfitJson = await fetch('/api/outfits');
+    const outfits = await outfitJson.json();
+    const outfitItemsJson = await fetch('/api/outfitItems');
+    const itemsForOutfit = await outfitItemsJson.json();
+    this.setState({ outfits, itemsForOutfit });
   }
 
   handleMouseEnter(event) {
@@ -36,9 +35,6 @@ export default class Outfits extends React.Component {
   }
 
   render() {
-
-    // console.log('this.state:', this.state);
-
     const outfitsArray = [];
     for (let i = 0; i < this.state.outfits.length; i++) {
 
@@ -87,7 +83,6 @@ export default class Outfits extends React.Component {
           Add Outfits
         </a>
         <p className={noItemMessage}>No outfits found. Let&rsquo;s add an outfit!</p>
-
         <div className='outfit-list-wrapper'>
           {outfitsArray}
         </div>
@@ -102,24 +97,17 @@ function Outfit(props) {
 
   const imageArray = [];
   for (let r = 0; r < items.length; r++) {
-    let left;
-    let top;
+    const left = `${items[r].deltaX}%`;
+    const top = `${items[r].deltaY}%`;
     let width;
     let height;
     if (window.innerWidth > 768) {
-      left = `${items[r].deltaX}%`;
-      top = `${items[r].deltaY}%`;
       width = '200px';
       height = '220px';
     } else if (window.innerWidth < 768) {
-      left = items[r].deltaX;
-      left = `${left}%`;
-      top = items[r].deltaY;
-      top = `${top}%`;
       width = '130px';
       height = '150px';
     }
-
     imageArray.push(
       <img key={r}
         id={items[r].outfitId}

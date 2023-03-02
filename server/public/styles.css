@@ -876,6 +876,15 @@ body {
   opacity: 0.6;
 }
 
+.saved-popup-text-wrapper-outfit {
+  background-color: white;
+  text-align: center;
+  width: 500px;
+  height: 280px;
+  margin: 180px auto;
+  border-radius: 17px;
+}
+
 /* ----------- outfits view ------------ */
 .outfits-view-container {
   margin: 5px auto;
@@ -1395,6 +1404,12 @@ body {
     padding: 5px 25px;
     margin-top: 15px;
     margin-right: 30px;
+  }
+
+  .saved-popup-text-wrapper-outfit {
+    width: 300px;
+    height: 200px;
+    margin: 40% auto;
   }
 
   /* ----------- mobile outfits view -------- */

@@ -135,6 +135,47 @@ export default class EditOutfit extends React.Component {
     });
   }
 
+  handleSubmit(event) {
+
+    // prevent the default form submission behavior.
+    event.preventDefault();
+
+    let updatedNotes;
+    if (this.state.updatedNotes === null) {
+      updatedNotes = this.state.outfit.notes;
+    } else {
+      updatedNotes = this.state.updatedNotes;
+    }
+    const newNotes = { notes: updatedNotes };
+
+    fetch(`/api/outfitsNotes/${this.props.outfitId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newNotes)
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          saved: true,
+          updatedNotes: ''
+        });
+      })
+      .catch(err => console.error(err));
+
+    fetch(`/api/outfitItems/${this.props.outfitId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          saved: true
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
   handleSaveConfirmPopupClick() {
 
     // Use fetch to send a post request to /api/store-item-for-outfit.
@@ -159,10 +200,6 @@ export default class EditOutfit extends React.Component {
           body: formDataItem
         })
           .then(res => res.json())
-          // .then(data => {
-          //   this.setState({
-          //   });
-          // })
           .catch(err => console.error(err));
 
       } else if (i === this.state.chosenItems.length - 1) { // post the last item in the array
@@ -187,7 +224,7 @@ export default class EditOutfit extends React.Component {
           .then(data => {
             this.setState({
               chosenItems: [],
-              notes: ''
+              switchView: true
             });
           })
           .catch(err => console.error(err));
@@ -195,25 +232,7 @@ export default class EditOutfit extends React.Component {
     }
   }
 
-  handleSubmit(event) {
-    // prevent the default form submission behavior.
-    event.preventDefault();
-
-    fetch(`/api/outfitItems/${this.props.outfitId}`, {
-      method: 'DELETE'
-    })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          saved: true
-        });
-      })
-      .catch(err => console.error(err));
-  }
-
   render() {
-
-    // console.log('this.state:', this.state);
 
     // create array for the images of chose items
     const chosenItemsArray = [];
@@ -357,7 +376,6 @@ export default class EditOutfit extends React.Component {
                     <div className='outfit-box-inner' >
                       {chosenItemsArray}
                       <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName} />
-
                       <p className={uploadMessage}>Add an item to create outfit.</p>
                     </div>
                   </div>
@@ -396,7 +414,7 @@ export default class EditOutfit extends React.Component {
         </div>
 
         <div className={popup}>
-          <div className='saved-popup-text-wrapper'>
+          <div className='saved-popup-text-wrapper-outfit'>
             <h1 className='successfully-saved'>Successfully saved!</h1>
             <a className='add-more-items' href='#add-outfit' onClick={this.handleSaveConfirmPopupClick}>Add More Outfits</a>
             <br />
