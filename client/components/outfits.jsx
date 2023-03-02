@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default class Outfits extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -8,20 +9,32 @@ export default class Outfits extends React.Component {
       itemsForOutfit: [],
       outfitId: null
     };
+
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
-  componentDidMount() {
-    fetch('/api/outfitItems')
-      .then(res => res.json())
-      .then(itemsForOutfit => this.setState({ itemsForOutfit }));
+  async componentDidMount() {
+    const outfitJson = await fetch('/api/outfits');
+    const outfits = await outfitJson.json();
+    const outfitItemsJson = await fetch('/api/outfitItems');
+    const itemsForOutfit = await outfitItemsJson.json();
+    this.setState({ outfits, itemsForOutfit });
+  }
 
-    fetch('/api/outfits')
-      .then(res => res.json())
-      .then(outfits => this.setState({ outfits }));
+  handleMouseEnter(event) {
+    this.setState({
+      outfitId: event.target.id
+    });
+  }
+
+  handleMouseLeave() {
+    this.setState({
+      outfitId: null
+    });
   }
 
   render() {
-
     const outfitsArray = [];
     for (let i = 0; i < this.state.outfits.length; i++) {
 
@@ -31,10 +44,21 @@ export default class Outfits extends React.Component {
           itemsArray.push(this.state.itemsForOutfit[n]);
         }
       }
+      const targetedOutfitId = Number(this.state.outfitId);
+      let hoverClassName = 'outfit-shadow-wrapper hidden';
+      if (this.state.outfits[i].outfitId === targetedOutfitId) {
+        hoverClassName = 'outfit-shadow-wrapper';
+      } else {
+        hoverClassName = 'outfit-shadow-wrapper hidden';
+      }
       outfitsArray.push(
         <div key={i} className='outfit-wrapper'>
           <Outfit
             items={itemsArray}
+            outfit={this.state.outfits[i]}
+            handleMouseEnter={this.handleMouseEnter}
+            handleMouseLeave={this.handleMouseLeave}
+            hover={hoverClassName}
             />
         </div>
       );
@@ -59,7 +83,6 @@ export default class Outfits extends React.Component {
           Add Outfits
         </a>
         <p className={noItemMessage}>No outfits found. Let&rsquo;s add an outfit!</p>
-
         <div className='outfit-list-wrapper'>
           {outfitsArray}
         </div>
@@ -74,28 +97,22 @@ function Outfit(props) {
 
   const imageArray = [];
   for (let r = 0; r < items.length; r++) {
-    let left;
-    let top;
+    const left = `${items[r].deltaX}%`;
+    const top = `${items[r].deltaY}%`;
     let width;
     let height;
     if (window.innerWidth > 768) {
-      left = `${items[r].deltaX}%`;
-      top = `${items[r].deltaY}%`;
       width = '200px';
       height = '220px';
     } else if (window.innerWidth < 768) {
-      left = items[r].deltaX;
-      left = `${left}%`;
-      top = items[r].deltaY;
-      top = `${top}%`;
       width = '130px';
       height = '150px';
     }
-
     imageArray.push(
       <img key={r}
+        id={items[r].outfitId}
       src={items[r].image}
-      alt={`outfit${r}`}
+        alt={`outfit${items[r].outfitId}`}
       className='test'
       style={{
         position: 'absolute',
@@ -104,17 +121,28 @@ function Outfit(props) {
         width: `${width}`,
         height: `${height}`
       }}
-      // onMouseEnter={this.handleMouseEnter}
-      // onMouseLeave={this.handleMouseLeave}
       />
     );
   }
 
+  const { outfitId, notes } = props.outfit;
+
   return (
 
-    <div className='outfit-box no-margin'>
-      <div className='outfit-box-inner'>
+    <div className='outfit-box-wrapper'>
+      <div className='outfit-box-inner ' id={outfitId} onMouseEnter={props.handleMouseEnter}>
         {imageArray}
+        {/* <div className={props.favoriteIcon}>
+          <i className='fa-solid fa-heart item-stay ' />
+        </div> */}
+        <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
+          <p className='show-outfit-notes'>{notes}</p>
+          <a href={`#outfit?outfitId=${outfitId}`}>
+            <i className="fa-solid fa-pen item" />
+          </a>
+          {/* <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart item' /></button>
+          <button type='button' className={props.isFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-solid fa-heart item' /></button> */}
+        </div>
       </div>
     </div>
   );

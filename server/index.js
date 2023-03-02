@@ -211,6 +211,68 @@ app.get('/api/outfits', (req, res, next) => {
       });
     });
 });
+/* -------------------------------------------------------------
+  Clients can GET a specifit outfit with its info by outfitId.
+--------------------------------------------------------------- */
+app.get('/api/outfits/:outfitId', (req, res, next) => {
+  const outfitId = Number(req.params.outfitId);
+  if (!Number.isInteger(outfitId) || outfitId <= 0) {
+    throw new ClientError(400, 'outfitId mush be a positive integer');
+  }
+
+  const sql = `
+       select "outfitId",
+              "userId",
+              "notes"
+        from "outfits"
+        where "outfitId" = $1
+       `;
+
+  const params = [outfitId];
+  db.query(sql, params)
+    .then(result => {
+      const item = result.rows[0];
+      if (!item) {
+        throw new ClientError(404, `cannot find outfit with outfitId ${outfitId}`);
+      }
+      res.json(item);
+    })
+    .catch(err => next(err));
+
+});
+/* -------------------------------------------------------------------------
+  Clients can GET all items for a specifit outfit with its info by outfitId.
+--------------------------------------------------------------------------- */
+app.get('/api/outfitItems/:outfitId', (req, res, next) => {
+  const outfitId = Number(req.params.outfitId);
+  if (!Number.isInteger(outfitId) || outfitId <= 0) {
+    throw new ClientError(400, 'outfifId mush be a positive integer');
+  }
+
+  const sql = `
+      select "outfitItems"."outfitId",
+             "outfitItems"."itemId",
+             "outfitItems"."deltaX",
+             "outfitItems"."deltaY",
+             "outfits"."userId",
+             "items"."image"
+        from  "outfitItems"
+        join "outfits" using ("outfitId")
+        join "items" using ("itemId")
+       where "outfitId" = $1
+  `;
+  const params = [outfitId];
+  db.query(sql, params)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
 
 /* -------------------------------------------
    Clients can POST a new item with its info.
@@ -361,7 +423,6 @@ app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
 ------------------------------------------------------ */
 app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   const updatedItem = req.body;
-
   const itemId = Number(req.params.itemId);
   // varidate the "inputs" first.
   if ('category' in updatedItem === false || 'brand' in updatedItem === false || 'color' in updatedItem === false || 'notes' in updatedItem === false || 'userId' in updatedItem === false) {
@@ -446,6 +507,45 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   }
 });
 
+/* ---------------------------------------------------------
+   Clients can PATECH outfit's info(notes) by its outfitId.
+----------------------------------------------------------- */
+app.patch('/api/outfitsNotes/:outfitId', (req, res, next) => {
+  const newNotes = req.body;
+  const outfitId = Number(req.params.outfitId);
+  if (!Number.isInteger(outfitId) || outfitId <= 0) {
+    throw new ClientError(400, 'outfitId mush be a positive integer');
+  } else if ('notes' in newNotes === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  }
+  const sql = `
+       update "outfits"
+       set   "notes" = $1
+       where "outfitId" = $2
+       returning *
+  `;
+  const params = [newNotes.notes, outfitId];
+  db.query(sql, params)
+    .then(result => {
+      const outfit = result.rows[0];
+      if (!outfit) {
+        throw new ClientError(404, `cannot find outfit with outfitId ${outfitId}`);
+      } else {
+        // the query succeeded
+        // respond to the client with the status code 200 and created newItem object
+        res.status(201).json(outfit);
+      }
+    })
+    .catch(err => {
+      // the query failed for some reason
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
 /* -----------------------------------------
    Clients can DELETE an item by its itemId.
 -------------------------------------------- */
@@ -470,6 +570,28 @@ app.delete('/api/items/:itemId', (req, res, next) => {
         throw new ClientError(404, `cannot find item with itemId ${itemId}`);
       }
       res.json(item);
+    })
+    .catch(err => next(err));
+});
+
+/* -----------------------------------------------------------------------------------
+   Clients can DELETE items in outfitItems table that match with a specific outfitId.
+------------------------------------------------------------------------------------ */
+app.delete('/api/outfitItems/:outfitId', (req, res, next) => {
+  const outfitId = Number(req.params.outfitId);
+  if (!Number.isInteger(outfitId) || outfitId <= 0) {
+    throw new ClientError(400, 'outfitId mush be a positive integer');
+  }
+  const sql = `
+       delete
+       from  "outfitItems"
+       where "outfitId" = $1
+       returning *
+  `;
+  const params = [outfitId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
     })
     .catch(err => next(err));
 });

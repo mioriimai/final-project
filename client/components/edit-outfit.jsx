@@ -1,20 +1,19 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
 
-export default class FormOutfit extends React.Component {
+export default class EditOutfit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addItemPopup: false,
+      outfit: [],
       items: [],
-      itemId: null,
       chosenItems: [],
-      notes: '',
+      updatedNotes: null,
+      itemId: null,
+      addItemPopup: false,
       saved: false,
-      savedOutfitId: null,
       reachedToTen: false
     };
-
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
@@ -28,13 +27,20 @@ export default class FormOutfit extends React.Component {
   }
 
   componentDidMount() {
+    fetch(`/api/outfitItems/${this.props.outfitId}`)
+      .then(res => res.json())
+      .then(chosenItems => this.setState({ chosenItems }));
+
+    fetch(`/api/outfits/${this.props.outfitId}`)
+      .then(res => res.json())
+      .then(outfit => this.setState({ outfit }));
+
     fetch('/api/items')
       .then(res => res.json())
       .then(items => this.setState({ items }));
   }
 
   handleAddButtonClick() {
-
     if (this.state.chosenItems.length < 10) {
       this.setState({
         addItemPopup: true
@@ -85,7 +91,6 @@ export default class FormOutfit extends React.Component {
   }
 
   handleOnDrag(event, ui) {
-
     // change delta X and Y and perventage
     let width;
     let height;
@@ -97,6 +102,7 @@ export default class FormOutfit extends React.Component {
       height = 300;
     }
 
+    // update chosenItem array with new deltaX and Y
     const copyChosenItems = [...this.state.chosenItems];
     const newChosenItems = [];
     const targetItemId = Number(event.target.id);
@@ -125,8 +131,49 @@ export default class FormOutfit extends React.Component {
 
   handleNotesChange(event) {
     this.setState({
-      notes: event.target.value
+      updatedNotes: event.target.value
     });
+  }
+
+  handleSubmit(event) {
+
+    // prevent the default form submission behavior.
+    event.preventDefault();
+
+    let updatedNotes;
+    if (this.state.updatedNotes === null) {
+      updatedNotes = this.state.outfit.notes;
+    } else {
+      updatedNotes = this.state.updatedNotes;
+    }
+    const newNotes = { notes: updatedNotes };
+
+    fetch(`/api/outfitsNotes/${this.props.outfitId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newNotes)
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          saved: true,
+          updatedNotes: ''
+        });
+      })
+      .catch(err => console.error(err));
+
+    fetch(`/api/outfitItems/${this.props.outfitId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          saved: true
+        });
+      })
+      .catch(err => console.error(err));
   }
 
   handleSaveConfirmPopupClick() {
@@ -143,7 +190,7 @@ export default class FormOutfit extends React.Component {
 
         //  Append entries to the form data object I created.
         formDataItem.append('userId', 1);
-        formDataItem.append('outfitId', this.state.savedOutfitId);
+        formDataItem.append('outfitId', this.props.outfitId);
         formDataItem.append('itemId', this.state.chosenItems[i].itemId);
         formDataItem.append('deltaX', deltaX);
         formDataItem.append('deltaY', deltaY);
@@ -153,10 +200,6 @@ export default class FormOutfit extends React.Component {
           body: formDataItem
         })
           .then(res => res.json())
-          .then(data => {
-            this.setState({
-            });
-          })
           .catch(err => console.error(err));
 
       } else if (i === this.state.chosenItems.length - 1) { // post the last item in the array
@@ -168,7 +211,7 @@ export default class FormOutfit extends React.Component {
 
         //  Append entries to the form data object I created.
         formDataItem.append('userId', 1);
-        formDataItem.append('outfitId', this.state.savedOutfitId);
+        formDataItem.append('outfitId', this.props.outfitId);
         formDataItem.append('itemId', this.state.chosenItems[i].itemId);
         formDataItem.append('deltaX', deltaX);
         formDataItem.append('deltaY', deltaY);
@@ -180,9 +223,8 @@ export default class FormOutfit extends React.Component {
           .then(res => res.json())
           .then(data => {
             this.setState({
-              saved: !this.state.saved,
               chosenItems: [],
-              savedOutfitId: null
+              switchView: true
             });
           })
           .catch(err => console.error(err));
@@ -190,36 +232,9 @@ export default class FormOutfit extends React.Component {
     }
   }
 
-  handleSubmit(event) {
-    // prevent the default form submission behavior.
-    event.preventDefault();
-
-    // Create a `new` FormData object.
-    const formData = new FormData();
-
-    //  Append entries to the form data object.
-    formData.append('userId', '1');
-    formData.append('favorite', false);
-    formData.append('notes', this.state.notes);
-
-    // Use fetch() to send a POST request to / api / form-outfit.
-    fetch('/api/form-outfit', {
-      method: 'POST',
-      body: formData
-    })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          notes: '',
-          saved: true,
-          savedOutfitId: data.outfitId
-        });
-      })
-      .catch(err => console.error(err));
-  }
-
   render() {
 
+    // create array for the images of chose items
     const chosenItemsArray = [];
     for (let i = 0; i < this.state.chosenItems.length; i++) {
       const targetedItemId = Number(this.state.itemId);
@@ -233,17 +248,21 @@ export default class FormOutfit extends React.Component {
 
       let defaultSize;
       if (window.innerWidth > 768) {
+        const newX = this.state.chosenItems[i].deltaX * 440 / 100;
+        const newY = this.state.chosenItems[i].deltaY * 460 / 100;
         defaultSize = {
-          x: 0,
-          y: 0,
+          x: newX,
+          y: newY,
           width: '200px',
           height: '220px',
           margin: 0
         };
       } else if (window.innerWidth < 768) {
+        const newXForMobile = this.state.chosenItems[i].deltaX * 280 / 100;
+        const newYForMobile = this.state.chosenItems[i].deltaY * 300 / 100;
         defaultSize = {
-          x: 0,
-          y: 0,
+          x: newXForMobile,
+          y: newYForMobile,
           width: '130px',
           height: '150px',
           margin: 0
@@ -252,37 +271,38 @@ export default class FormOutfit extends React.Component {
 
       chosenItemsArray.push(
         <Rnd key={i}
-             className='rnd'
-             onMouseEnter={this.handleMouseEnter}
-             onMouseLeave={this.handleMouseLeave}
-             default={defaultSize}
-             style={{
-               backgroundImage: `url(${this.state.chosenItems[i].image})`,
-               backgroundSize: 'contain',
-               backgroundRepeat: 'no-repeat'
-             }}
-             dragAxis="both"
-             enableResizing={{
-               top: false,
-               right: false,
-               bottom: false,
-               left: false,
-               topRight: false,
-               bottomRight: false,
-               bottomLeft: false,
-               topLeft: false
-             }}
-             bounds='parent'
-             id={`${this.state.chosenItems[i].itemId}`}
-             onDrag={this.handleOnDrag}
-          >
+          className='rnd'
+          onMouseEnter={this.handleMouseEnter}
+           onMouseLeave={this.handleMouseLeave}
+          default={defaultSize}
+          style={{
+            backgroundImage: `url(${this.state.chosenItems[i].image})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat'
+          }}
+          dragAxis="both"
+          enableResizing={{
+            top: false,
+            right: false,
+            bottom: false,
+            left: false,
+            topRight: false,
+            bottomRight: false,
+            bottomLeft: false,
+            topLeft: false
+          }}
+          bounds='parent'
+          id={`${this.state.chosenItems[i].itemId}`}
+          onDrag={this.handleOnDrag}
+        >
           <div className={hoverDeleteChosenItem} >
-            <i className='fa-regular fa-circle-xmark chosen-item' onClick={this.handleDeleteChoseItemClick}/>
+            <i className='fa-regular fa-circle-xmark chosen-item' onClick={this.handleDeleteChoseItemClick} />
           </div>
         </Rnd>
       );
     }
 
+    // create array for items options
     const itemsArray = [];
     for (let i = 0; i < this.state.items.length; i++) {
       const targetedItemId = Number(this.state.itemId);
@@ -325,12 +345,16 @@ export default class FormOutfit extends React.Component {
       reachedToTenMessage = 'reached-to-ten-message';
     }
 
-    // show image placeholder and hide it when image is selected
     let placeholderClassName = 'item-image-placeholder';
     let uploadMessage = 'upload-from-camera-roll';
     if (this.state.chosenItems.length > 0) {
       placeholderClassName = 'hidden';
       uploadMessage = 'upload-from-camera-roll hidden';
+    }
+
+    let valueOfNotes = this.state.outfit.notes;
+    if (this.state.updatedNotes !== null) {
+      valueOfNotes = this.state.updatedNotes;
     }
 
     // save confirm popup-window
@@ -343,7 +367,7 @@ export default class FormOutfit extends React.Component {
             <div className='form-outfit-white-box'>
               <div className='row'>
                 <div className='column-full'>
-                  <p className='form-outfit-title'>New Outfit</p>
+                  <p className='form-outfit-title'>Edit Outfit</p>
                 </div>
               </div>
               <div className='row'>
@@ -352,7 +376,6 @@ export default class FormOutfit extends React.Component {
                     <div className='outfit-box-inner' >
                       {chosenItemsArray}
                       <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName} />
-
                       <p className={uploadMessage}>Add an item to create outfit.</p>
                     </div>
                   </div>
@@ -369,7 +392,7 @@ export default class FormOutfit extends React.Component {
                     <label htmlFor="notes" className='outfit-notes'>Notes</label>
                   </div>
                   <div className='row'>
-                    <textarea name="notes" id='outfit-notes' value={this.state.notes} onChange={this.handleNotesChange} />
+                    <textarea name="notes" id='outfit-notes' value={valueOfNotes} onChange={this.handleNotesChange} />
                   </div>
                   <div className='row outfit-save-button-wrapper'>
                     <button type='submit' className='outfit-save-button'>SAVE</button>
@@ -391,7 +414,7 @@ export default class FormOutfit extends React.Component {
         </div>
 
         <div className={popup}>
-          <div className='saved-popup-text-wrapper'>
+          <div className='saved-popup-text-wrapper-outfit'>
             <h1 className='successfully-saved'>Successfully saved!</h1>
             <a className='add-more-items' href='#add-outfit' onClick={this.handleSaveConfirmPopupClick}>Add More Outfits</a>
             <br />
@@ -415,7 +438,7 @@ function Item(props) {
           onMouseEnter={props.handleMouseEnter}
           name={`${itemId}`}
         />
-        <div className={props.hover} onMouseLeave={props.handleMouseLeave} onClick={props.handleItemClick}/>
+        <div className={props.hover} onMouseLeave={props.handleMouseLeave} onClick={props.handleItemClick} />
       </div>
     </div>
   );
