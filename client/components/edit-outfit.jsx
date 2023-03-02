@@ -25,6 +25,7 @@ export default class EditOutfit extends React.Component {
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSaveConfirmPopupClick = this.handleSaveConfirmPopupClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDeleteConfirmPopupClick = this.handleDeleteConfirmPopupClick.bind(this);
   }
 
   componentDidMount() {
@@ -233,7 +234,15 @@ export default class EditOutfit extends React.Component {
     }
   }
 
+  handleDeleteConfirmPopupClick() {
+    this.setState({
+      deleteConfirmation: !this.state.deleteConfirmation
+    });
+  }
+
   render() {
+
+    // console.log('this.state:', this.state);
 
     // create array for the images of chose items
     const chosenItemsArray = [];
