@@ -259,8 +259,6 @@ export default class EditOutfit extends React.Component {
 
   render() {
 
-    // console.log('this.state:', this.state);
-
     // create array for the images of chose items
     const chosenItemsArray = [];
     for (let i = 0; i < this.state.chosenItems.length; i++) {
