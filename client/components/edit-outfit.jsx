@@ -370,6 +370,9 @@ export default class EditOutfit extends React.Component {
     // save confirm popup-window
     const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
 
+    // show or hide deleteConfirmPopup
+    const deleteConfirmPopup = this.state.deleteConfirmation ? 'pop-up' : 'pop-up hidden';
+
     return (
       <>
         <form onSubmit={this.handleSubmit}>
@@ -434,6 +437,14 @@ export default class EditOutfit extends React.Component {
             <a className='add-more-items' href='#add-outfit' onClick={this.handleSaveConfirmPopupClick}>Add More Outfits</a>
             <br />
             <a className='see-items' href='#outfits' onClick={this.handleSaveConfirmPopupClick}>See Your Outfits</a>
+          </div>
+        </div>
+
+        <div className={deleteConfirmPopup}>
+          <div className='saved-popup-text-wrapper'>
+            <h1 className='delete-confirm-message'>Are you sure you want to delete this item? <br />This process can&rsquo;t be undone.</h1>
+            <button className='cancel-delete-button' type='button' onClick={this.handleDeleteConfirmPopupClick} >Cancel</button>
+            <a className='delete-item-button' href='#items' onClick={this.handleDeleteItem} >Delete</a>
           </div>
         </div>
       </>
