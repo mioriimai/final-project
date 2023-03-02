@@ -574,6 +574,32 @@ app.delete('/api/items/:itemId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+/* ---------------------------------------------
+   Clients can DELETE an outfit by its outfitId.
+----------------------------------------------- */
+app.delete('/api/outfits/:outfitId', (req, res, next) => {
+  const outfitId = Number(req.params.outfitId);
+  if (!Number.isInteger(outfitId) || outfitId <= 0) {
+    throw new ClientError(400, 'outfitId mush be a positive integer');
+  }
+  const sql = `
+       delete
+       from  "outfits"
+       where "outfitId" = $1
+       returning *
+  `;
+  const params = [outfitId];
+  db.query(sql, params)
+    .then(result => {
+      const outfit = result.rows[0];
+      if (!outfit) {
+        throw new ClientError(404, `cannot find outfit with outfitId ${outfitId}`);
+      }
+      res.json(outfit);
+    })
+    .catch(err => next(err));
+});
+
 /* -----------------------------------------------------------------------------------
    Clients can DELETE items in outfitItems table that match with a specific outfitId.
 ------------------------------------------------------------------------------------ */

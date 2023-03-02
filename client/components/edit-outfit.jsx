@@ -12,7 +12,8 @@ export default class EditOutfit extends React.Component {
       itemId: null,
       addItemPopup: false,
       saved: false,
-      reachedToTen: false
+      reachedToTen: false,
+      deleteConfirmation: false
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
@@ -24,6 +25,8 @@ export default class EditOutfit extends React.Component {
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleSaveConfirmPopupClick = this.handleSaveConfirmPopupClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDeleteConfirmPopupClick = this.handleDeleteConfirmPopupClick.bind(this);
+    this.handleDeleteOutfit = this.handleDeleteOutfit.bind(this);
   }
 
   componentDidMount() {
@@ -232,6 +235,28 @@ export default class EditOutfit extends React.Component {
     }
   }
 
+  handleDeleteConfirmPopupClick() {
+    this.setState({
+      deleteConfirmation: !this.state.deleteConfirmation
+    });
+  }
+
+  handleDeleteOutfit() {
+    // Use fetch() to send a DELETE request to /api/outfits.
+    fetch(`/api/outfits/${this.props.outfitId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .catch(err => console.error(err));
+
+    // Use fetch() to send a DELETE request to /api/outfitItems.
+    fetch(`/api/outfitItems/${this.props.outfitId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .catch(err => console.error(err));
+  }
+
   render() {
 
     // create array for the images of chose items
@@ -360,6 +385,9 @@ export default class EditOutfit extends React.Component {
     // save confirm popup-window
     const popup = this.state.saved ? 'pop-up' : 'pop-up hidden';
 
+    // show or hide deleteConfirmPopup
+    const deleteConfirmPopup = this.state.deleteConfirmation ? 'pop-up' : 'pop-up hidden';
+
     return (
       <>
         <form onSubmit={this.handleSubmit}>
@@ -371,13 +399,18 @@ export default class EditOutfit extends React.Component {
                 </div>
               </div>
               <div className='row'>
-                <div className='column-half'>
+                <div className='column-half mobile-dele-icon-position'>
                   <div className='outfit-box' >
                     <div className='outfit-box-inner' >
                       {chosenItemsArray}
                       <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName} />
                       <p className={uploadMessage}>Add an item to create outfit.</p>
                     </div>
+                  </div>
+                  <div className='mobile-column-half'>
+                    <button type='button' className='outfit-delete-confirm-button' onClick={this.handleDeleteConfirmPopupClick}>
+                      <i className="fa-regular fa-trash-can outfit" />
+                      Delete</button>
                   </div>
                 </div>
                 <div className='column-half'>
@@ -419,6 +452,14 @@ export default class EditOutfit extends React.Component {
             <a className='add-more-items' href='#add-outfit' onClick={this.handleSaveConfirmPopupClick}>Add More Outfits</a>
             <br />
             <a className='see-items' href='#outfits' onClick={this.handleSaveConfirmPopupClick}>See Your Outfits</a>
+          </div>
+        </div>
+
+        <div className={deleteConfirmPopup}>
+          <div className='saved-popup-text-wrapper'>
+            <h1 className='delete-confirm-message'>Are you sure you want to delete this item? <br />This process can&rsquo;t be undone.</h1>
+            <button className='cancel-delete-button' type='button' onClick={this.handleDeleteConfirmPopupClick} >Cancel</button>
+            <a className='delete-item-button' href='#outfits' onClick={this.handleDeleteOutfit} >Delete</a>
           </div>
         </div>
       </>
