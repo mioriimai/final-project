@@ -12,7 +12,7 @@ export default class Outfits extends React.Component {
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
-    // this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
+    this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
   }
 
   async componentDidMount() {
@@ -35,17 +35,30 @@ export default class Outfits extends React.Component {
     });
   }
 
-  // handleFavoriteClick() {
-  //   let favoriteStatus;
-  //   const targetedOutfitId = Number(this.state.outfitId);
-  //   for (let i = 0; i < this.state.outfits.length; i++) {
-  //     if (this.state.outfits[i].outfitId === targetedOutfitId) {
-  //       favoriteStatus = this.state.outfits[i].favorite;
-  //     }
-  //   }
-  //   const status = { favorite: !favoriteStatus };
-  //   console.log('status:', status);
-  // }
+  handleFavoriteClick() {
+    let favoriteStatus;
+    const targetedOutfitId = Number(this.state.outfitId);
+    for (let i = 0; i < this.state.outfits.length; i++) {
+      if (this.state.outfits[i].outfitId === targetedOutfitId) {
+        favoriteStatus = this.state.outfits[i].favorite;
+      }
+    }
+    const status = { favorite: !favoriteStatus };
+
+    // Use fetch() to send a PATCH request to update item's favorite status
+    fetch(`/api/outfitFavoriteUpdate/${this.state.outfitId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(status)
+    });
+
+    // Use fetch() to send a GET request to get all items
+    fetch('/api/outfits')
+      .then(res => res.json())
+      .then(outfits => this.setState({ outfits }));
+  }
 
   render() {
     // console.log('this.state:', this.state);
@@ -66,6 +79,19 @@ export default class Outfits extends React.Component {
       } else {
         hoverClassName = 'outfit-shadow-wrapper hidden';
       }
+
+      let isNotFavorite;
+      let isFavorite;
+      let favoriteIcon;
+      if (this.state.outfits[i].favorite === false) {
+        isNotFavorite = 'hover-favorite-icon';
+        isFavorite = 'hover-favorite-icon hidden';
+        favoriteIcon = 'favorite-icon hidden';
+      } else if (this.state.outfits[i].favorite === true) {
+        isNotFavorite = 'hover-favorite-icon hidden';
+        isFavorite = 'hover-favorite-icon';
+        favoriteIcon = 'favorite-icon';
+      }
       outfitsArray.push(
         <div key={i} className='outfit-wrapper'>
           <Outfit
@@ -74,6 +100,10 @@ export default class Outfits extends React.Component {
             handleMouseEnter={this.handleMouseEnter}
             handleMouseLeave={this.handleMouseLeave}
             hover={hoverClassName}
+            isNotFavoriteIcon={isNotFavorite}
+            isFavoriteIcon={isFavorite}
+            favoriteIcon={favoriteIcon}
+            handleFavoriteClick={this.handleFavoriteClick}
             />
         </div>
       );
@@ -147,9 +177,9 @@ function Outfit(props) {
     <div className='outfit-box-wrapper'>
       <div className='outfit-box-inner ' id={outfitId} onMouseEnter={props.handleMouseEnter}>
         {imageArray}
-        {/* <div className={props.favoriteIcon}>
+        <div className={props.favoriteIcon}>
           <i className='fa-solid fa-heart item-stay ' />
-        </div> */}
+        </div>
         <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
           <p className='show-outfit-notes'>{notes}</p>
           <a href={`#outfit?outfitId=${outfitId}`}>
