@@ -100,6 +100,28 @@ app.get('/api/favoriteItems', (req, res, next) => {
     .catch(err => next(err));
 });
 
+/* ------------------------------------------------------
+    Clients can GET all outfit that have favorite = true.
+--------------------------------------------------------- */
+app.get('/api/favoriteOutfits', (req, res, next) => {
+  const sql = `
+    select "notes", "outfitId", "favorite", "userId"
+    from "outfits"
+    where "favorite" = $1
+    order by "outfitId"
+  `;
+  const favorite = true;
+  const params = [favorite];
+  db.query(sql, params)
+    .then(result => {
+      const outfits = result.rows;
+      // the query succeeded
+      // respond to the client with the status code 200 and all rows from the "items" table
+      res.status(200).json(outfits);
+    })
+    .catch(err => next(err));
+});
+
 /* -----------------------------------------------------------------------
    Clients can GET items that meet specific category and brand and color.
 ------------------------------------------------------------------------- */
@@ -161,9 +183,9 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
     .catch(err => next(err));
 });
 
-/* -------------------------------------------------
-      Clients can GET all outfits with all info.
---------------------------------------------------- */
+/* -------------------------------------------------------------
+      Clients can GET all items used for outfits with all info.
+------------------------------------------------------------- */
 app.get('/api/outfitItems', (req, res, next) => {
   const sql = `
         select "outfitItems"."outfitId",

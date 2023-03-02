@@ -25,6 +25,11 @@ export default class FormItem extends React.Component {
         .then(res => res.json())
         .then(favoriteItems => this.setState({ favoriteItems }));
     }
+    /* else if (this.showOutfits === true) {
+      fetch('/api/favoriteOutfits')
+        .then(res => res.json())
+        .then(favoriteOutfits => this.setState({ favoriteOutfits }));
+    } */
   }
 
   handleMouseEnter(event) {
@@ -40,26 +45,25 @@ export default class FormItem extends React.Component {
   }
 
   handleFavoriteClick() {
-    let favoriteStatus;
-    const targetedItemId = Number(this.state.itemId);
-    for (let i = 0; i < this.state.favoriteItems.length; i++) {
-      if (this.state.favoriteItems[i].itemId === targetedItemId) {
-        favoriteStatus = this.state.favoriteItems[i].favorite;
-      }
-    }
-    const status = { favorite: !favoriteStatus };
-
-    // Use fetch() to send a PATCH request to update item's favorite status
-    fetch(`/api/itemFavoriteUpdate/${this.state.itemId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(status)
-    });
-
-    // Use fetch() to send a GET request to get all item that have favorite=true.
     if (this.state.showItems === true) {
+      let favoriteStatus;
+      const targetedItemId = Number(this.state.itemId);
+      for (let i = 0; i < this.state.favoriteItems.length; i++) {
+        if (this.state.favoriteItems[i].itemId === targetedItemId) {
+          favoriteStatus = this.state.favoriteItems[i].favorite;
+        }
+      }
+      const status = { favorite: !favoriteStatus };
+      // Use fetch() to send a PATCH request to update item's favorite status
+      fetch(`/api/itemFavoriteUpdate/${this.state.itemId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(status)
+      });
+
+      // Use fetch() to send a GET request to get all item that have favorite=true.
       fetch('/api/favoriteItems')
         .then(res => res.json())
         .then(favoriteItems => this.setState({ favoriteItems }));
@@ -85,6 +89,7 @@ export default class FormItem extends React.Component {
   }
 
   render() {
+    // console.log('this.state:', this.state);
 
     // create arrays for favorite items
     const itemsArray = [];
