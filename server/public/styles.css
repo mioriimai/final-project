@@ -667,7 +667,7 @@ body {
   background-color: white;
   max-width: 1200px;
   min-width: 1020px;
-  height: 630px;
+  height: 655px;
   margin: 40px auto;
 }
 
@@ -718,7 +718,7 @@ body {
   background-color: #f3f0e8;
   border: none;
   border-radius: 30px;
-  margin: 10px auto 0;
+  margin: 40px auto 0;
   padding: 10px 40px;
 }
 
@@ -809,7 +809,7 @@ body {
 }
 
 .up-to-ten-message {
-  margin: 20px auto 60px;
+  margin: 20px auto 85px;
   font-family: "Playfair Display", sans-serif;
   color: #515151;
   font-size: 18px;
@@ -883,6 +883,27 @@ body {
   height: 280px;
   margin: 180px auto;
   border-radius: 17px;
+}
+
+.outfit-delete-confirm-button {
+  color: #515151;
+  background-color: white;
+  font-family: "Playfair Display", sans-serif;
+  border: none;
+  font-size: 17px;
+  margin-top: 20px;
+  margin-left: 100px;
+}
+
+.outfit-delete-confirm-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.fa-regular.fa-trash-can.outfit {
+  font-size: 1.8rem;
+  margin-right: 7px;
+  color: #7c7c7c;
 }
 
 /* ----------- outfits view ------------ */
@@ -1279,7 +1300,7 @@ body {
 
   .form-outfit-white-box {
     min-width: initial;
-    height: 780px;
+    height: 740px;
     width: 100%;
     margin: 30px auto;
   }
@@ -1309,7 +1330,7 @@ body {
 
   .add-item-to-outfit-button {
     font-size: 24px;
-    margin: 40px auto 0;
+    margin: 25px auto 0;
     padding: 10px 40px;
   }
 
@@ -1365,7 +1386,7 @@ body {
   }
 
   .up-to-ten-message {
-    margin: 15px auto 40px;
+    margin: 15px auto 30px;
     font-size: 14px;
   }
 
@@ -1385,10 +1406,10 @@ body {
   }
 
   .outfit-notes {
-    font-size: 22px;
+    font-size: 20px;
     margin: 0;
     padding-left: 40px;
-    padding-bottom: 10px;
+    padding-bottom: 7px;
   }
 
   #outfit-notes {
@@ -1410,6 +1431,25 @@ body {
     width: 300px;
     height: 200px;
     margin: 40% auto;
+  }
+
+  .mobile-dele-icon-position {
+    position: relative;
+  }
+
+  .outfit-delete-confirm-button {
+    font-size: 15px;
+    margin-top: 0;
+    margin-left: 0;
+    position: absolute;
+    top: 617px;
+    left: 38px;
+  }
+
+  .fa-regular.fa-trash-can.outfit {
+    font-size: 1.5rem;
+    margin-right: 5px;
+    color: #7c7c7c;
   }
 
   /* ----------- mobile outfits view -------- */

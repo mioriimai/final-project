@@ -372,13 +372,18 @@ export default class EditOutfit extends React.Component {
                 </div>
               </div>
               <div className='row'>
-                <div className='column-half'>
+                <div className='column-half mobile-dele-icon-position'>
                   <div className='outfit-box' >
                     <div className='outfit-box-inner' >
                       {chosenItemsArray}
                       <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName} />
                       <p className={uploadMessage}>Add an item to create outfit.</p>
                     </div>
+                  </div>
+                  <div className='mobile-column-half'>
+                    <button type='button' className='outfit-delete-confirm-button' onClick={this.handleDeleteConfirmPopupClick}>
+                      <i className="fa-regular fa-trash-can outfit" />
+                      Delete</button>
                   </div>
                 </div>
                 <div className='column-half'>
