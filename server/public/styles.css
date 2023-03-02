@@ -966,6 +966,14 @@ body {
   margin: 140px 25px;
 }
 
+.fa-solid.fa-heart.item-stay.outfit {
+  color: #e78f8f;
+  font-size: 2.6em;
+  position: absolute;
+  right: 31px;
+  top: 35px;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
@@ -1268,7 +1276,6 @@ body {
   }
 
   .fa-solid.fa-heart.item-stay {
-    color: #e78f8f;
     font-size: 1.1em;
     right: 20px;
     top: 22px;
@@ -1488,6 +1495,12 @@ body {
     font-size: 22px;
     text-align: center;
     margin: 100px 25px;
+  }
+
+  .fa-solid.fa-heart.item-stay.outfit {
+    font-size: 1.1em;
+    right: 17px;
+    top: 22px;
   }
 
   /* tablet screen */

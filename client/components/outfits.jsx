@@ -139,6 +139,7 @@ export default class Outfits extends React.Component {
 function Outfit(props) {
 
   const items = props.items;
+  const { outfitId, notes } = props.outfit;
 
   const imageArray = [];
   for (let r = 0; r < items.length; r++) {
@@ -170,15 +171,12 @@ function Outfit(props) {
     );
   }
 
-  const { outfitId, notes } = props.outfit;
-
   return (
-
     <div className='outfit-box-wrapper'>
       <div className='outfit-box-inner ' id={outfitId} onMouseEnter={props.handleMouseEnter}>
         {imageArray}
         <div className={props.favoriteIcon}>
-          <i className='fa-solid fa-heart item-stay ' />
+          <i className='fa-solid fa-heart item-stay outfit' />
         </div>
         <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
           <p className='show-outfit-notes'>{notes}</p>

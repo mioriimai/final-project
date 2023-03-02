@@ -6,7 +6,9 @@ export default class FormItem extends React.Component {
     this.state = {
       favoriteItems: [],
       favoriteOutfits: [],
+      itemsForOutfit: [],
       itemId: null,
+      outfitId: null,
       showItems: true,
       showOutfits: false
     };
@@ -84,6 +86,7 @@ export default class FormItem extends React.Component {
 
   render() {
 
+    // create arrays for favorite items
     const itemsArray = [];
     for (let i = 0; i < this.state.favoriteItems.length; i++) {
       const targetedItemId = Number(this.state.itemId);
@@ -125,11 +128,70 @@ export default class FormItem extends React.Component {
       );
     }
 
+    // create arrays for favorite outfits
+    const outfitsArray = [];
+    for (let i = 0; i < this.state.favoriteOutfits.length; i++) {
+
+      const itemsArray = [];
+      for (let n = 0; n < this.state.itemsForOutfit.length; n++) {
+        if (this.state.favoriteOutfits[i].outfitId === this.state.itemsForOutfit[n].outfitId) {
+          itemsArray.push(this.state.itemsForOutfit[n]);
+        }
+      }
+      const targetedOutfitId = Number(this.state.outfitId);
+      let hoverClassName = 'outfit-shadow-wrapper hidden';
+      if (this.state.favoritesoutfits[i].outfitId === targetedOutfitId) {
+        hoverClassName = 'outfit-shadow-wrapper';
+      } else {
+        hoverClassName = 'outfit-shadow-wrapper hidden';
+      }
+
+      let isNotFavorite;
+      let isFavorite;
+      let favoriteIcon;
+      if (this.state.outfits[i].favorite === false) {
+        isNotFavorite = 'hover-favorite-icon';
+        isFavorite = 'hover-favorite-icon hidden';
+        favoriteIcon = 'favorite-icon hidden';
+      } else if (this.state.outfits[i].favorite === true) {
+        isNotFavorite = 'hover-favorite-icon hidden';
+        isFavorite = 'hover-favorite-icon';
+        favoriteIcon = 'favorite-icon';
+      }
+      outfitsArray.push(
+        <div key={i} className='outfit-wrapper'>
+          <Outfit
+            items={itemsArray}
+            outfit={this.state.favoriteOutfits[i]}
+            handleMouseEnter={this.handleMouseEnter}
+            handleMouseLeave={this.handleMouseLeave}
+            hover={hoverClassName}
+            isNotFavoriteIcon={isNotFavorite}
+            isFavoriteIcon={isFavorite}
+            favoriteIcon={favoriteIcon}
+            handleFavoriteClick={this.handleFavoriteClick}
+          />
+        </div>
+      );
+    }
+
+    let list;
+    if (this.state.showItems === true) {
+      list = itemsArray;
+    }
+
     let noItemMessage;
-    if (this.state.favoriteItems.length === 0) {
+    if (this.state.favoriteItems.length === 0 && this.state.showItems === true) {
       noItemMessage = 'no-item-message';
     } else {
       noItemMessage = 'no-item-message hidden';
+    }
+
+    let noOutfitMessage;
+    if (this.state.favoriteOutfits.length === 0 && this.state.showOutfits === true) {
+      noOutfitMessage = 'no-item-message';
+    } else {
+      noOutfitMessage = 'no-item-message hidden';
     }
 
     let addButton;
@@ -163,8 +225,9 @@ export default class FormItem extends React.Component {
           Add {addButton}
         </a>
         <p className={noItemMessage}>There is no item in your favorite list.</p>
+        <p className={noOutfitMessage}>There is no outfit in your favorite list.</p>
         <div className='item-list-wrapper'>
-          {itemsArray}
+          {list}
         </div>
       </div>
     );
@@ -190,6 +253,61 @@ function Item(props) {
         <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
           <p className='items-notes'>{notes}</p>
           <a href={`#item?itemId=${itemId}`}>
+            <i className="fa-solid fa-pen item" />
+          </a>
+          <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart item' /></button>
+          <button type='button' className={props.isFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-solid fa-heart item' /></button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Outfit(props) {
+
+  const items = props.items;
+  const { outfitId, notes } = props.outfit;
+
+  const imageArray = [];
+  for (let r = 0; r < items.length; r++) {
+    const left = `${items[r].deltaX}%`;
+    const top = `${items[r].deltaY}%`;
+    let width;
+    let height;
+    if (window.innerWidth > 768) {
+      width = '200px';
+      height = '220px';
+    } else if (window.innerWidth < 768) {
+      width = '130px';
+      height = '150px';
+    }
+    imageArray.push(
+      <img key={r}
+        id={items[r].outfitId}
+        src={items[r].image}
+        alt={`outfit${items[r].outfitId}`}
+        className='test'
+        style={{
+          position: 'absolute',
+          left: `${left}`,
+          top: `${top}`,
+          width: `${width}`,
+          height: `${height}`
+        }}
+      />
+    );
+  }
+
+  return (
+    <div className='outfit-box-wrapper'>
+      <div className='outfit-box-inner ' id={outfitId} onMouseEnter={props.handleMouseEnter}>
+        {imageArray}
+        <div className={props.favoriteIcon}>
+          <i className='fa-solid fa-heart item-stay outfit' />
+        </div>
+        <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
+          <p className='show-outfit-notes'>{notes}</p>
+          <a href={`#outfit?outfitId=${outfitId}`}>
             <i className="fa-solid fa-pen item" />
           </a>
           <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart item' /></button>
