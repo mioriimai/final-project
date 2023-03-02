@@ -26,6 +26,7 @@ export default class EditOutfit extends React.Component {
     this.handleSaveConfirmPopupClick = this.handleSaveConfirmPopupClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDeleteConfirmPopupClick = this.handleDeleteConfirmPopupClick.bind(this);
+    this.handleDeleteOutfit = this.handleDeleteOutfit.bind(this);
   }
 
   componentDidMount() {
@@ -240,7 +241,7 @@ export default class EditOutfit extends React.Component {
     });
   }
 
-  handleDeleteItem() {
+  handleDeleteOutfit() {
     // Use fetch() to send a DELETE request to /api/outfits.
     fetch(`/api/outfits/${this.props.outfitId}`, {
       method: 'DELETE'
@@ -460,7 +461,7 @@ export default class EditOutfit extends React.Component {
           <div className='saved-popup-text-wrapper'>
             <h1 className='delete-confirm-message'>Are you sure you want to delete this item? <br />This process can&rsquo;t be undone.</h1>
             <button className='cancel-delete-button' type='button' onClick={this.handleDeleteConfirmPopupClick} >Cancel</button>
-            <a className='delete-item-button' href='#items' onClick={this.handleDeleteItem} >Delete</a>
+            <a className='delete-item-button' href='#outfits' onClick={this.handleDeleteOutfit} >Delete</a>
           </div>
         </div>
       </>
