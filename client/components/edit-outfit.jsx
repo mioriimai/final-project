@@ -12,7 +12,8 @@ export default class EditOutfit extends React.Component {
       itemId: null,
       addItemPopup: false,
       saved: false,
-      reachedToTen: false
+      reachedToTen: false,
+      deleteConfirmation: false
     };
     this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
     this.handlePopupLeaveButtonClick = this.handlePopupLeaveButtonClick.bind(this);
