@@ -12,6 +12,7 @@ export default class Outfits extends React.Component {
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    // this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
   }
 
   async componentDidMount() {
@@ -34,7 +35,21 @@ export default class Outfits extends React.Component {
     });
   }
 
+  // handleFavoriteClick() {
+  //   let favoriteStatus;
+  //   const targetedOutfitId = Number(this.state.outfitId);
+  //   for (let i = 0; i < this.state.outfits.length; i++) {
+  //     if (this.state.outfits[i].outfitId === targetedOutfitId) {
+  //       favoriteStatus = this.state.outfits[i].favorite;
+  //     }
+  //   }
+  //   const status = { favorite: !favoriteStatus };
+  //   console.log('status:', status);
+  // }
+
   render() {
+    // console.log('this.state:', this.state);
+
     const outfitsArray = [];
     for (let i = 0; i < this.state.outfits.length; i++) {
 
