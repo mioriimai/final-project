@@ -399,7 +399,7 @@ export default class EditOutfit extends React.Component {
                 </div>
               </div>
               <div className='row'>
-                <div className='column-half mobile-dele-icon-position'>
+                <div className='column-half tablet'>
                   <div className='outfit-box' >
                     <div className='outfit-box-inner' >
                       {chosenItemsArray}
@@ -407,13 +407,13 @@ export default class EditOutfit extends React.Component {
                       <p className={uploadMessage}>Add an item to create outfit.</p>
                     </div>
                   </div>
-                  <div className='mobile-column-half'>
+                  <div className='mobile-column-half mobile-delete-icon-position'>
                     <button type='button' className='outfit-delete-confirm-button' onClick={this.handleDeleteConfirmPopupClick}>
                       <i className="fa-regular fa-trash-can outfit" />
                       Delete</button>
                   </div>
                 </div>
-                <div className='column-half'>
+                <div className='column-half tablet'>
                   <div className='row'>
                     <button type='button' className='add-item-to-outfit-button' onClick={this.handleAddButtonClick}><i className='fa-solid fa-plus outfit' />Add an Item</button>
                   </div>

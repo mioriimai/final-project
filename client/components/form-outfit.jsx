@@ -326,7 +326,7 @@ export default class FormOutfit extends React.Component {
     }
 
     // show image placeholder and hide it when image is selected
-    let placeholderClassName = 'item-image-placeholder';
+    let placeholderClassName = 'outfit-image-placeholder';
     let uploadMessage = 'upload-from-camera-roll';
     if (this.state.chosenItems.length > 0) {
       placeholderClassName = 'hidden';
@@ -347,7 +347,7 @@ export default class FormOutfit extends React.Component {
                 </div>
               </div>
               <div className='row'>
-                <div className='column-half'>
+                <div className='column-half tablet'>
                   <div className='outfit-box' >
                     <div className='outfit-box-inner' >
                       {chosenItemsArray}
@@ -357,7 +357,7 @@ export default class FormOutfit extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className='column-half'>
+                <div className='column-half tablet'>
                   <div className='row'>
                     <button type='button' className='add-item-to-outfit-button' onClick={this.handleAddButtonClick}><i className='fa-solid fa-plus outfit' />Add an Item</button>
                   </div>

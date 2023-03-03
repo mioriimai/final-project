@@ -158,10 +158,14 @@ body {
 
 /* ----------- form item view ---------- */
 .form-item-container {
-  max-width: 1300px;
-  margin: 40px 10%;
+  margin: 50px 10%;
+}
+
+.form-item-white-box {
+  margin: 0 auto;
+  max-width: 1050px;
   background-color: white;
-  height: 515px;
+  height: 540px;
 }
 
 .form-item-title {
@@ -189,8 +193,8 @@ body {
 
 .item-image-placeholder {
   opacity: 40%;
-  width: 50%;
-  margin: 14% auto;
+  width: 170px;
+  margin: 50px auto 0;
   object-fit: contain;
   display: block;
 }
@@ -199,7 +203,7 @@ body {
   color: #737373;
   font-family: Alegreya, sans-serif;
   font-size: 20px;
-  margin: -30px auto;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -417,9 +421,9 @@ body {
 
 /* ----------- items view ----------- */
 .items-view-container {
-  margin: 5px auto;
+  margin: 20px auto;
   max-width: 1700px;
-  padding: 0 5%;
+  padding: 0 10%;
 }
 
 .items {
@@ -495,7 +499,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 25px;
 }
 
 .no-item-message {
@@ -665,16 +669,15 @@ body {
 
 .form-outfit-white-box {
   background-color: white;
-  max-width: 1200px;
-  min-width: 1020px;
-  height: 655px;
+  max-width: 1070px;
+  height: 665px;
   margin: 40px auto;
 }
 
 .form-outfit-title {
   font-family: Alegreya, sans-serif;
   font-size: 35px;
-  margin: 40px 0 15px 90px;
+  margin: 40px 0 25px 90px;
 }
 
 .outfit-box {
@@ -702,6 +705,14 @@ body {
   margin: 0;
   position: relative;
   cursor: pointer;
+}
+
+.outfit-image-placeholder {
+  opacity: 40%;
+  width: 170px;
+  margin: 100px auto 0;
+  object-fit: contain;
+  display: block;
 }
 
 .fa-regular.fa-circle-xmark.chosen-item {
@@ -909,7 +920,6 @@ body {
 /* ----------- outfits view ------------ */
 .outfits-view-container {
   margin: 5px auto;
-  max-width: 1700px;
   padding: 0 5%;
 }
 
@@ -917,7 +927,7 @@ body {
   font-family: "Playfair Display", sans-serif;
   font-weight: bold;
   font-size: 47px;
-  margin: 30px 45px 0 4%;
+  margin: 30px 45px 0 20%;
 }
 
 .outfit-list-wrapper {
@@ -1034,14 +1044,20 @@ body {
 
   .form-item-container {
     margin: 20px 7%;
+  }
+
+  .form-item-white-box {
     padding: 0 8%;
     height: 700px;
+    max-width: 440px;
+    min-width: 263px;
   }
 
   .form-item-title {
     font-size: 25px;
     margin: 17px 0 5px;
     padding: 0;
+    max-width: 450px;
   }
 
   .add-padding-left {
@@ -1061,8 +1077,8 @@ body {
   }
 
   .item-image-placeholder {
-    width: 50%;
-    margin: 30px auto;
+    width: 150px;
+    margin: 25px auto 0;
   }
 
   .upload-from-camera-roll {
@@ -1173,11 +1189,12 @@ body {
   .items-view-container {
     margin: 0 auto;
     padding: 0 5%;
+    min-width: 350px;
   }
 
   .items {
     font-size: 26px;
-    margin: 25px 0 0 15px;
+    margin: 25px 0 0 25px;
   }
 
   #sort-category,
@@ -1306,7 +1323,8 @@ body {
   }
 
   .form-outfit-white-box {
-    min-width: initial;
+    min-width: 320px;
+    max-width: 400px;
     height: 740px;
     width: 100%;
     margin: 30px auto;
@@ -1314,7 +1332,7 @@ body {
 
   .form-outfit-title {
     font-size: 25px;
-    margin: 15px 0 15px 25px;
+    margin: 25px 0 15px 10%;
   }
 
   .outfit-box {
@@ -1326,9 +1344,14 @@ body {
   .outfit-box-inner {
     width: 275px;
     height: 295px;
-    padding: 0;
+    padding: 1px;
     margin: 1.5px;
     vertical-align: middle;
+  }
+
+  .outfit-image-placeholder {
+    width: 150px;
+    margin: 40px auto 0;
   }
 
   .fa-regular.fa-circle-xmark.chosen-item {
@@ -1415,13 +1438,13 @@ body {
   .outfit-notes {
     font-size: 20px;
     margin: 0;
-    padding-left: 40px;
+    padding-left: 45px;
     padding-bottom: 7px;
   }
 
   #outfit-notes {
     margin: 0 auto;
-    width: 85%;
+    width: 280px;
     height: 120px;
     padding: 15px;
     font-size: 17px;
@@ -1440,7 +1463,7 @@ body {
     margin: 40% auto;
   }
 
-  .mobile-dele-icon-position {
+  .mobile-delete-icon-position {
     position: relative;
   }
 
@@ -1449,8 +1472,8 @@ body {
     margin-top: 0;
     margin-left: 0;
     position: absolute;
-    top: 617px;
-    left: 38px;
+    top: 310px;
+    left: 40px;
   }
 
   .fa-regular.fa-trash-can.outfit {
@@ -1460,9 +1483,15 @@ body {
   }
 
   /* ----------- mobile outfits view -------- */
+  .outfits-view-container {
+    margin: 0 auto;
+    padding: 0 5%;
+    min-width: 300px;
+  }
+
   .outfits {
     font-size: 26px;
-    margin: 25px 0 0 15px;
+    margin: 25px 0 0 30px;
   }
 
   .outfit-list-wrapper {
@@ -1502,94 +1531,192 @@ body {
     right: 17px;
     top: 22px;
   }
+}
 
-  /* tablet screen */
-  @media screen and (min-width: 768px) and (max-width: 1279px) {
-    /* ----------- tablet form item view ---------- */
+/* tablet screen */
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  /* ----------- tablet form item view ---------- */
 
-    .form-item-container {
-      margin: 33px 6%;
-    }
+  .form-item-container {
+    margin: 50px 10%;
+  }
 
-    .form-item-title {
-      font-size: 30px;
-      margin: 27px 0 0;
-      padding-left: 7%;
-    }
+  .form-item-white-box {
+    max-width: 1050px;
+    min-width: 643px;
+    height: 480px;
+  }
 
-    .add-padding-left {
-      padding-left: 6%;
-    }
+  .form-item-title {
+    font-size: 30px;
+    margin: 27px 0 0;
+    padding-left: 7%;
+  }
 
-    .add-padding-right {
-      padding-right: 6%;
-      padding-top: 13px;
-    }
+  .add-padding-left {
+    padding-left: 6%;
+  }
 
-    .item-image-wrapper {
-      width: 94%;
-      height: 300px;
-      text-align: center;
-    }
+  .add-padding-right {
+    padding-right: 6%;
+    padding-top: 13px;
+  }
 
-    .item-image-placeholder {
-      width: 200px;
-      margin: 5% auto;
-    }
+  .item-image-wrapper {
+    width: 94%;
+    height: 300px;
+    text-align: center;
+  }
 
-    .upload-from-camera-roll {
-      font-size: 18px;
-    }
+  .item-image-placeholder {
+    width: 160px;
+    margin: 50px auto 0;
+  }
 
-    .file-upload-wrapper {
-      width: 80%;
-      margin: 0 auto;
-    }
+  .upload-from-camera-roll {
+    font-size: 18px;
+    margin-top: 0;
+  }
 
-    .form-item-category,
-    .form-item-brand,
-    .form-item-color {
-      font-size: 22px;
-      padding-bottom: 8px;
-    }
+  .file-upload-wrapper {
+    width: 80%;
+    margin: 0 auto;
+  }
 
-    .position-right {
-      padding-right: 10px;
-    }
+  .form-item-category,
+  .form-item-brand,
+  .form-item-color {
+    font-size: 22px;
+    padding-bottom: 8px;
+  }
 
-    #category-dropdown-menu,
-    #brand-dropdown-menu,
-    #color-dropdown-menu {
-      font-size: 19px;
-      padding: 0 5px;
-      text-align: right;
-      padding-bottom: 6px;
-    }
+  .position-right {
+    padding-right: 10px;
+  }
 
-    .each-row {
-      margin-bottom: 10px;
-    }
+  #category-dropdown-menu,
+  #brand-dropdown-menu,
+  #color-dropdown-menu {
+    font-size: 19px;
+    padding: 0 5px;
+    text-align: right;
+    padding-bottom: 6px;
+  }
 
-    .form-item-notes {
-      font-size: 22px;
-      margin: 0;
-      padding-left: 20px;
-      padding-bottom: 8px;
-    }
+  .each-row {
+    margin-bottom: 10px;
+  }
 
-    #notes {
-      margin-left: 20px;
-      height: 113px;
-      padding: 13px;
-      font-size: 17px;
-    }
+  .form-item-notes {
+    font-size: 22px;
+    margin: 0;
+    padding-left: 20px;
+    padding-bottom: 8px;
+  }
 
-    .item-save-button {
-      font-size: 17px;
-      font-weight: bold;
-      padding: 5px 24px;
-    }
+  #notes {
+    margin-left: 20px;
+    height: 113px;
+    padding: 13px;
+    font-size: 17px;
+  }
 
-    /* --------- tablet items view ---------- */
+  .item-save-button {
+    font-size: 17px;
+    font-weight: bold;
+    padding: 5px 24px;
+  }
+
+  /* --------- tablet form outfit view ---------- */
+  .form-outfit-container {
+    margin: 50px 10%;
+  }
+
+  .form-outfit-white-box {
+    max-width: 620px;
+    min-width: 620px;
+    height: 1100px;
+  }
+
+  .form-outfit-title {
+    font-family: Alegreya, sans-serif;
+    font-size: 35px;
+    margin: 40px 0 20px 80px;
+  }
+
+  .outfit-box {
+    margin: auto;
+  }
+
+  .outfit-image-placeholder {
+    width: 170px;
+    margin: 90px auto 10px;
+  }
+
+  .outfit-notes {
+    font-size: 25px;
+    margin: 0;
+    padding-left: 100px;
+    padding-bottom: 7px;
+  }
+
+  .up-to-ten-message {
+    margin: 15px auto 50px;
+    font-size: 18px;
+  }
+
+  .outfit-save-button {
+    margin-right: 90px;
+  }
+
+  /* -------- tablet edit outfit view --------- */
+
+  .outfit-delete-confirm-button {
+    font-size: 18px;
+    margin-top: 0;
+    margin-left: 0;
+    position: absolute;
+    top: 435px;
+    left: 95px;
+    width: 100px;
+  }
+
+  .mobile-delete-icon-position {
+    position: absolute;
+  }
+
+  /* -------- tablet items view --------- */
+
+  .items-view-container {
+    margin: 5px auto;
+    padding: 0 5%;
+  }
+
+  .sort-wrapper {
+    width: fit-content;
+    margin: auto;
+  }
+
+  #sort-category,
+  #sort-brand,
+  #sort-color {
+    font-size: 18px;
+    border-width: 2px;
+    padding: 1px 15px 2px 20px;
+    margin: 20px 10px 0;
+    width: 140px;
+  }
+
+  /* -------- tablet outfits view --------- */
+  .outfits-view-container {
+    margin: 5px auto;
+    padding: 0 3%;
+  }
+
+  .outfits {
+    font-family: "Playfair Display", sans-serif;
+    font-weight: bold;
+    font-size: 47px;
+    margin: 30px 45px 0 75px;
   }
 }
