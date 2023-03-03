@@ -100,6 +100,28 @@ app.get('/api/favoriteItems', (req, res, next) => {
     .catch(err => next(err));
 });
 
+/* ------------------------------------------------------
+    Clients can GET all outfit that have favorite = true.
+--------------------------------------------------------- */
+app.get('/api/favoriteOutfits', (req, res, next) => {
+  const sql = `
+    select "notes", "outfitId", "favorite", "userId"
+    from "outfits"
+    where "favorite" = $1
+    order by "outfitId"
+  `;
+  const favorite = true;
+  const params = [favorite];
+  db.query(sql, params)
+    .then(result => {
+      const outfits = result.rows;
+      // the query succeeded
+      // respond to the client with the status code 200 and all rows from the "items" table
+      res.status(200).json(outfits);
+    })
+    .catch(err => next(err));
+});
+
 /* -----------------------------------------------------------------------
    Clients can GET items that meet specific category and brand and color.
 ------------------------------------------------------------------------- */
@@ -161,9 +183,9 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
     .catch(err => next(err));
 });
 
-/* -------------------------------------------------
-      Clients can GET all outfits with all info.
---------------------------------------------------- */
+/* -------------------------------------------------------------
+      Clients can GET all items used for outfits with all info.
+------------------------------------------------------------- */
 app.get('/api/outfitItems', (req, res, next) => {
   const sql = `
         select "outfitItems"."outfitId",
@@ -383,11 +405,11 @@ app.post('/api/store-item-for-outfit', uploadsMiddleware, (req, res, next) => {
    Clients can PATECH item's info(favorite) by its itemId.
 --------------------------------------------------------- */
 app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
-  const favoriteState = req.body;
+  const updateData = req.body;
   const itemId = Number(req.params.itemId);
   if (!Number.isInteger(itemId) || itemId <= 0) {
     throw new ClientError(400, 'itemId mush be a positive integer');
-  } else if ('favorite' in favoriteState === false) {
+  } else if ('favorite' in updateData === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   }
   const sql = `
@@ -396,7 +418,7 @@ app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
        where "itemId" = $2
        returning *
   `;
-  const params = [favoriteState.favorite, itemId];
+  const params = [updateData.favorite, itemId];
   db.query(sql, params)
     .then(result => {
       const item = result.rows[0];
@@ -406,6 +428,45 @@ app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
         // the query succeeded
         // respond to the client with the status code 200 and created newItem object
         res.status(201).json(item);
+      }
+    })
+    .catch(err => {
+      // the query failed for some reason
+      console.error(err);
+      // respond to the client with a generic 500 error message
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
+
+/* -----------------------------------------------------------
+   Clients can PATECH outfit's info(favorite) by its outfitId.
+------------------------------------------------------------- */
+app.patch('/api/outfitFavoriteUpdate/:outfitId', (req, res, next) => {
+  const updateData = req.body;
+  const outfitId = Number(req.params.outfitId);
+  if (!Number.isInteger(outfitId) || outfitId <= 0) {
+    throw new ClientError(400, 'outfitId mush be a positive integer');
+  } else if ('favorite' in updateData === false) {
+    throw new ClientError(400, 'An invalid/missing information.');
+  }
+  const sql = `
+       update "outfits"
+       set   "favorite" = $1
+       where "outfitId" = $2
+       returning *
+  `;
+  const params = [updateData.favorite, outfitId];
+  db.query(sql, params)
+    .then(result => {
+      const outfit = result.rows[0];
+      if (!outfit) {
+        throw new ClientError(404, `cannot find outfit with outfitId ${outfitId}`);
+      } else {
+        // the query succeeded
+        // respond to the client with the status code 200 and created newItem object
+        res.status(201).json(outfit);
       }
     })
     .catch(err => {
