@@ -20,27 +20,30 @@ export default class FormItem extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.showItems === true) {
-      fetch('/api/favoriteItems')
-        .then(res => res.json())
-        .then(favoriteItems => this.setState({ favoriteItems }));
-    }
-    /* else if (this.showOutfits === true) {
-      fetch('/api/favoriteOutfits')
-        .then(res => res.json())
-        .then(favoriteOutfits => this.setState({ favoriteOutfits }));
-    } */
+    fetch('/api/favoriteItems')
+      .then(res => res.json())
+      .then(favoriteItems => this.setState({ favoriteItems }));
+
+    fetch('/api/favoriteOutfits')
+      .then(res => res.json())
+      .then(favoriteOutfits => this.setState({ favoriteOutfits }));
+
+    fetch('/api/outfitItems')
+      .then(res => res.json())
+      .then(itemsForOutfit => this.setState({ itemsForOutfit }));
   }
 
   handleMouseEnter(event) {
     this.setState({
-      itemId: event.target.name
+      itemId: event.target.name,
+      outfitId: event.target.id
     });
   }
 
   handleMouseLeave() {
     this.setState({
-      itemId: null
+      itemId: null,
+      outfitId: null
     });
   }
 
@@ -145,7 +148,7 @@ export default class FormItem extends React.Component {
       }
       const targetedOutfitId = Number(this.state.outfitId);
       let hoverClassName = 'outfit-shadow-wrapper hidden';
-      if (this.state.favoritesoutfits[i].outfitId === targetedOutfitId) {
+      if (this.state.favoriteOutfits[i].outfitId === targetedOutfitId) {
         hoverClassName = 'outfit-shadow-wrapper';
       } else {
         hoverClassName = 'outfit-shadow-wrapper hidden';
@@ -154,11 +157,11 @@ export default class FormItem extends React.Component {
       let isNotFavorite;
       let isFavorite;
       let favoriteIcon;
-      if (this.state.outfits[i].favorite === false) {
+      if (this.state.favoriteOutfits[i].favorite === false) {
         isNotFavorite = 'hover-favorite-icon';
         isFavorite = 'hover-favorite-icon hidden';
         favoriteIcon = 'favorite-icon hidden';
-      } else if (this.state.outfits[i].favorite === true) {
+      } else if (this.state.favoriteOutfits[i].favorite === true) {
         isNotFavorite = 'hover-favorite-icon hidden';
         isFavorite = 'hover-favorite-icon';
         favoriteIcon = 'favorite-icon';
@@ -183,6 +186,8 @@ export default class FormItem extends React.Component {
     let list;
     if (this.state.showItems === true) {
       list = itemsArray;
+    } else if (this.state.showOutfits === true) {
+      list = outfitsArray;
     }
 
     let noItemMessage;
