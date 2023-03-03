@@ -116,7 +116,6 @@ export default class FormItem extends React.Component {
   }
 
   render() {
-    // console.log('this.state:', this.state);
 
     // create arrays for favorite items
     const itemsArray = [];

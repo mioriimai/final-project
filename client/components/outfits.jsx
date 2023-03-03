@@ -61,7 +61,6 @@ export default class Outfits extends React.Component {
   }
 
   render() {
-    // console.log('this.state:', this.state);
 
     const outfitsArray = [];
     for (let i = 0; i < this.state.outfits.length; i++) {
