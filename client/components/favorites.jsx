@@ -70,6 +70,30 @@ export default class FormItem extends React.Component {
       fetch('/api/favoriteItems')
         .then(res => res.json())
         .then(favoriteItems => this.setState({ favoriteItems }));
+
+    } else if (this.state.showOutfits === true) {
+      let favoriteStatus;
+      const targetedOutfitId = Number(this.state.outfitId);
+      for (let i = 0; i < this.state.favoriteOutfits.length; i++) {
+        if (this.state.favoriteOutfits[i].outfitId === targetedOutfitId) {
+          favoriteStatus = this.state.favoriteOutfits[i].favorite;
+        }
+      }
+      const status = { favorite: !favoriteStatus };
+
+      // Use fetch() to send a PATCH request to update item's favorite status
+      fetch(`/api/outfitFavoriteUpdate/${this.state.outfitId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(status)
+      });
+
+      // Use fetch() to send a GET request to get all outfits that have favorite=true.
+      fetch('/api/favoriteOutfits')
+        .then(res => res.json())
+        .then(favoriteOutfits => this.setState({ favoriteOutfits }));
     }
   }
 
