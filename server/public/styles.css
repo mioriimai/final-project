@@ -979,34 +979,42 @@ body {
 
 .fa-solid.fa-heart.item-stay.outfit {
   color: #e78f8f;
-  font-size: 1.9em;
+  font-size: 2.2em;
   position: absolute;
-  right: 27px;
-  top: 30px;
+  right: 35px;
+  top: 36px;
+  cursor: pointer;
 }
 
 .fa-regular.fa-heart.outfit {
   color: #6c6b6b;
-  font-size: 2.7em;
+  font-size: 2.8em;
   position: absolute;
-  right: 30px;
-  top: 30px;
+  right: 38px;
+  top: 35px;
+  cursor: pointer;
 }
 
 .fa-solid.fa-heart.outfit {
   color: #e78f8f;
-  font-size: 2.7em;
+  font-size: 2.8em;
   position: absolute;
-  right: 30px;
-  top: 30px;
+  right: 38px;
+  top: 35px;
+  cursor: pointer;
 }
 
 .fa-solid.fa-pen.outfit {
   color: #6c6b6b;
-  font-size: 2em;
+  font-size: 2.4em;
   position: absolute;
-  left: 30px;
-  top: 30px;
+  left: 38px;
+  top: 35px;
+  cursor: pointer;
+}
+
+.loading-spinner {
+  text-align: center;
 }
 
 /* ------------- media query ------------  */
@@ -1551,6 +1559,38 @@ body {
     font-size: 22px;
     text-align: center;
     margin: 100px 25px;
+  }
+
+  .fa-solid.fa-heart.item-stay.outfit {
+    color: #e78f8f;
+    font-size: 1.9em;
+    position: absolute;
+    right: 31.5px;
+    top: 30px;
+  }
+
+  .fa-regular.fa-heart.outfit {
+    color: #6c6b6b;
+    font-size: 2.7em;
+    position: absolute;
+    right: 35px;
+    top: 30px;
+  }
+
+  .fa-solid.fa-heart.outfit {
+    color: #e78f8f;
+    font-size: 2.7em;
+    position: absolute;
+    right: 35px;
+    top: 30px;
+  }
+
+  .fa-solid.fa-pen.outfit {
+    color: #6c6b6b;
+    font-size: 2em;
+    position: absolute;
+    left: 35px;
+    top: 30px;
   }
 }
 

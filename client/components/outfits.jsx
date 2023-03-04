@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThreeDots } from 'react-loader-spinner';
 
 export default class Outfits extends React.Component {
 
@@ -7,7 +8,8 @@ export default class Outfits extends React.Component {
     this.state = {
       outfits: [],
       itemsForOutfit: [],
-      outfitId: null
+      outfitId: null,
+      loadingSpinner: true
     };
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
@@ -15,12 +17,23 @@ export default class Outfits extends React.Component {
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
   }
 
-  async componentDidMount() {
-    const outfitJson = await fetch('/api/outfits');
-    const outfits = await outfitJson.json();
-    const outfitItemsJson = await fetch('/api/outfitItems');
-    const itemsForOutfit = await outfitItemsJson.json();
-    this.setState({ outfits, itemsForOutfit });
+  componentDidMount() {
+
+    setTimeout(() => {
+      fetch('/api/outfits')
+        .then(res => res.json())
+        .then(outfits => this.setState({ outfits }))
+        .then(() => {
+          return fetch('/api/outfitItems');
+        })
+        .then(res => res.json())
+        .then(itemsForOutfit => this.setState({ itemsForOutfit }))
+        .then(() => {
+          this.setState({
+            loadingSpinner: false
+          });
+        });
+    }, 2000);
   }
 
   handleMouseEnter(event) {
@@ -115,6 +128,16 @@ export default class Outfits extends React.Component {
       noItemMessage = 'no-item-message hidden';
     }
 
+    let outfitsContainer;
+    let loadingSpinner;
+    if (this.state.loadingSpinner === true) {
+      loadingSpinner = 'loading-spinner';
+      outfitsContainer = 'hidden';
+    } else if (this.state.loadingSpinner === false) {
+      loadingSpinner = 'hidden';
+      outfitsContainer = '';
+    }
+
     return (
       <div className='outfits-view-container'>
         <div className='row'>
@@ -126,12 +149,31 @@ export default class Outfits extends React.Component {
           <i className="fa-solid fa-plus" />
           Add Outfits
         </a>
-        <p className={noItemMessage}>No outfits found. Let&rsquo;s add an outfit!</p>
-        <div className='outfit-list-wrapper'>
-          {outfitsArray}
+        <div className={loadingSpinner}>
+          <ThreeDots
+            height="80"
+            width="80"
+            radius="9"
+            color="#8F8F8F"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{
+              margin: '100px',
+              display: 'block'
+            }}
+            wrapperClassName=""
+            visible={true}
+          />
+          {/* <p className='loading'>Loading</p> */}
+        </div>
+        <div className={outfitsContainer}>
+          <p className={noItemMessage}>No outfits found. Let&rsquo;s add an outfit!</p>
+          <div className='outfit-list-wrapper'>
+            {outfitsArray}
+          </div>
         </div>
       </div>
     );
+
   }
 }
 
