@@ -44,11 +44,11 @@
   /* ----------- moble item form view ---------- */
 
   .column-two-fifth {
-    flex-basis: 20%;
+    flex-basis: 45%;
   }
 
   .column-three-fifth {
-    flex-basis: 65%;
+    flex-basis: 55%;
   }
 
   /* ----------- moble items view ---------- */
@@ -59,6 +59,12 @@
 
 /* tablet screen */
 
-/* @media screen and (min-width: 768px) and (max-width: 1279px) {
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .column-half.tablet {
+    flex-basis: 100%;
+  }
 
-} */
+  .mobile-column-full {
+    flex-basis: 100%;
+  }
+}

@@ -207,67 +207,69 @@ export default class EditItem extends React.Component {
       <>
         <form onSubmit={this.handleSubmit}>
           <div className='form-item-container'>
-            <div className='row'>
-              <div className='column-full'>
-                <p className='form-item-title'>Edit Item</p>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='column-half add-padding-left'>
-                <div className='row item-image-wrapper'>
-                  <img src={ image } alt={ itemId } className={showedImageClassName} />
-                  {preview}
-                </div>
-                <div className='row file-upload-wrapper'>
-                  <input type="file" name='image' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
+            <div className='form-item-white-box'>
+              <div className='row'>
+                <div className='column-full'>
+                  <p className='form-item-title'>Edit Item</p>
                 </div>
               </div>
-              <div className='column-half add-padding-right'>
-                <div className='row each-row'>
-                  <div className='column-two-fifth'>
-                    <p className='form-item-category'>Category</p>
+              <div className='row'>
+                <div className='column-half add-padding-left'>
+                  <div className='row item-image-wrapper'>
+                    <img src={ image } alt={ itemId } className={showedImageClassName} />
+                    {preview}
                   </div>
-                  <div className='column-three-fifth position-right'>
-                    <select name="category" id="category-dropdown-menu" value={valueOfCategory} onChange={this.handleCategoryChange} >
-                      <CreateOptions options="category" />
-                    </select>
-                  </div>
-                </div>
-                <div className='row each-row'>
-                  <div className='column-three-ten'>
-                    <p className='form-item-brand'>Brand</p>
-                  </div>
-                  <div className='column-seven-ten position-right'>
-                    <select name="brand" id="brand-dropdown-menu" value={valueOfBrand} onChange={this.handleBrandChange} >
-                      <CreateOptions options="brand" />
-                    </select>
+                  <div className='row file-upload-wrapper'>
+                    <input type="file" name='image' ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" onChange={this.handleImageUpload} className='choose-file' />
                   </div>
                 </div>
-                <div className='row each-row'>
-                  <div className='column-three-ten'>
-                    <p className='form-item-color'>Color</p>
+                <div className='column-half add-padding-right'>
+                  <div className='row each-row'>
+                    <div className='column-two-fifth'>
+                      <p className='form-item-category'>Category</p>
+                    </div>
+                    <div className='column-three-fifth position-right'>
+                      <select name="category" id="category-dropdown-menu" value={valueOfCategory} onChange={this.handleCategoryChange} >
+                        <CreateOptions options="category" />
+                      </select>
+                    </div>
                   </div>
-                  <div className='column-seven-ten position-right'>
-                    <select name="color" id="color-dropdown-menu" value={valueOfColor} onChange={this.handleColorChange} >
-                      <CreateOptions options="color" />
-                    </select>
+                  <div className='row each-row'>
+                    <div className='column-three-ten'>
+                      <p className='form-item-brand'>Brand</p>
+                    </div>
+                    <div className='column-seven-ten position-right'>
+                      <select name="brand" id="brand-dropdown-menu" value={valueOfBrand} onChange={this.handleBrandChange} >
+                        <CreateOptions options="brand" />
+                      </select>
+                    </div>
                   </div>
-                </div>
-                <div className='row'>
-                  <label htmlFor="notes" className='form-item-notes'>Notes</label>
-                </div>
-                <div className='row'>
-                  <textarea name="notes" id="notes" value={valueOfNotes} onChange={this.handleNotesChange} />
-                </div>
-                <div className='row'>
-                  <div className='mobile-column-half'>
-                    <button type='button' className='item-delete-confirm-button' onClick={this.handleDeleteConfirmPopupClick}>
-                      <i className="fa-regular fa-trash-can" />
-                      Delete</button>
+                  <div className='row each-row'>
+                    <div className='column-three-ten'>
+                      <p className='form-item-color'>Color</p>
+                    </div>
+                    <div className='column-seven-ten position-right'>
+                      <select name="color" id="color-dropdown-menu" value={valueOfColor} onChange={this.handleColorChange} >
+                        <CreateOptions options="color" />
+                      </select>
+                    </div>
                   </div>
-                  <div className='mobile-column-half'>
-                    <div className='item-save-button-wrapper'>
-                      <button type='submit' className='item-save-button'>SAVE</button>
+                  <div className='row'>
+                    <label htmlFor="notes" className='form-item-notes'>Notes</label>
+                  </div>
+                  <div className='row'>
+                    <textarea name="notes" id="notes" value={valueOfNotes} onChange={this.handleNotesChange} />
+                  </div>
+                  <div className='row'>
+                    <div className='mobile-column-half'>
+                      <button type='button' className='item-delete-confirm-button' onClick={this.handleDeleteConfirmPopupClick}>
+                        <i className="fa-regular fa-trash-can" />
+                        Delete</button>
+                    </div>
+                    <div className='mobile-column-half'>
+                      <div className='item-save-button-wrapper'>
+                        <button type='submit' className='item-save-button'>SAVE</button>
+                      </div>
                     </div>
                   </div>
                 </div>
