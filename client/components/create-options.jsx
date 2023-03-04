@@ -16,7 +16,7 @@ export default class CreateOptions extends React.Component {
   createOptions(array) {
     const optionList = [];
     for (let i = 0; i < array.length; i++) {
-      optionList.push(<option key={i} value={array[i]}>{array[i]}</option>);
+      optionList.push(<option key={i} value={array[i]} >{array[i]}</option>);
     }
     return optionList;
   }

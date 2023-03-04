@@ -180,10 +180,10 @@ function Outfit(props) {
         <div className={props.hover} onMouseLeave={props.handleMouseLeave}>
           <p className='show-outfit-notes'>{notes}</p>
           <a href={`#outfit?outfitId=${outfitId}`}>
-            <i className="fa-solid fa-pen item" />
+            <i className="fa-solid fa-pen outfit" />
           </a>
-          <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart item' /></button>
-          <button type='button' className={props.isFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-solid fa-heart item' /></button>
+          <button type='button' className={props.isNotFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-regular fa-heart outfit' /></button>
+          <button type='button' className={props.isFavoriteIcon} onClick={props.handleFavoriteClick}><i className='fa-solid fa-heart outfit' /></button>
         </div>
       </div>
     </div>

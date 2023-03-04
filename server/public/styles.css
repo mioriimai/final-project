@@ -400,6 +400,7 @@ body {
   font-weight: bold;
   padding: 6px 40px 8px;
   margin-right: 40px;
+  color: black;
 }
 
 .delete-item-button {
@@ -978,10 +979,34 @@ body {
 
 .fa-solid.fa-heart.item-stay.outfit {
   color: #e78f8f;
-  font-size: 2.6em;
+  font-size: 1.9em;
+  position: absolute;
+  right: 27px;
+  top: 30px;
+}
+
+.fa-regular.fa-heart.outfit {
+  color: #6c6b6b;
+  font-size: 2.7em;
   position: absolute;
   right: 30px;
-  top: 35px;
+  top: 30px;
+}
+
+.fa-solid.fa-heart.outfit {
+  color: #e78f8f;
+  font-size: 2.7em;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+.fa-solid.fa-pen.outfit {
+  color: #6c6b6b;
+  font-size: 2em;
+  position: absolute;
+  left: 30px;
+  top: 30px;
 }
 
 /* ------------- media query ------------  */
@@ -1110,6 +1135,7 @@ body {
     border: none;
     padding: 0 5px 0 0;
     text-align: right;
+    background-color: white;
   }
 
   .each-row {
@@ -1151,7 +1177,7 @@ body {
 
   .saved-popup-text-wrapper {
     width: 300px;
-    height: 200px;
+    height: 215px;
     margin: 40% auto;
   }
 
@@ -1275,27 +1301,27 @@ body {
   }
 
   .fa-solid.fa-pen.item {
-    font-size: 1.4em;
+    font-size: 1.3em;
     left: 20px;
-    top: 22px;
+    top: 20px;
   }
 
   .fa-regular.fa-heart.item {
-    font-size: 1.4em;
+    font-size: 1.6em;
     right: 20px;
-    top: 22px;
+    top: 20px;
   }
 
   .fa-solid.fa-heart.item {
-    font-size: 1.4em;
+    font-size: 1.6em;
     right: 20px;
-    top: 22px;
+    top: 20px;
   }
 
   .fa-solid.fa-heart.item-stay {
     font-size: 1.1em;
     right: 20px;
-    top: 22px;
+    top: 20px;
   }
 
   /* ------------- mobile favorites view --------------- */
@@ -1325,7 +1351,7 @@ body {
   .form-outfit-white-box {
     min-width: 320px;
     max-width: 400px;
-    height: 740px;
+    height: 755px;
     width: 100%;
     margin: 30px auto;
   }
@@ -1362,6 +1388,7 @@ body {
     font-size: 24px;
     margin: 25px auto 0;
     padding: 10px 40px;
+    color: black;
   }
 
   .fa-solid.fa-plus.outfit {
@@ -1459,7 +1486,7 @@ body {
 
   .saved-popup-text-wrapper-outfit {
     width: 300px;
-    height: 200px;
+    height: 215px;
     margin: 40% auto;
   }
 
@@ -1472,8 +1499,8 @@ body {
     margin-top: 0;
     margin-left: 0;
     position: absolute;
-    top: 310px;
-    left: 40px;
+    top: 320px;
+    left: 30px;
   }
 
   .fa-regular.fa-trash-can.outfit {
@@ -1524,12 +1551,6 @@ body {
     font-size: 22px;
     text-align: center;
     margin: 100px 25px;
-  }
-
-  .fa-solid.fa-heart.item-stay.outfit {
-    font-size: 1.1em;
-    right: 17px;
-    top: 22px;
   }
 }
 
