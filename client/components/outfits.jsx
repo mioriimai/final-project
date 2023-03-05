@@ -146,8 +146,7 @@ export default class Outfits extends React.Component {
           </div>
         </div>
         <a href="#add-outfit" className='add-items-button'>
-          <i className="fa-solid fa-plus" />
-          Add Outfits
+          <i className="fa-solid fa-plus" />Add Outfits
         </a>
         <div className={loadingSpinner}>
           <ThreeDots
@@ -163,7 +162,6 @@ export default class Outfits extends React.Component {
             wrapperClassName=""
             visible={true}
           />
-          {/* <p className='loading'>Loading</p> */}
         </div>
         <div className={outfitsContainer}>
           <p className={noItemMessage}>No outfits found. Let&rsquo;s add an outfit!</p>

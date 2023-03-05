@@ -241,7 +241,6 @@ app.get('/api/outfits/:outfitId', (req, res, next) => {
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfitId mush be a positive integer');
   }
-
   const sql = `
        select "outfitId",
               "userId",
@@ -260,8 +259,8 @@ app.get('/api/outfits/:outfitId', (req, res, next) => {
       res.json(item);
     })
     .catch(err => next(err));
-
 });
+
 /* -------------------------------------------------------------------------
   Clients can GET all items for a specifit outfit with its info by outfitId.
 --------------------------------------------------------------------------- */
@@ -270,7 +269,6 @@ app.get('/api/outfitItems/:outfitId', (req, res, next) => {
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfifId mush be a positive integer');
   }
-
   const sql = `
       select "outfitItems"."outfitId",
              "outfitItems"."itemId",
@@ -351,9 +349,7 @@ app.post('/api/form-outfit', uploadsMiddleware, (req, res, next) => {
     values ($1, $2, $3)
     returning *
   `;
-
   const params = [newOutfit.notes, newOutfit.favorite, newOutfit.userId];
-
   db.query(sql, params)
     .then(result => {
       // the query succeeded
@@ -610,7 +606,6 @@ app.patch('/api/outfitsNotes/:outfitId', (req, res, next) => {
 /* -----------------------------------------
    Clients can DELETE an item by its itemId.
 -------------------------------------------- */
-
 app.delete('/api/items/:itemId', (req, res, next) => {
   const itemId = Number(req.params.itemId);
   if (!Number.isInteger(itemId) || itemId <= 0) {

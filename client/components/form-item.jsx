@@ -141,9 +141,7 @@ export default class FormItem extends React.Component {
                 <div className='column-half add-padding-left'>
                   <div className='row'>
                     <div className='item-image-wrapper'>
-
                       <img src="/images/image-placeholder.png" alt="placeholder" className={placeholderClassName} />
-
                       <p className={uploadMessage}>Upload from Camera Roll</p>
                       {preview}
                     </div>
