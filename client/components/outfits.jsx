@@ -58,7 +58,6 @@ export default class Outfits extends React.Component {
     }
     const status = { favorite: !favoriteStatus };
 
-    // Use fetch() to send a PATCH request to update item's favorite status
     fetch(`/api/outfitFavoriteUpdate/${this.state.outfitId}`, {
       method: 'PATCH',
       headers: {
@@ -67,14 +66,12 @@ export default class Outfits extends React.Component {
       body: JSON.stringify(status)
     });
 
-    // Use fetch() to send a GET request to get all items
     fetch('/api/outfits')
       .then(res => res.json())
       .then(outfits => this.setState({ outfits }));
   }
 
   render() {
-
     const outfitsArray = [];
     for (let i = 0; i < this.state.outfits.length; i++) {
 

@@ -139,8 +139,6 @@ export default class EditOutfit extends React.Component {
   }
 
   handleSubmit(event) {
-
-    // prevent the default form submission behavior.
     event.preventDefault();
 
     let updatedNotes;
