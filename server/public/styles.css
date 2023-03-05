@@ -6,8 +6,7 @@ body {
 
 .navbar-wrapper {
   border-bottom: 1px solid black;
-  padding: 7px;
-  margin: 0;
+  padding: 10px;
   text-align: center;
   position: relative;
 }
@@ -25,11 +24,8 @@ body {
 .fa-solid.fa-bars {
   font-size: 2rem;
   position: absolute;
-  left: 25px;
-  top: 13px;
-}
-
-.fa-solid.fa-bars:hover {
+  left: 26px;
+  top: 16px;
   cursor: pointer;
 }
 
@@ -63,12 +59,12 @@ body {
 
 .item-menu {
   text-decoration: none;
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #000;
   display: block;
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 15px;
-  padding-left: 30px;
+  padding-left: 40px;
   font-family: "Playfair Display", serif;
   font-weight: bold;
 }
@@ -82,11 +78,11 @@ body {
 .item-outfits,
 .item-favorites {
   text-decoration: none;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #000;
   display: block;
   padding: 7px;
-  padding-left: 30px;
+  padding-left: 40px;
   font-family: "Playfair Display", serif;
 }
 
@@ -128,7 +124,7 @@ body {
 }
 
 .wanna-organize {
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .add-item-button,
@@ -195,7 +191,6 @@ body {
   opacity: 40%;
   width: 170px;
   margin: 50px auto 0;
-  object-fit: contain;
   display: block;
 }
 
@@ -242,9 +237,6 @@ body {
   justify-content: flex-end;
   border-bottom: 1px solid #c0c0c0;
   padding-right: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 #category-dropdown-menu,
@@ -272,13 +264,11 @@ body {
 .form-item-notes {
   font-family: "Alegreya SC", sans-serif;
   font-size: 25px;
-  margin: 0;
   padding-left: 20px;
   padding-bottom: 10px;
 }
 
 #notes {
-  margin: 0 auto;
   margin-left: 25px;
   border: 1px solid #c0c0c0;
   border-radius: 10px;
@@ -292,27 +282,6 @@ body {
 
 #notes:hover {
   cursor: pointer;
-}
-
-.item-delete-confirm-button {
-  color: #515151;
-  background-color: white;
-  font-family: "Playfair Display", sans-serif;
-  border: none;
-  font-size: 15px;
-  margin-top: 17px;
-  margin-left: 25px;
-}
-
-.fa-regular.fa-trash-can {
-  font-size: 1.5rem;
-  margin-right: 6px;
-  color: #7c7c7c;
-}
-
-.item-delete-confirm-button:hover {
-  cursor: pointer;
-  opacity: 0.6;
 }
 
 .item-save-button-wrapper {
@@ -383,41 +352,14 @@ body {
   background-color: #cbcbcb;
 }
 
-.delete-confirm-message {
-  color: #7d7d7d;
+.item-delete-confirm-button {
+  color: #515151;
+  background-color: white;
   font-family: "Playfair Display", sans-serif;
-  font-size: 25px;
-  padding: 55px 75px 0;
-  margin-bottom: 30px;
-}
-
-.cancel-delete-button {
-  font-family: "Playfair Display", sans-serif;
-  background-color: #f3f0e8;
   border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 6px 40px 8px;
-  margin-right: 40px;
-  color: black;
-}
-
-.delete-item-button {
-  font-family: "Playfair Display", sans-serif;
-  color: white;
-  background-color: #d43e3e;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 6px 40px 8px;
-}
-
-.cancel-delete-button:hover,
-.delete-item-button:hover {
-  cursor: pointer;
-  opacity: 0.6;
+  font-size: 15px;
+  margin-top: 17px;
+  margin-left: 25px;
 }
 
 /* ----------- items view ----------- */
@@ -528,14 +470,8 @@ body {
 }
 
 .item-wrapper {
-  padding: 0;
   width: 340px;
   margin: 10px 10px 20px;
-}
-
-.item-button {
-  display: "block";
-  cursor: "pointer";
 }
 
 .item-image {
@@ -613,6 +549,55 @@ body {
   top: 35px;
 }
 
+/* --------- edit item view --------- */
+.fa-regular.fa-trash-can {
+  font-size: 1.5rem;
+  margin-right: 6px;
+  color: #7c7c7c;
+}
+
+.item-delete-confirm-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.delete-confirm-message {
+  color: #7d7d7d;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 25px;
+  padding: 55px 75px 0;
+  margin-bottom: 30px;
+}
+
+.cancel-delete-button {
+  font-family: "Playfair Display", sans-serif;
+  background-color: #f3f0e8;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 6px 40px 8px;
+  margin-right: 40px;
+  color: black;
+}
+
+.delete-item-button {
+  font-family: "Playfair Display", sans-serif;
+  color: white;
+  background-color: #d43e3e;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 6px 40px 8px;
+}
+
+.cancel-delete-button:hover,
+.delete-item-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 /* ------------- favorites view --------------- */
 .favorites {
   font-family: "Playfair Display", sans-serif;
@@ -686,11 +671,8 @@ body {
   border-radius: 10px;
   width: 440px;
   height: 460px;
-  margin: auto;
   margin-left: 18%;
   position: relative;
-  overflow: auto;
-  padding: 0;
 }
 
 .outfit-box-inner {
@@ -712,7 +694,6 @@ body {
   opacity: 40%;
   width: 170px;
   margin: 100px auto 0;
-  object-fit: contain;
   display: block;
 }
 
@@ -720,8 +701,8 @@ body {
   color: #7c7c7c;
   font-size: 25px;
   position: absolute;
-  right: 15px;
-  top: 15px;
+  right: 25px;
+  top: 25px;
 }
 
 .add-item-to-outfit-button {
@@ -793,6 +774,7 @@ body {
   padding: 0;
   width: 250px;
   margin: 10px 10px 20px;
+  cursor: pointer;
 }
 
 .add-item-image {
@@ -812,12 +794,6 @@ body {
   width: 100%;
   height: 300px;
   border-radius: 25px;
-}
-
-.non-scroll {
-  height: calc(100vh + 1px);
-  width: 1px;
-  background-color: transparent;
 }
 
 .up-to-ten-message {
@@ -847,7 +823,6 @@ body {
 .outfit-notes {
   font-family: "Alegreya SC", sans-serif;
   font-size: 25px;
-  margin: 0;
   padding-left: 75px;
   padding-bottom: 10px;
 }
@@ -895,27 +870,6 @@ body {
   height: 280px;
   margin: 180px auto;
   border-radius: 17px;
-}
-
-.outfit-delete-confirm-button {
-  color: #515151;
-  background-color: white;
-  font-family: "Playfair Display", sans-serif;
-  border: none;
-  font-size: 17px;
-  margin-top: 20px;
-  margin-left: 100px;
-}
-
-.outfit-delete-confirm-button:hover {
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-.fa-regular.fa-trash-can.outfit {
-  font-size: 1.8rem;
-  margin-right: 7px;
-  color: #7c7c7c;
 }
 
 /* ----------- outfits view ------------ */
@@ -1017,6 +971,29 @@ body {
   text-align: center;
 }
 
+/* ---------- edit outfit view -------- */
+
+.outfit-delete-confirm-button {
+  color: #515151;
+  background-color: white;
+  font-family: "Playfair Display", sans-serif;
+  border: none;
+  font-size: 17px;
+  margin-top: 20px;
+  margin-left: 100px;
+}
+
+.outfit-delete-confirm-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.fa-regular.fa-trash-can.outfit {
+  font-size: 1.8rem;
+  margin-right: 7px;
+  color: #7c7c7c;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
@@ -1027,11 +1004,10 @@ body {
   }
 
   /* ------- mobile app-drawer-menu ------ */
-
   .fa-solid.fa-bars {
     font-size: 1.5rem;
     left: 18px;
-    top: 9px;
+    top: 12px;
   }
 
   .menu.is-active {
@@ -1060,7 +1036,7 @@ body {
   }
 
   .wanna-organize {
-    margin-top: 30px;
+    margin-top: 35px;
   }
 
   .add-item-button,
@@ -1074,7 +1050,6 @@ body {
   }
 
   /* ----------- moble item form view ---------- */
-
   .form-item-container {
     margin: 20px 7%;
   }
@@ -1333,7 +1308,6 @@ body {
   }
 
   /* ------------- mobile favorites view --------------- */
-
   .favorites {
     font-size: 26px;
     margin: 25px 16px 0;
@@ -1562,33 +1536,25 @@ body {
   }
 
   .fa-solid.fa-heart.item-stay.outfit {
-    color: #e78f8f;
     font-size: 1.9em;
-    position: absolute;
     right: 31.5px;
     top: 30px;
   }
 
   .fa-regular.fa-heart.outfit {
-    color: #6c6b6b;
     font-size: 2.7em;
-    position: absolute;
     right: 35px;
     top: 30px;
   }
 
   .fa-solid.fa-heart.outfit {
-    color: #e78f8f;
     font-size: 2.7em;
-    position: absolute;
     right: 35px;
     top: 30px;
   }
 
   .fa-solid.fa-pen.outfit {
-    color: #6c6b6b;
     font-size: 2em;
-    position: absolute;
     left: 35px;
     top: 30px;
   }
@@ -1596,8 +1562,18 @@ body {
 
 /* tablet screen */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
-  /* ----------- tablet form item view ---------- */
+  /* ---- drawer menu ----- */
+  .item-menu {
+    padding-left: 30px;
+  }
 
+  .item-items,
+  .item-outfits,
+  .item-favorites {
+    padding-left: 30px;
+  }
+
+  /* ----------- tablet form item view ---------- */
   .form-item-container {
     margin: 50px 10%;
   }
@@ -1731,7 +1707,6 @@ body {
   }
 
   /* -------- tablet edit outfit view --------- */
-
   .outfit-delete-confirm-button {
     font-size: 18px;
     margin-top: 0;
@@ -1747,7 +1722,6 @@ body {
   }
 
   /* -------- tablet items view --------- */
-
   .items-view-container {
     margin: 5px auto;
     padding: 0 5%;

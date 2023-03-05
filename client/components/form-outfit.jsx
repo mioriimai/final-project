@@ -386,7 +386,6 @@ export default class FormOutfit extends React.Component {
             <div className='add-item-list-wrapper'>
               {itemsArray}
             </div>
-            <div className='non-scroll' />
           </div>
         </div>
 

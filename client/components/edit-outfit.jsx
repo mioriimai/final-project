@@ -457,7 +457,7 @@ export default class EditOutfit extends React.Component {
 
         <div className={deleteConfirmPopup}>
           <div className='saved-popup-text-wrapper'>
-            <h1 className='delete-confirm-message'>Are you sure you want to delete this item? <br />This process can&rsquo;t be undone.</h1>
+            <h1 className='delete-confirm-message'>Are you sure you want to delete this outfit? <br />This process can&rsquo;t be undone.</h1>
             <button className='cancel-delete-button' type='button' onClick={this.handleDeleteConfirmPopupClick} >Cancel</button>
             <a className='delete-item-button' href='#outfits' onClick={this.handleDeleteOutfit} >Delete</a>
           </div>
