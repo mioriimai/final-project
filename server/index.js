@@ -93,8 +93,6 @@ app.get('/api/favoriteItems', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       const items = result.rows;
-      // the query succeeded
-      // respond to the client with the status code 200 and all rows from the "items" table
       res.status(200).json(items);
     })
     .catch(err => next(err));
@@ -115,8 +113,6 @@ app.get('/api/favoriteOutfits', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       const outfits = result.rows;
-      // the query succeeded
-      // respond to the client with the status code 200 and all rows from the "items" table
       res.status(200).json(outfits);
     })
     .catch(err => next(err));
@@ -241,7 +237,6 @@ app.get('/api/outfits/:outfitId', (req, res, next) => {
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfitId mush be a positive integer');
   }
-
   const sql = `
        select "outfitId",
               "userId",
@@ -260,8 +255,8 @@ app.get('/api/outfits/:outfitId', (req, res, next) => {
       res.json(item);
     })
     .catch(err => next(err));
-
 });
+
 /* -------------------------------------------------------------------------
   Clients can GET all items for a specifit outfit with its info by outfitId.
 --------------------------------------------------------------------------- */
@@ -270,7 +265,6 @@ app.get('/api/outfitItems/:outfitId', (req, res, next) => {
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfifId mush be a positive integer');
   }
-
   const sql = `
       select "outfitItems"."outfitId",
              "outfitItems"."itemId",
@@ -309,27 +303,18 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
   // The S3 url to access the uploaded file later
   const url = req.file.location;
 
-  // query the database
   const sql = `
     insert into "items" ("image", "category", "brand", "color", "notes", "favorite", "userId")
     values ($1, $2, $3, $4, $5, $6, $7)
     returning *
   `;
-  // send the user input in a separate array instead of putting the user input directory into our query
   const params = [url, newItem.category, newItem.brand, newItem.color, newItem.notes, newItem.favorite, newItem.userId];
-
   db.query(sql, params)
     .then(result => {
-      // the query succeeded
-      // respond to the client with the status code 200 and created newItem object
       res.status(201).json(result.rows[0]);
     })
     .catch(err => {
-      // the query failed for some reason
-      // possibly due to a syntax error in the SQL statement
-      // print the error to STDERR (the terminal) for debugging purposes
       console.error(err);
-      // respond to the client with a generic 500 error message
       res.status(500).json({
         error: 'An unexpected error occurred.'
       });
@@ -341,28 +326,21 @@ app.post('/api/form-item', uploadsMiddleware, (req, res, next) => {
 --------------------------------------------- */
 app.post('/api/form-outfit', uploadsMiddleware, (req, res, next) => {
   const newOutfit = req.body;
-  // varidate the "inputs" first.
   if ('userId' in newOutfit === false || 'notes' in newOutfit === false || 'favorite' in newOutfit === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   }
-  // query the database
   const sql = `
     insert into "outfits" ("notes", "favorite", "userId")
     values ($1, $2, $3)
     returning *
   `;
-
   const params = [newOutfit.notes, newOutfit.favorite, newOutfit.userId];
-
   db.query(sql, params)
     .then(result => {
-      // the query succeeded
       res.status(201).json(result.rows[0]);
     })
     .catch(err => {
-      // the query failed for some reason
       console.error(err);
-      // respond to the client with a generic 500 error message
       res.status(500).json({
         error: 'An unexpected error occurred.'
       });
@@ -374,11 +352,9 @@ app.post('/api/form-outfit', uploadsMiddleware, (req, res, next) => {
 ----------------------------------------------------------------------------- */
 app.post('/api/store-item-for-outfit', uploadsMiddleware, (req, res, next) => {
   const item = req.body;
-  // varidate the "inputs" first.
   if ('userId' in item === false || 'outfitId' in item === false || 'itemId' in item === false || 'deltaX' in item === false || 'deltaY' in item === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   }
-  // query the database
   const sql = `
     insert into "outfitItems" ("outfitId", "itemId", "userId", "deltaX", "deltaY")
     values ($1, $2, $3, $4, $5)
@@ -388,13 +364,10 @@ app.post('/api/store-item-for-outfit', uploadsMiddleware, (req, res, next) => {
 
   db.query(sql, params)
     .then(result => {
-      // the query succeeded
       res.status(201).json(result.rows[0]);
     })
     .catch(err => {
-      // the query failed for some reason
       console.error(err);
-      // respond to the client with a generic 500 error message
       res.status(500).json({
         error: 'An unexpected error occurred.'
       });
@@ -425,15 +398,11 @@ app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
       if (!item) {
         throw new ClientError(404, `cannot find item with itemId ${itemId}`);
       } else {
-        // the query succeeded
-        // respond to the client with the status code 200 and created newItem object
         res.status(201).json(item);
       }
     })
     .catch(err => {
-      // the query failed for some reason
       console.error(err);
-      // respond to the client with a generic 500 error message
       res.status(500).json({
         error: 'An unexpected error occurred.'
       });
@@ -464,15 +433,11 @@ app.patch('/api/outfitFavoriteUpdate/:outfitId', (req, res, next) => {
       if (!outfit) {
         throw new ClientError(404, `cannot find outfit with outfitId ${outfitId}`);
       } else {
-        // the query succeeded
-        // respond to the client with the status code 200 and created newItem object
         res.status(201).json(outfit);
       }
     })
     .catch(err => {
-      // the query failed for some reason
       console.error(err);
-      // respond to the client with a generic 500 error message
       res.status(500).json({
         error: 'An unexpected error occurred.'
       });
@@ -485,7 +450,6 @@ app.patch('/api/outfitFavoriteUpdate/:outfitId', (req, res, next) => {
 app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   const updatedItem = req.body;
   const itemId = Number(req.params.itemId);
-  // varidate the "inputs" first.
   if ('category' in updatedItem === false || 'brand' in updatedItem === false || 'color' in updatedItem === false || 'notes' in updatedItem === false || 'userId' in updatedItem === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   } else if (!Number.isInteger(itemId) || itemId <= 0) {
@@ -493,7 +457,6 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
   }
 
   if (req.file === undefined) { // when the image was not updated
-    // query the database
     const sql = `
     update "items"
        set "image" = $1,
@@ -504,7 +467,6 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
      where "itemId" = $6
     returning *
    `;
-    // send the user input in a separate array instead of putting the user input directory into our query
     const params = [updatedItem.image, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
     db.query(sql, params)
       .then(result => {
@@ -512,17 +474,11 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
         if (!item) {
           throw new ClientError(404, `cannot find item with itemId ${itemId}`);
         } else {
-          // the query succeeded
-          // respond to the client with the status code 200 and created newItem object
           res.status(201).json(item);
         }
       })
       .catch(err => {
-        // the query failed for some reason
-        // possibly due to a syntax error in the SQL statement
-        // print the error to STDERR (the terminal) for debugging purposes
         console.error(err);
-        // respond to the client with a generic 500 error message
         res.status(500).json({
           error: 'An unexpected error occurred.'
         });
@@ -530,7 +486,6 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
 
   } else { // when image was updated
     const url = req.file.location; // The S3 url to access the uploaded file later
-    // query the database
     const sql = `
     update "items"
        set "image" = $1,
@@ -541,7 +496,6 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
      where "itemId" = $6
     returning *
   `;
-    // send the user input in a separate array instead of putting the user input directory into our query
     const params = [url, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
 
     db.query(sql, params)
@@ -550,17 +504,11 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
         if (!item) {
           throw new ClientError(404, `cannot find item with itemId ${itemId}`);
         } else {
-          // the query succeeded
-          // respond to the client with the status code 200 and created newItem object
           res.status(201).json(item);
         }
       })
       .catch(err => {
-        // the query failed for some reason
-        // possibly due to a syntax error in the SQL statement
-        // print the error to STDERR (the terminal) for debugging purposes
         console.error(err);
-        // respond to the client with a generic 500 error message
         res.status(500).json({
           error: 'An unexpected error occurred.'
         });
@@ -592,15 +540,11 @@ app.patch('/api/outfitsNotes/:outfitId', (req, res, next) => {
       if (!outfit) {
         throw new ClientError(404, `cannot find outfit with outfitId ${outfitId}`);
       } else {
-        // the query succeeded
-        // respond to the client with the status code 200 and created newItem object
         res.status(201).json(outfit);
       }
     })
     .catch(err => {
-      // the query failed for some reason
       console.error(err);
-      // respond to the client with a generic 500 error message
       res.status(500).json({
         error: 'An unexpected error occurred.'
       });
@@ -610,7 +554,6 @@ app.patch('/api/outfitsNotes/:outfitId', (req, res, next) => {
 /* -----------------------------------------
    Clients can DELETE an item by its itemId.
 -------------------------------------------- */
-
 app.delete('/api/items/:itemId', (req, res, next) => {
   const itemId = Number(req.params.itemId);
   if (!Number.isInteger(itemId) || itemId <= 0) {

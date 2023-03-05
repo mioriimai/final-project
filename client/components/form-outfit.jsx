@@ -85,7 +85,6 @@ export default class FormOutfit extends React.Component {
   }
 
   handleOnDrag(event, ui) {
-
     // change delta X and Y and perventage
     let width;
     let height;
@@ -219,7 +218,6 @@ export default class FormOutfit extends React.Component {
   }
 
   render() {
-
     const chosenItemsArray = [];
     for (let i = 0; i < this.state.chosenItems.length; i++) {
       const targetedItemId = Number(this.state.itemId);
@@ -386,7 +384,6 @@ export default class FormOutfit extends React.Component {
             <div className='add-item-list-wrapper'>
               {itemsArray}
             </div>
-            <div className='non-scroll' />
           </div>
         </div>
 

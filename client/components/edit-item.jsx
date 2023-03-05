@@ -125,7 +125,6 @@ export default class EditItem extends React.Component {
     formDataObject.append('notes', notes);
     formDataObject.append('userId', 1);
 
-    // Use fetch() to send a POST request to / api / form-item.
     fetch(`/api/items/${this.props.itemId}`, {
       method: 'PATCH',
       body: formDataObject
@@ -153,7 +152,6 @@ export default class EditItem extends React.Component {
   }
 
   handleDeleteItem() {
-    // Use fetch() to send a DELETE request to / api / form-item.
     fetch(`/api/items/${this.props.itemId}`, {
       method: 'DELETE'
     })
@@ -196,10 +194,7 @@ export default class EditItem extends React.Component {
       valueOfNotes = this.state.updatedNotes;
     }
 
-    // show or hide savedPopup
     const savedPopup = this.state.saved ? 'pop-up' : 'pop-up hidden';
-
-    // show or hide deleteConfirmPopup
     const deleteConfirmPopup = this.state.deleteConfirmation ? 'pop-up' : 'pop-up hidden';
 
     return (

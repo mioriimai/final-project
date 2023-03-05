@@ -58,7 +58,6 @@ export default class Outfits extends React.Component {
     }
     const status = { favorite: !favoriteStatus };
 
-    // Use fetch() to send a PATCH request to update item's favorite status
     fetch(`/api/outfitFavoriteUpdate/${this.state.outfitId}`, {
       method: 'PATCH',
       headers: {
@@ -67,14 +66,12 @@ export default class Outfits extends React.Component {
       body: JSON.stringify(status)
     });
 
-    // Use fetch() to send a GET request to get all items
     fetch('/api/outfits')
       .then(res => res.json())
       .then(outfits => this.setState({ outfits }));
   }
 
   render() {
-
     const outfitsArray = [];
     for (let i = 0; i < this.state.outfits.length; i++) {
 
@@ -146,8 +143,7 @@ export default class Outfits extends React.Component {
           </div>
         </div>
         <a href="#add-outfit" className='add-items-button'>
-          <i className="fa-solid fa-plus" />
-          Add Outfits
+          <i className="fa-solid fa-plus" />Add Outfits
         </a>
         <div className={loadingSpinner}>
           <ThreeDots
@@ -163,7 +159,6 @@ export default class Outfits extends React.Component {
             wrapperClassName=""
             visible={true}
           />
-          {/* <p className='loading'>Loading</p> */}
         </div>
         <div className={outfitsContainer}>
           <p className={noItemMessage}>No outfits found. Let&rsquo;s add an outfit!</p>
