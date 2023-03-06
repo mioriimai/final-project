@@ -6,16 +6,16 @@ body {
 
 .navbar-wrapper {
   border-bottom: 1px solid black;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   position: relative;
 }
 
-.your-closet {
+.wearly {
   color: black;
   font-family: "Playfair Display SC", serif;
-  font-weight: bold;
-  font-size: 33px;
+  font-size: 40px;
+  letter-spacing: 7px;
   text-decoration: none;
 }
 
@@ -118,9 +118,10 @@ body {
 
 .wanna-organize,
 .what-to-wear {
-  font-family: "The Girl Next Door", sans-serif;
+  font-family: "Cormorant Garamond", sans-serif;
   font-size: 40px;
   margin: 20px;
+  color: #676767;
 }
 
 .wanna-organize {
@@ -972,7 +973,6 @@ body {
 }
 
 /* ---------- edit outfit view -------- */
-
 .outfit-delete-confirm-button {
   color: #515151;
   background-color: white;
@@ -999,8 +999,14 @@ body {
 /* mobile screen */
 @media screen and (max-width: 767px) {
   /* --------- mobile navbar -------- */
-  .your-closet {
-    font-size: 20px;
+
+  .navbar-wrapper {
+    padding: 7px;
+  }
+
+  .wearly {
+    font-size: 25px;
+    letter-spacing: 4px;
   }
 
   /* ------- mobile app-drawer-menu ------ */
