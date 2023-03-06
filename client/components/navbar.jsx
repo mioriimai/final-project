@@ -6,7 +6,7 @@ export default class Navbar extends React.Component {
   render() {
     return (
       <nav className='navbar-wrapper'>
-        <a className='your-closet' href='#home'>Your Closet</a>
+        <a className='wearly' href='#home'>Wearly</a>
         <AppDrawer />
       </nav>
     );
