@@ -44,7 +44,7 @@ Users can create an outfit.
 ## Stretch features
 - Users can sign up.
 - Users can sign in.
-- Users can sign .
+- Users can sign out.
 - Users can remove the background of an image.
 
 
