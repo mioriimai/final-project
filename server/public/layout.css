@@ -43,11 +43,11 @@
 
   /* ----------- moble item form view ---------- */
   .column-two-fifth {
-    flex-basis: 45%;
+    flex-basis: 40%;
   }
 
   .column-three-fifth {
-    flex-basis: 55%;
+    flex-basis: 60%;
   }
 
   /* ----------- moble items view ---------- */
