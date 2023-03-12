@@ -8,6 +8,9 @@ export default class Navbar extends React.Component {
       <nav className='navbar-wrapper'>
         <a className='wearly' href='#home'>Wearly</a>
         <AppDrawer />
+        <a href="#sign-up">
+          <i className='fa-solid fa-circle-user'/>
+        </a>
       </nav>
     );
   }
