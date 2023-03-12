@@ -8,8 +8,8 @@ create schema "public";
 
 create table "public"."users" (
   "userId"             serial,
+  "name"               text           not null,
   "username"           text           not null,
-  "email"              text           not null,
   "hashedPassword"     text           not null,
   "createdAt"          timestamptz(6) not null default now(),
   primary key ("userId"),
