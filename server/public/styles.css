@@ -1046,8 +1046,25 @@ body {
   border: 1px solid #d3d3d3;
   border-radius: 6px;
   margin-top: 6px;
-  margin-bottom: 17px;
+  margin-bottom: 20px;
   padding-left: 10px;
+}
+
+.username-wrapper,
+.password-wrapper {
+  position: relative;
+}
+
+.username-validation-message,
+.password-validation-message {
+  margin: -10px auto 10px;
+  color: rgb(221, 86, 86);
+  font-family: Alegreya, sans-serif;
+  font-size: 12px;
+  position: absolute;
+  top: 77px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .create-account-button {

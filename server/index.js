@@ -650,9 +650,36 @@ app.post('/api/auth/sign-up', (req, res, next) => {
           const newUser = result.rows[0];
           res.status(201).json(newUser);
         })
-        .catch(err => next(err));
+        // .catch(err => next(err));
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({
+            error: 'Please try with other username.'
+          });
+        });
     })
     .catch(err => next(err));
+});
+
+/* -------------------------------
+     Clients can GET usernames.
+--------------------------------- */
+app.get('/api/usernames', (req, res, next) => {
+  const sql = `
+       select "username"
+       from "users"
+       `;
+  db.query(sql)
+    .then(result => {
+      res.status(201).json(result.rows);
+    })
+  // .catch(err => next(err));
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
 });
 
 app.use(errorMiddleware);
