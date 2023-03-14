@@ -19,6 +19,19 @@ body {
   text-decoration: none;
 }
 
+.fa-solid.fa-circle-user {
+  color: #717171;
+  font-size: 2.5rem;
+  position: absolute;
+  right: 50px;
+  top: 14px;
+}
+
+.fa-solid.fa-circle-user:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 /* ------- app-drawer-menu ------ */
 
 .fa-solid.fa-bars {
@@ -995,6 +1008,100 @@ body {
   color: #7c7c7c;
 }
 
+/* ------------ Sign up view -------------- */
+
+.sign-up-container {
+  margin: 40px;
+}
+
+.sign-up-white-box {
+  margin: 0 auto;
+  width: 480px;
+  height: 610px;
+  background-color: white;
+}
+
+.sign-up {
+  font-family: "Playfair Display", sans-serif;
+  margin: 80px auto 30px;
+  font-size: 50px;
+}
+
+.sign-up-name,
+.sign-up-username,
+.sign-up-password {
+  color: #888;
+  font-family: Alegreya, sans-serif;
+  font-size: 17px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.sign-up-name-input,
+.sign-up-username-input,
+.sign-up-password-input {
+  font-family: "Playfair Display", sans-serif;
+  width: 260px;
+  height: 35px;
+  border: 1px solid #d3d3d3;
+  border-radius: 6px;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
+.username-wrapper,
+.password-wrapper {
+  position: relative;
+}
+
+.username-validation-message,
+.password-validation-message {
+  margin: -10px auto 10px;
+  color: rgb(221, 86, 86);
+  font-family: Alegreya, sans-serif;
+  font-size: 12px;
+  position: absolute;
+  top: 78px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.create-account-button {
+  color: white;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #8f8f8f;
+  border: none;
+  border-radius: 40px;
+  padding: 13px 50px;
+  margin: 25px auto 15px;
+}
+
+.create-account-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.have-an-account {
+  color: #000;
+  font-family: Alegreya, sans-serif;
+  margin: auto;
+}
+
+.sign-in-button {
+  color: #e78f8f;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.sign-in-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
@@ -1008,6 +1115,12 @@ body {
   .wearly {
     font-size: 25px;
     letter-spacing: 4px;
+  }
+
+  .fa-solid.fa-circle-user {
+    font-size: 1.8rem;
+    right: 24px;
+    top: 12px;
   }
 
   /* ------- mobile app-drawer-menu ------ */
@@ -1564,6 +1677,59 @@ body {
     font-size: 2em;
     left: 35px;
     top: 30px;
+  }
+
+  /* ------------ mobile sign up view -------------- */
+  .sign-up-container {
+    margin: 30px;
+  }
+
+  .sign-up-white-box {
+    width: 310px;
+    height: 490px;
+  }
+
+  .sign-up {
+    margin: 55px auto 25px;
+    font-size: 40px;
+  }
+
+  .sign-up-name,
+  .sign-up-username,
+  .sign-up-password {
+    font-size: 16px;
+  }
+
+  .sign-up-name-input,
+  .sign-up-username-input,
+  .sign-up-password-input {
+    width: 200px;
+    height: 30px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    padding-left: 10px;
+  }
+
+  .create-account-button {
+    font-size: 15px;
+    padding: 10px 30px;
+    margin: 20px auto 10px;
+  }
+
+  .have-an-account {
+    font-size: 13px;
+  }
+
+  .sign-in-button {
+    margin-left: 7px;
+  }
+
+  .username-validation-message,
+  .password-validation-message {
+    margin: -12px auto 10px;
+    font-size: 9px;
+    top: 74px;
+    left: 150px;
   }
 }
 

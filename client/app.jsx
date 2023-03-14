@@ -7,6 +7,7 @@ import EditOutfit from './components/edit-outfit';
 import Items from './components/items';
 import Outfits from './components/outfits';
 import Favorites from './components/favorites';
+import SignUp from './components/sign-up';
 import Navbar from './components/navbar';
 import parseRoute from './lib/parse-route';
 import PageContainer from './components/page-container';
@@ -54,6 +55,9 @@ export default class App extends React.Component {
     if (route.path === 'outfit') {
       const outfitId = route.params.get('outfitId');
       return <EditOutfit outfitId={outfitId} />;
+    }
+    if (route.path === 'sign-up') {
+      return <SignUp />;
     }
 
   }
