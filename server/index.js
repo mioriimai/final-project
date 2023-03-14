@@ -1,5 +1,6 @@
 require('dotenv/config');
 const express = require('express');
+const argon2 = require('argon2'); // eslint-disable-line
 const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
 const ClientError = require('./client-error');
@@ -622,6 +623,34 @@ app.delete('/api/outfitItems/:outfitId', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+/* ------------------------------------------------
+     Clients can POST user info for registration.
+-------------------------------------------------- */
+app.post('/api/auth/sign-up', (req, res, next) => {
+  const { name, username, password } = req.body;
+  if (!name || !username || !password) {
+    throw new ClientError(400, 'name, username and password are required fields');
+  }
+
+  argon2
+    .hash(password)
+    .then(hassedPassword => {
+      const sql = `
+    insert into "users" ("name", "username", "hashedPassword")
+    values ($1, $2, $3)
+    returning *
+    `;
+      const params = [name, username, hassedPassword];
+      db.query(sql, params)
+        .then(result => {
+          const newUser = result.rows[0];
+          res.status(201).json(newUser);
+        })
+        .catch(err => next(err));
     })
     .catch(err => next(err));
 });
