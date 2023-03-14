@@ -14,7 +14,7 @@ export default class SignUp extends React.Component {
         <div className='sign-up-container'>
           <div className='sign-up-white-box'>
             <div className='row'>
-              <h2 className='sign-up'>Sign up</h2>
+              <h2 className='sign-up'>Sign Up</h2>
             </div>
             <div className='row'>
               <label htmlFor="name" className='sign-up-name'>
