@@ -1008,6 +1008,83 @@ body {
   color: #7c7c7c;
 }
 
+/* ------------ Sign up view -------------- */
+
+.sign-up-container {
+  margin: 40px;
+}
+
+.sign-up-white-box {
+  margin: 0 auto;
+  width: 480px;
+  height: 610px;
+  background-color: white;
+}
+
+.sign-up {
+  font-family: "Playfair Display", sans-serif;
+  margin: 75px auto 35px;
+  font-size: 50px;
+}
+
+.sign-up-name,
+.sign-up-username,
+.sign-up-password {
+  color: #888;
+  font-family: Alegreya, sans-serif;
+  font-size: 17px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.sign-up-name-input,
+.sign-up-username-input,
+.sign-up-password-input {
+  font-family: "Playfair Display", sans-serif;
+  width: 260px;
+  height: 35px;
+  border: 1px solid #d3d3d3;
+  border-radius: 6px;
+  margin-top: 6px;
+  margin-bottom: 17px;
+  padding-left: 10px;
+}
+
+.create-account-button {
+  color: white;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #8f8f8f;
+  border: none;
+  border-radius: 40px;
+  padding: 13px 50px;
+  margin: 25px auto 15px;
+}
+
+.create-account-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.have-an-account {
+  color: #000;
+  font-family: Alegreya, sans-serif;
+  margin: auto;
+}
+
+.sign-in-button {
+  color: #e78f8f;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.sign-in-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
