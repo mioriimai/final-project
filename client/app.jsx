@@ -8,6 +8,7 @@ import Items from './components/items';
 import Outfits from './components/outfits';
 import Favorites from './components/favorites';
 import SignUp from './components/sign-up';
+import SignIn from './components/sign-in';
 import Navbar from './components/navbar';
 import parseRoute from './lib/parse-route';
 import PageContainer from './components/page-container';
@@ -58,6 +59,9 @@ export default class App extends React.Component {
     }
     if (route.path === 'sign-up') {
       return <SignUp />;
+    }
+    if (route.path === 'sign-in') {
+      return <SignIn />;
     }
 
   }
