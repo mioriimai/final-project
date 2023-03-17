@@ -8,6 +8,13 @@ export default class SignIn extends React.Component {
       username: '',
       password: ''
     };
+    this.handleChangeUsername = this.handleChangeUsername.bind(this);
+  }
+
+  handleChangeUsername(event) {
+    this.setState({
+      username: event.target.value
+    });
   }
 
   render() {
@@ -21,7 +28,7 @@ export default class SignIn extends React.Component {
             <div className='row username-wrapper'>
               <label htmlFor="usename" className='sign-up-username'>
                 Username<br />
-                <input required type="text" id='username' name='username' className='sign-up-username-input' value={this.state.username} /* onChange={this.handleChangeUsername} */ />
+                <input required type="text" id='username' name='username' className='sign-up-username-input' value={this.state.username} onChange={this.handleChangeUsername} />
               </label>
               {/* <p className={usernameValidationMessage}>This username is taken. Please try anothor.</p> */}
             </div>
