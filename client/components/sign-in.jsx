@@ -9,11 +9,18 @@ export default class SignIn extends React.Component {
       password: ''
     };
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
   }
 
   handleChangeUsername(event) {
     this.setState({
       username: event.target.value
+    });
+  }
+
+  handleChangePassword(event) {
+    this.setState({
+      password: event.target.value
     });
   }
 
@@ -35,7 +42,7 @@ export default class SignIn extends React.Component {
             <div className='row password-wrapper'>
               <label htmlFor="password" className='sign-up-password'>
                 Password<br />
-                <input required type="password" id='passward' name='password' className='sign-up-password-input' value={this.state.password} /* onChange={this.handleChangePassword} */ />
+                <input required type="password" id='passward' name='password' className='sign-up-password-input' value={this.state.password} onChange={this.handleChangePassword} />
               </label>
               {/* <p className={passwordValidationMessage}>Password must be 4-15 characters.</p> */}
             </div>
