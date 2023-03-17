@@ -21,7 +21,7 @@ export default class SignIn extends React.Component {
     return (
       <form /* onSubmit={this.handleSubmit} */>
         <div className='sign-up-container'>
-          <div className='sign-up-white-box'>
+          <div className='sign-in-white-box'>
             <div className='row'>
               <h2 className='sign-up'>Sign In</h2>
             </div>
@@ -40,8 +40,8 @@ export default class SignIn extends React.Component {
               {/* <p className={passwordValidationMessage}>Password must be 4-15 characters.</p> */}
             </div>
             <div className='row'>
-              <button type='submit' className='create-account-button'>
-                Create Account
+              <button type='submit' className='confirm-sign-in-button'>
+                Sign In
               </button>
             </div>
             <div className='row'>
