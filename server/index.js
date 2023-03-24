@@ -6,6 +6,8 @@ const errorMiddleware = require('./error-middleware');
 const ClientError = require('./client-error');
 const pg = require('pg');
 const uploadsMiddleware = require('./uploads-middleware');
+const jwt = require('jsonwebtoken');
+const authorizationMiddleware = require('./authorization-middleware');
 
 // create a database connection object to use the pg package.
 const db = new pg.Pool({
@@ -19,6 +21,99 @@ const app = express();
 
 app.use(staticMiddleware);
 app.use(express.json());
+
+/* --------------------------------------------------------
+     Clients can POST user info for registration(sign-up).
+--------------------------------------------------------- */
+app.post('/api/auth/sign-up', (req, res, next) => {
+  const { name, username, password } = req.body;
+  if (!name || !username || !password) {
+    throw new ClientError(400, 'name, username and password are required fields');
+  }
+
+  argon2
+    .hash(password)
+    .then(hassedPassword => {
+      const sql = `
+    insert into "users" ("name", "username", "hashedPassword")
+    values ($1, $2, $3)
+    returning *
+    `;
+      const params = [name, username, hassedPassword];
+      db.query(sql, params)
+        .then(result => {
+          const newUser = result.rows[0];
+          res.status(201).json(newUser);
+        })
+        // .catch(err => next(err));
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({
+            error: 'Please try with other username.'
+          });
+        });
+    })
+    .catch(err => next(err));
+});
+
+/* --------------------------------------------------------
+   Clients can POST user info for authorization(sign-in).
+--------------------------------------------------------- */
+app.post('/api/auth/sign-in', (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(401, 'invalid login');
+  }
+  const sql = `
+    select "userId",
+           "hashedPassword"
+      from "users"
+     where "username" = $1
+  `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+      if (!user) {
+        throw new ClientError(401, 'invalid login');
+      }
+      const { userId, hashedPassword } = user;
+      return argon2
+        .verify(hashedPassword, password)
+        .then(isMatching => {
+          if (!isMatching) {
+            throw new ClientError(401, 'invalid login');
+          }
+          const payload = { userId, username };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          res.json({ token, user: payload });
+        });
+    })
+    .catch(err => next(err));
+});
+
+app.use(authorizationMiddleware);
+
+/* -------------------------------
+     Clients can GET usernames.
+--------------------------------- */
+app.get('/api/usernames', (req, res, next) => {
+  const sql = `
+       select "username"
+       from "users"
+       `;
+  db.query(sql)
+    .then(result => {
+      res.status(201).json(result.rows);
+    })
+    // .catch(err => next(err));
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occurred.'
+      });
+    });
+});
 
 /* -------------------------------
       Clients can GET all items.
@@ -625,61 +720,6 @@ app.delete('/api/outfitItems/:outfitId', (req, res, next) => {
       res.json(result.rows);
     })
     .catch(err => next(err));
-});
-
-/* ------------------------------------------------
-     Clients can POST user info for registration.
--------------------------------------------------- */
-app.post('/api/auth/sign-up', (req, res, next) => {
-  const { name, username, password } = req.body;
-  if (!name || !username || !password) {
-    throw new ClientError(400, 'name, username and password are required fields');
-  }
-
-  argon2
-    .hash(password)
-    .then(hassedPassword => {
-      const sql = `
-    insert into "users" ("name", "username", "hashedPassword")
-    values ($1, $2, $3)
-    returning *
-    `;
-      const params = [name, username, hassedPassword];
-      db.query(sql, params)
-        .then(result => {
-          const newUser = result.rows[0];
-          res.status(201).json(newUser);
-        })
-        // .catch(err => next(err));
-        .catch(err => {
-          console.error(err);
-          res.status(500).json({
-            error: 'Please try with other username.'
-          });
-        });
-    })
-    .catch(err => next(err));
-});
-
-/* -------------------------------
-     Clients can GET usernames.
---------------------------------- */
-app.get('/api/usernames', (req, res, next) => {
-  const sql = `
-       select "username"
-       from "users"
-       `;
-  db.query(sql)
-    .then(result => {
-      res.status(201).json(result.rows);
-    })
-  // .catch(err => next(err));
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'An unexpected error occurred.'
-      });
-    });
 });
 
 app.use(errorMiddleware);
