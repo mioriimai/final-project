@@ -67,15 +67,15 @@ export default class SignIn extends React.Component {
               <h2 className='sign-up'>Sign In</h2>
             </div>
             <div className='row username-wrapper'>
-              <label htmlFor="usename" className='sign-up-username'>
+              <label htmlFor='username' className='sign-up-username'>
                 Username<br />
                 <input required type="text" id='username' name='username' className='sign-up-username-input' value={this.state.username} onChange={this.handleChangeUsername} />
               </label>
             </div>
             <div className='row password-wrapper'>
-              <label htmlFor="password" className='sign-up-password'>
+              <label htmlFor='password' className='sign-up-password'>
                 Password<br />
-                <input required type="password" id='passward' name='password' className='sign-up-password-input' value={this.state.password} onChange={this.handleChangePassword} />
+                <input required type='password' id='password' name='password' className='sign-up-password-input' value={this.state.password} onChange={this.handleChangePassword} />
               </label>
               <p className={validationMessage}>The username or password is incorrect.</p>
             </div>
