@@ -19,6 +19,10 @@ body {
   text-decoration: none;
 }
 
+.sign-in-icon-wrapper {
+  text-decoration: none;
+}
+
 .fa-solid.fa-circle-user {
   color: #717171;
   font-size: 2.5rem;
@@ -27,9 +31,27 @@ body {
   top: 14px;
 }
 
-.fa-solid.fa-circle-user:hover {
+.sign-in-icon-wrapper:hover {
   cursor: pointer;
   opacity: 0.6;
+}
+
+.fa-solid.fa-right-from-bracket {
+  color: #717171;
+  font-size: 1.7rem;
+  position: absolute;
+  right: 56px;
+  top: 10px;
+}
+
+.sign-out {
+  color: #717171;
+  position: absolute;
+  right: 44px;
+  top: 23px;
+  font-family: "Playfair Display", serif;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 /* ------- app-drawer-menu ------ */
@@ -1153,6 +1175,18 @@ body {
     font-size: 1.8rem;
     right: 24px;
     top: 12px;
+  }
+
+  .fa-solid.fa-right-from-bracket {
+    font-size: 1.1rem;
+    right: 22px;
+    top: 11px;
+  }
+
+  .sign-out {
+    right: 16px;
+    top: 22px;
+    font-size: 8px;
   }
 
   /* ------- mobile app-drawer-menu ------ */
