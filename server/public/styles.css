@@ -1138,13 +1138,18 @@ body {
 .confirm-sign-in-button {
   color: white;
   font-family: "Playfair Display", sans-serif;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: bold;
   background-color: #8f8f8f;
   border: none;
   border-radius: 40px;
-  padding: 13px 80px;
+  padding: 12px 80px;
   margin: 33px auto 15px;
+}
+
+.confirm-sign-in-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 .signin-validation-message {
