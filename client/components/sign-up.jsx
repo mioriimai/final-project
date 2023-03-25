@@ -129,7 +129,7 @@ export default class SignUp extends React.Component {
                 Username<br />
                 <input required type="text" id='username' name='username' className='sign-up-username-input' value={this.state.username} onChange={this.handleChangeUsername} />
               </label>
-              <p className={usernameValidationMessage}>This username is taken. Please try anothor.</p>
+              <p className={usernameValidationMessage}>This username is taken. Please try another.</p>
             </div>
             <div className='row password-wrapper'>
               <label htmlFor="password" className='sign-up-password'>

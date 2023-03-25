@@ -31,7 +31,7 @@ export default class SignIn extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const req = {
-      method: 'GET',
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state)
     };

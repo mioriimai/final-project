@@ -7,9 +7,9 @@ export default class Navbar extends React.Component {
     const { user, handleSignOut } = this.context;
     let signInIcon;
     if (user !== null) {
-      signInIcon = <a className="sign-in-icon-wrapper" onClick={handleSignOut} href="#sign-in"><i className="fa-solid fa-right-from-bracket" /><p className='sign-out'>Sign Out</p></a>;
+      signInIcon = <a className="sign-in-icon-wrapper" onClick={handleSignOut} ><i className="fa-solid fa-right-from-bracket" /><p className='sign-out'>Sign Out</p></a>;
     } else if (user === null) {
-      signInIcon = <a className="sign-in-icon-wrapper" href="#sign-up"><i className='fa-solid fa-circle-user' /></a >;
+      signInIcon = <a className="sign-in-icon-wrapper" href="#sign-in"><i className='fa-solid fa-circle-user' /></a >;
     }
     return (
       <nav className='navbar-wrapper'>

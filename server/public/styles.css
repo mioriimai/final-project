@@ -1082,11 +1082,13 @@ body {
   margin: -10px auto 10px;
   color: rgb(221, 86, 86);
   font-family: Alegreya, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   position: absolute;
   top: 78px;
   left: 50%;
   transform: translateX(-50%);
+  width: 250px;
+  text-align: center;
 }
 
 .create-account-button {
@@ -1124,7 +1126,7 @@ body {
   opacity: 0.6;
 }
 
-/* ------------ Sign up view -------------- */
+/* ------------ Sign in view -------------- */
 
 .sign-in-white-box {
   margin: 0 auto;
