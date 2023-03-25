@@ -20,21 +20,23 @@ export default class Outfits extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      fetch(`/api/outfits/${this.context.user.userId}`)
-        .then(res => res.json())
-        .then(outfits => this.setState({ outfits }))
-        .then(() => {
-          return fetch(`/api/outfitItems/${this.context.user.userId}`);
-        })
-        .then(res => res.json())
-        .then(itemsForOutfit => this.setState({ itemsForOutfit }))
-        .then(() => {
-          this.setState({
-            loadingSpinner: false
+    if (this.context.user) {
+      setTimeout(() => {
+        fetch(`/api/outfits/${this.context.user.userId}`)
+          .then(res => res.json())
+          .then(outfits => this.setState({ outfits }))
+          .then(() => {
+            return fetch(`/api/outfitItems/${this.context.user.userId}`);
+          })
+          .then(res => res.json())
+          .then(itemsForOutfit => this.setState({ itemsForOutfit }))
+          .then(() => {
+            this.setState({
+              loadingSpinner: false
+            });
           });
-        });
-    }, 2000);
+      }, 2000);
+    }
   }
 
   handleMouseEnter(event) {

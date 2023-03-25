@@ -22,17 +22,19 @@ export default class Favorites extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/favoriteItems/${this.context.user.userId}`)
-      .then(res => res.json())
-      .then(favoriteItems => this.setState({ favoriteItems }));
+    if (this.context.user) {
+      fetch(`/api/favoriteItems/${this.context.user.userId}`)
+        .then(res => res.json())
+        .then(favoriteItems => this.setState({ favoriteItems }));
 
-    fetch(`/api/favoriteOutfits/${this.context.user.userId}`)
-      .then(res => res.json())
-      .then(favoriteOutfits => this.setState({ favoriteOutfits }));
+      fetch(`/api/favoriteOutfits/${this.context.user.userId}`)
+        .then(res => res.json())
+        .then(favoriteOutfits => this.setState({ favoriteOutfits }));
 
-    fetch(`/api/outfitItems/${this.context.user.userId}`)
-      .then(res => res.json())
-      .then(itemsForOutfit => this.setState({ itemsForOutfit }));
+      fetch(`/api/outfitItems/${this.context.user.userId}`)
+        .then(res => res.json())
+        .then(itemsForOutfit => this.setState({ itemsForOutfit }));
+    }
   }
 
   handleMouseEnter(event) {

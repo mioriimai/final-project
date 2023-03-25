@@ -23,9 +23,11 @@ export default class Items extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/items/${this.context.user.userId}`)
-      .then(res => res.json())
-      .then(items => this.setState({ items }));
+    if (this.context.user) {
+      fetch(`/api/items/${this.context.user.userId}`)
+        .then(res => res.json())
+        .then(items => this.setState({ items }));
+    }
   }
 
   handleMouseEnter(event) {
