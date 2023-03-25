@@ -121,20 +121,20 @@ export default class SignUp extends React.Component {
             <div className='row'>
               <label htmlFor="name" className='sign-up-name'>
                 Name<br />
-                <input required type="text" id='name' name='name' className='sign-up-name-input' value={this.state.name} onChange={this.handleChangeName}/>
+                <input required type="text" id='name' name='name' className='sign-up-name-input' value={this.state.name} onChange={this.handleChangeName} autoComplete='on' />
               </label>
             </div>
             <div className='row username-wrapper'>
               <label htmlFor="username" className='sign-up-username'>
                 Username<br />
-                <input required type='text' id='username' name='username' className='sign-up-username-input' value={this.state.username} onChange={this.handleChangeUsername} />
+                <input required type='text' id='username' name='username' className='sign-up-username-input' value={this.state.username} onChange={this.handleChangeUsername} autoComplete='on' />
               </label>
               <p className={usernameValidationMessage}>This username is taken. Please try another.</p>
             </div>
             <div className='row password-wrapper'>
               <label htmlFor='password' className='sign-up-password'>
                 Password<br />
-                <input required type='password' id='password' name='password' className='sign-up-password-input' value={this.state.password} onChange={this.handleChangePassword} />
+                <input required type='password' id='password' name='password' className='sign-up-password-input' value={this.state.password} onChange={this.handleChangePassword} autoComplete='on' />
               </label>
               <p className={passwordValidationMessage}>Password must be 4-15 characters.</p>
             </div>

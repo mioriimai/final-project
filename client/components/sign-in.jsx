@@ -69,13 +69,13 @@ export default class SignIn extends React.Component {
             <div className='row username-wrapper'>
               <label htmlFor='username' className='sign-up-username'>
                 Username<br />
-                <input required type="text" id='username' name='username' className='sign-up-username-input' value={this.state.username} onChange={this.handleChangeUsername} />
+                <input required type="text" id='username' name='username' className='sign-up-username-input' value={this.state.username} onChange={this.handleChangeUsername} autoComplete='on' />
               </label>
             </div>
             <div className='row password-wrapper'>
               <label htmlFor='password' className='sign-up-password'>
                 Password<br />
-                <input required type='password' id='password' name='password' className='sign-up-password-input' value={this.state.password} onChange={this.handleChangePassword} />
+                <input required type='password' id='password' name='password' className='sign-up-password-input' value={this.state.password} onChange={this.handleChangePassword} autoComplete='on' />
               </label>
               <p className={validationMessage}>The username or password is incorrect.</p>
             </div>
