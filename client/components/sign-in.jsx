@@ -1,5 +1,6 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class SignIn extends React.Component {
 
@@ -30,7 +31,7 @@ export default class SignIn extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const req = {
-      method: 'POST',
+      method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state)
     };
@@ -38,7 +39,7 @@ export default class SignIn extends React.Component {
       .then(res => res.json())
       .then(result => {
         if (result.user && result.token) {
-          // rerult = this.context;
+          this.context.handleSignIn(result);
           window.location.hash = '#';
         } else {
           this.setState({ valid: false });
@@ -47,7 +48,10 @@ export default class SignIn extends React.Component {
   }
 
   render() {
-    // console.log(this.state);
+
+    const { user } = this.context;
+    if (user) return <Redirect to="" />;
+
     let validationMessage;
     if (this.state.valid === false) {
       validationMessage = 'signin-validation-message';
@@ -67,7 +71,6 @@ export default class SignIn extends React.Component {
                 Username<br />
                 <input required type="text" id='username' name='username' className='sign-up-username-input' value={this.state.username} onChange={this.handleChangeUsername} />
               </label>
-              {/* <p className={usernameValidationMessage}>This username is taken. Please try anothor.</p> */}
             </div>
             <div className='row password-wrapper'>
               <label htmlFor="password" className='sign-up-password'>

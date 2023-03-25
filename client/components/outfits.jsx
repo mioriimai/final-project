@@ -1,5 +1,7 @@
 import React from 'react';
 import { ThreeDots } from 'react-loader-spinner';
+import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class Outfits extends React.Component {
 
@@ -18,13 +20,12 @@ export default class Outfits extends React.Component {
   }
 
   componentDidMount() {
-
     setTimeout(() => {
-      fetch('/api/outfits')
+      fetch(`/api/outfits/${this.context.user.userId}`)
         .then(res => res.json())
         .then(outfits => this.setState({ outfits }))
         .then(() => {
-          return fetch('/api/outfitItems');
+          return fetch(`/api/outfitItems/${this.context.user.userId}`);
         })
         .then(res => res.json())
         .then(itemsForOutfit => this.setState({ itemsForOutfit }))
@@ -58,7 +59,7 @@ export default class Outfits extends React.Component {
     }
     const status = { favorite: !favoriteStatus };
 
-    fetch(`/api/outfitFavoriteUpdate/${this.state.outfitId}`, {
+    fetch(`/api/outfitFavoriteUpdate/${this.state.outfitId}/${this.context.user.userId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -66,12 +67,14 @@ export default class Outfits extends React.Component {
       body: JSON.stringify(status)
     });
 
-    fetch('/api/outfits')
+    fetch(`/api/outfits/${this.context.user.userId}`)
       .then(res => res.json())
       .then(outfits => this.setState({ outfits }));
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="sign-in" />;
+
     const outfitsArray = [];
     for (let i = 0; i < this.state.outfits.length; i++) {
 
@@ -226,3 +229,4 @@ function Outfit(props) {
     </div>
   );
 }
+Outfits.contextType = AppContext;

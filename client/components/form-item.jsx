@@ -1,5 +1,7 @@
 import React from 'react';
 import CreateOptions from './create-options';
+import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class FormItem extends React.Component {
   constructor(props) {
@@ -70,6 +72,8 @@ export default class FormItem extends React.Component {
     // prevent the default form submission behavior.
     event.preventDefault();
 
+    const { user } = this.context;
+
     // Create a `new` FormData object.
     const formDataObject = new FormData();
 
@@ -80,7 +84,7 @@ export default class FormItem extends React.Component {
     formDataObject.append('color', this.state.color);
     formDataObject.append('notes', this.state.notes);
     formDataObject.append('favorite', false);
-    formDataObject.append('userId', 1);
+    formDataObject.append('userId', user.userId);
 
     // Use fetch() to send a POST request to / api / form-item.
     fetch('/api/form-item', {
@@ -111,6 +115,9 @@ export default class FormItem extends React.Component {
   }
 
   render() {
+
+    if (!this.context.user) return <Redirect to="sign-in" />;
+
     // show image placeholder and hide it when image is selected
     const previewImage = this.state.preview;
     let preview = '';
@@ -201,10 +208,11 @@ export default class FormItem extends React.Component {
             <h1 className='successfully-saved'>Successfully saved!</h1>
             <a className='add-more-items' href='#add-item' onClick={this.handlePopupClick}>Add More Items</a>
             <br />
-            <a className='see-items' href='#items' onClick={this.handlePopupClick}>See Your Items</a>
+            <a className='see-items' href='#items' onClick={this.handlePopupClick}>See My Items</a>
           </div>
         </div>
       </>
     );
   }
 }
+FormItem.contextType = AppContext;

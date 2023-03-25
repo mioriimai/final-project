@@ -1,5 +1,6 @@
 import React from 'react';
 import CreateOptions from './create-options';
+import AppContext from '../lib/app-context';
 
 export default class EditItem extends React.Component {
   constructor(props) {
@@ -29,7 +30,7 @@ export default class EditItem extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/items/${this.props.itemId}`)
+    fetch(`/api/items/${this.props.itemId}/${this.context.user.userId}`)
       .then(res => res.json())
       .then(item => this.setState({ item }));
   }
@@ -118,14 +119,15 @@ export default class EditItem extends React.Component {
     } else {
       notes = this.state.updatedNotes;
     }
+    const { user } = this.context;
     formDataObject.append('image', image);
     formDataObject.append('category', category);
     formDataObject.append('brand', brand);
     formDataObject.append('color', color);
     formDataObject.append('notes', notes);
-    formDataObject.append('userId', 1);
+    formDataObject.append('userId', user.userId);
 
-    fetch(`/api/items/${this.props.itemId}`, {
+    fetch(`/api/items/${this.props.itemId}/${this.context.user.userId}`, {
       method: 'PATCH',
       body: formDataObject
     })
@@ -152,7 +154,7 @@ export default class EditItem extends React.Component {
   }
 
   handleDeleteItem() {
-    fetch(`/api/items/${this.props.itemId}`, {
+    fetch(`/api/items/${this.props.itemId}/${this.context.user.userId}`, {
       method: 'DELETE'
     })
       .then(res => res.json())
@@ -278,7 +280,7 @@ export default class EditItem extends React.Component {
             <h1 className='successfully-saved'>Successfully saved!</h1>
             <a className='add-more-items' href='#add-item' onClick={this.handleSavePopupClick}>Add More Items</a>
             <br />
-            <a className='see-items' href='#items' onClick={this.handleSavePopupClick}>See Items in the Closet</a>
+            <a className='see-items' href='#items' onClick={this.handleSavePopupClick}>See My Items</a>
           </div>
         </div>
 
@@ -293,3 +295,4 @@ export default class EditItem extends React.Component {
     );
   }
 }
+EditItem.contextType = AppContext;

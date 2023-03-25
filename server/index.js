@@ -7,7 +7,6 @@ const ClientError = require('./client-error');
 const pg = require('pg');
 const uploadsMiddleware = require('./uploads-middleware');
 const jwt = require('jsonwebtoken');
-const authorizationMiddleware = require('./authorization-middleware');
 
 // create a database connection object to use the pg package.
 const db = new pg.Pool({
@@ -45,7 +44,6 @@ app.post('/api/auth/sign-up', (req, res, next) => {
           const newUser = result.rows[0];
           res.status(201).json(newUser);
         })
-        // .catch(err => next(err));
         .catch(err => {
           console.error(err);
           res.status(500).json({
@@ -92,8 +90,6 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.use(authorizationMiddleware);
-
 /* -------------------------------
      Clients can GET usernames.
 --------------------------------- */
@@ -115,21 +111,23 @@ app.get('/api/usernames', (req, res, next) => {
     });
 });
 
-/* -------------------------------
-      Clients can GET all items.
------------------------------------ */
-app.get('/api/items', (req, res, next) => {
+/* ------------------------------------------
+    Clients can GET all items with userId.
+-------------------------------------------- */
+app.get('/api/items/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);
   // query the database
   const sql = `
     select "image", "notes", "itemId", "favorite"
     from "items"
+    where "userId" = $1
     order by "itemId"
   `;
-  db.query(sql)
+  const params = [userId];
+  db.query(sql, params)
     .then(result => {
-      // the query succeeded
-      // respond to the client with the status code 200 and all rows from the "items" table
-      res.status(200).json(result.rows);
+      const items = result.rows;
+      res.status(200).json(items);
     })
     .catch(err => {
       // the query failed for some reason
@@ -146,8 +144,9 @@ app.get('/api/items', (req, res, next) => {
 /* -------------------------------------------
    Clients can GET a item's info by itemId.
 --------------------------------------------- */
-app.get('/api/items/:itemId', (req, res, next) => {
+app.get('/api/items/:itemId/:userId', (req, res, next) => {
   const itemId = Number(req.params.itemId);
+  const userId = Number(req.params.userId);
   if (!Number.isInteger(itemId) || itemId <= 0) {
     throw new ClientError(400, 'itemId mush be a positive integer');
   }
@@ -160,9 +159,9 @@ app.get('/api/items/:itemId', (req, res, next) => {
              "notes",
              "favorite"
        from  "items"
-       where "itemId" = $1
+       where "itemId" = $1 AND "userId" = $2
   `;
-  const params = [itemId];
+  const params = [itemId, userId];
   db.query(sql, params)
     .then(result => {
       const item = result.rows[0];
@@ -177,15 +176,16 @@ app.get('/api/items/:itemId', (req, res, next) => {
 /* ------------------------------------------------------
    Clients can GET item's info that have favorite = true.
 --------------------------------------------------------- */
-app.get('/api/favoriteItems', (req, res, next) => {
+app.get('/api/favoriteItems/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);
   const sql = `
     select "image", "notes", "itemId", "favorite"
     from "items"
-    where "favorite" = $1
+    where "favorite" = $1 AND "userId" = $2
     order by "itemId"
   `;
   const favorite = true;
-  const params = [favorite];
+  const params = [favorite, userId];
   db.query(sql, params)
     .then(result => {
       const items = result.rows;
@@ -197,15 +197,16 @@ app.get('/api/favoriteItems', (req, res, next) => {
 /* ------------------------------------------------------
     Clients can GET all outfit that have favorite = true.
 --------------------------------------------------------- */
-app.get('/api/favoriteOutfits', (req, res, next) => {
+app.get('/api/favoriteOutfits/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);
   const sql = `
     select "notes", "outfitId", "favorite", "userId"
     from "outfits"
-    where "favorite" = $1
+    where "favorite" = $1 AND "userId" = $2
     order by "outfitId"
   `;
   const favorite = true;
-  const params = [favorite];
+  const params = [favorite, userId];
   db.query(sql, params)
     .then(result => {
       const outfits = result.rows;
@@ -217,44 +218,45 @@ app.get('/api/favoriteOutfits', (req, res, next) => {
 /* -----------------------------------------------------------------------
    Clients can GET items that meet specific category and brand and color.
 ------------------------------------------------------------------------- */
-app.get('/api/items/:category/:brand/:color', (req, res, next) => {
+app.get('/api/items/:category/:brand/:color/:userId', (req, res, next) => {
   const category = req.params.category;
   const brand = req.params.brand;
   const color = req.params.color;
+  const userId = Number(req.params.userId);
 
   if (typeof category !== 'string' || typeof brand !== 'string' || typeof color !== 'string') {
-    throw new ClientError(400, 'mush be strings');
+    throw new ClientError(400, 'must be strings');
   }
 
   let whereCondition;
   let paramsArray;
   if (category === 'Category' && brand === 'Brand') { // select items have specific category and brand
-    whereCondition = '"color" = $1';
-    paramsArray = [color];
+    whereCondition = '"color" = $1 AND "userId" = $2';
+    paramsArray = [color, userId];
 
   } else if (category === 'Category' && color === 'Color') { // select items have specific category and color
-    whereCondition = '"brand" = $1';
-    paramsArray = [brand];
+    whereCondition = '"brand" = $1 AND "userId" = $2';
+    paramsArray = [brand, userId];
 
   } else if (category === 'Category') { // select items have specific category
-    whereCondition = '"brand" = $1 AND "color" = $2';
-    paramsArray = [brand, color];
+    whereCondition = '"brand" = $1 AND "color" = $2 AND "userId" = $3';
+    paramsArray = [brand, color, userId];
 
   } else if (brand === 'Brand' && color === 'Color') { // select items have specific brand and color
-    whereCondition = '"category" = $1';
-    paramsArray = [category];
+    whereCondition = '"category" = $1 AND "userId" = $2';
+    paramsArray = [category, userId];
 
   } else if (brand === 'Brand') { // select items have specific brand
-    whereCondition = '"category" = $1 AND "color" = $2';
-    paramsArray = [category, color];
+    whereCondition = '"category" = $1 AND "color" = $2 AND "userId" = $3';
+    paramsArray = [category, color, userId];
 
   } else if (color === 'Color') { // select items have specific color
-    whereCondition = '"category" = $1 AND "brand" = $2';
-    paramsArray = [category, brand];
+    whereCondition = '"category" = $1 AND "brand" = $2 AND "userId" = $3';
+    paramsArray = [category, brand, userId];
 
   } else { // select items have specific category and brand and color
-    whereCondition = '"category" = $1 AND "brand" = $2 AND "color" = $3';
-    paramsArray = [category, brand, color];
+    whereCondition = '"category" = $1 AND "brand" = $2 AND "color" = $3 AND "userId" = $4';
+    paramsArray = [category, brand, color, userId];
   }
 
   const sql = `
@@ -278,7 +280,8 @@ app.get('/api/items/:category/:brand/:color', (req, res, next) => {
 /* -------------------------------------------------------------
       Clients can GET all items used for outfits with all info.
 ------------------------------------------------------------- */
-app.get('/api/outfitItems', (req, res, next) => {
+app.get('/api/outfitItems/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);
   const sql = `
         select "outfitItems"."outfitId",
                "outfitItems"."itemId",
@@ -291,9 +294,11 @@ app.get('/api/outfitItems', (req, res, next) => {
         from "outfitItems"
         join "outfits" using ("outfitId")
         join "items" using ("itemId")
+        where "outfits"."userId" = $1
         order by "outfitId"
         `;
-  db.query(sql)
+  const params = [userId];
+  db.query(sql, params)
     .then(result => {
       res.status(200).json(result.rows);
     })
@@ -308,13 +313,16 @@ app.get('/api/outfitItems', (req, res, next) => {
 /* -------------------------------------------------
       Clients can GET all rows in outfits table.
 --------------------------------------------------- */
-app.get('/api/outfits', (req, res, next) => {
+app.get('/api/outfits/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);
   const sql = `
     select "outfitId", "notes", "userId", "favorite"
     from "outfits"
+    where "userId" = $1
     order by "outfitId"
   `;
-  db.query(sql)
+  const params = [userId];
+  db.query(sql, params)
     .then(result => {
       res.status(200).json(result.rows);
     })
@@ -328,8 +336,9 @@ app.get('/api/outfits', (req, res, next) => {
 /* -------------------------------------------------------------
   Clients can GET a specifit outfit with its info by outfitId.
 --------------------------------------------------------------- */
-app.get('/api/outfits/:outfitId', (req, res, next) => {
+app.get('/api/outfits/:outfitId/:userId', (req, res, next) => {
   const outfitId = Number(req.params.outfitId);
+  const userId = Number(req.params.userId);
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfitId mush be a positive integer');
   }
@@ -338,10 +347,10 @@ app.get('/api/outfits/:outfitId', (req, res, next) => {
               "userId",
               "notes"
         from "outfits"
-        where "outfitId" = $1
+        where "outfitId" = $1 AND "userId" = $2
        `;
 
-  const params = [outfitId];
+  const params = [outfitId, userId];
   db.query(sql, params)
     .then(result => {
       const item = result.rows[0];
@@ -356,8 +365,9 @@ app.get('/api/outfits/:outfitId', (req, res, next) => {
 /* -------------------------------------------------------------------------
   Clients can GET all items for a specifit outfit with its info by outfitId.
 --------------------------------------------------------------------------- */
-app.get('/api/outfitItems/:outfitId', (req, res, next) => {
+app.get('/api/outfitItems/:outfitId/:userId', (req, res, next) => {
   const outfitId = Number(req.params.outfitId);
+  const userId = Number(req.params.userId);
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfifId mush be a positive integer');
   }
@@ -371,9 +381,9 @@ app.get('/api/outfitItems/:outfitId', (req, res, next) => {
         from  "outfitItems"
         join "outfits" using ("outfitId")
         join "items" using ("itemId")
-       where "outfitId" = $1
+       where "outfitId" = $1 AND "outfits"."userId" = $2
   `;
-  const params = [outfitId];
+  const params = [outfitId, userId];
   db.query(sql, params)
     .then(result => {
       res.status(200).json(result.rows);
@@ -473,9 +483,10 @@ app.post('/api/store-item-for-outfit', uploadsMiddleware, (req, res, next) => {
 /* -------------------------------------------------------
    Clients can PATECH item's info(favorite) by its itemId.
 --------------------------------------------------------- */
-app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
+app.patch('/api/itemFavoriteUpdate/:itemId/:userId', (req, res, next) => {
   const updateData = req.body;
   const itemId = Number(req.params.itemId);
+  const userId = Number(req.params.userId);
   if (!Number.isInteger(itemId) || itemId <= 0) {
     throw new ClientError(400, 'itemId mush be a positive integer');
   } else if ('favorite' in updateData === false) {
@@ -484,10 +495,10 @@ app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
   const sql = `
        update "items"
        set   "favorite" = $1
-       where "itemId" = $2
+       where "itemId" = $2 AND "userId" = $3
        returning *
   `;
-  const params = [updateData.favorite, itemId];
+  const params = [updateData.favorite, itemId, userId];
   db.query(sql, params)
     .then(result => {
       const item = result.rows[0];
@@ -508,9 +519,10 @@ app.patch('/api/itemFavoriteUpdate/:itemId', (req, res, next) => {
 /* -----------------------------------------------------------
    Clients can PATECH outfit's info(favorite) by its outfitId.
 ------------------------------------------------------------- */
-app.patch('/api/outfitFavoriteUpdate/:outfitId', (req, res, next) => {
+app.patch('/api/outfitFavoriteUpdate/:outfitId/:userId', (req, res, next) => {
   const updateData = req.body;
   const outfitId = Number(req.params.outfitId);
+  const userId = Number(req.params.userId);
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfitId mush be a positive integer');
   } else if ('favorite' in updateData === false) {
@@ -519,10 +531,10 @@ app.patch('/api/outfitFavoriteUpdate/:outfitId', (req, res, next) => {
   const sql = `
        update "outfits"
        set   "favorite" = $1
-       where "outfitId" = $2
+       where "outfitId" = $2 AND "userId" = $3
        returning *
   `;
-  const params = [updateData.favorite, outfitId];
+  const params = [updateData.favorite, outfitId, userId];
   db.query(sql, params)
     .then(result => {
       const outfit = result.rows[0];
@@ -543,9 +555,10 @@ app.patch('/api/outfitFavoriteUpdate/:outfitId', (req, res, next) => {
 /* -----------------------------------------------------
    Clients can PATECH edited item's info by its itemId.
 ------------------------------------------------------ */
-app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
+app.patch('/api/items/:itemId/:userId', uploadsMiddleware, (req, res, next) => {
   const updatedItem = req.body;
   const itemId = Number(req.params.itemId);
+  const userId = Number(req.params.userId);
   if ('category' in updatedItem === false || 'brand' in updatedItem === false || 'color' in updatedItem === false || 'notes' in updatedItem === false || 'userId' in updatedItem === false) {
     throw new ClientError(400, 'An invalid/missing information.');
   } else if (!Number.isInteger(itemId) || itemId <= 0) {
@@ -560,10 +573,10 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
            "brand" = $3,
            "color" = $4,
            "notes" = $5
-     where "itemId" = $6
+     where "itemId" = $6 AND "userId" = $7
     returning *
    `;
-    const params = [updatedItem.image, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId];
+    const params = [updatedItem.image, updatedItem.category, updatedItem.brand, updatedItem.color, updatedItem.notes, itemId, userId];
     db.query(sql, params)
       .then(result => {
         const item = result.rows[0];
@@ -615,9 +628,10 @@ app.patch('/api/items/:itemId', uploadsMiddleware, (req, res, next) => {
 /* ---------------------------------------------------------
    Clients can PATECH outfit's info(notes) by its outfitId.
 ----------------------------------------------------------- */
-app.patch('/api/outfitsNotes/:outfitId', (req, res, next) => {
+app.patch('/api/outfitsNotes/:outfitId/:userId', (req, res, next) => {
   const newNotes = req.body;
   const outfitId = Number(req.params.outfitId);
+  const userId = Number(req.params.userId);
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfitId mush be a positive integer');
   } else if ('notes' in newNotes === false) {
@@ -626,10 +640,10 @@ app.patch('/api/outfitsNotes/:outfitId', (req, res, next) => {
   const sql = `
        update "outfits"
        set   "notes" = $1
-       where "outfitId" = $2
+       where "outfitId" = $2 AND "userId" = $3
        returning *
   `;
-  const params = [newNotes.notes, outfitId];
+  const params = [newNotes.notes, outfitId, userId];
   db.query(sql, params)
     .then(result => {
       const outfit = result.rows[0];
@@ -650,8 +664,9 @@ app.patch('/api/outfitsNotes/:outfitId', (req, res, next) => {
 /* -----------------------------------------
    Clients can DELETE an item by its itemId.
 -------------------------------------------- */
-app.delete('/api/items/:itemId', (req, res, next) => {
+app.delete('/api/items/:itemId/:userId', (req, res, next) => {
   const itemId = Number(req.params.itemId);
+  const userId = Number(req.params.userId);
   if (!Number.isInteger(itemId) || itemId <= 0) {
     throw new ClientError(400, 'itemId mush be a positive integer');
   }
@@ -659,10 +674,10 @@ app.delete('/api/items/:itemId', (req, res, next) => {
   const sql = `
        delete
        from  "items"
-       where "itemId" = $1
+       where "itemId" = $1 AND "userId" = $2
        returning *
   `;
-  const params = [itemId];
+  const params = [itemId, userId];
   db.query(sql, params)
     .then(result => {
       const item = result.rows[0];
@@ -677,18 +692,19 @@ app.delete('/api/items/:itemId', (req, res, next) => {
 /* ---------------------------------------------
    Clients can DELETE an outfit by its outfitId.
 ----------------------------------------------- */
-app.delete('/api/outfits/:outfitId', (req, res, next) => {
+app.delete('/api/outfits/:outfitId/:userId', (req, res, next) => {
   const outfitId = Number(req.params.outfitId);
+  const userId = Number(req.params.userId);
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfitId mush be a positive integer');
   }
   const sql = `
        delete
        from  "outfits"
-       where "outfitId" = $1
+       where "outfitId" = $1 AND "userId" = $2
        returning *
   `;
-  const params = [outfitId];
+  const params = [outfitId, userId];
   db.query(sql, params)
     .then(result => {
       const outfit = result.rows[0];
@@ -703,18 +719,19 @@ app.delete('/api/outfits/:outfitId', (req, res, next) => {
 /* -----------------------------------------------------------------------------------
    Clients can DELETE items in outfitItems table that match with a specific outfitId.
 ------------------------------------------------------------------------------------ */
-app.delete('/api/outfitItems/:outfitId', (req, res, next) => {
+app.delete('/api/outfitItems/:outfitId/:userId', (req, res, next) => {
   const outfitId = Number(req.params.outfitId);
+  const userId = Number(req.params.userId);
   if (!Number.isInteger(outfitId) || outfitId <= 0) {
     throw new ClientError(400, 'outfitId mush be a positive integer');
   }
   const sql = `
        delete
        from  "outfitItems"
-       where "outfitId" = $1
+       where "outfitId" = $1 AND "userId" = $2
        returning *
   `;
-  const params = [outfitId];
+  const params = [outfitId, userId];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);

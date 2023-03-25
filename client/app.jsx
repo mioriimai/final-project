@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from './pages/home';
 import FormItem from './components/form-item';
+import jwtDecode from 'jwt-decode';
 import FormOutfit from './components/form-outfit';
 import EditItem from './components/edit-item';
 import EditOutfit from './components/edit-outfit';
@@ -12,6 +13,7 @@ import SignIn from './components/sign-in';
 import Navbar from './components/navbar';
 import parseRoute from './lib/parse-route';
 import PageContainer from './components/page-container';
+import AppContext from './lib/app-context';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,6 +23,8 @@ export default class App extends React.Component {
       isAuthorizing: true,
       route: parseRoute(window.location.hash)
     };
+    this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +33,20 @@ export default class App extends React.Component {
         route: parseRoute(window.location.hash)
       });
     });
+    const token = window.localStorage.getItem('react-context-jwt');
+    const user = token ? jwtDecode(token) : null;
+    this.setState({ user, isAuthorizing: false });
+  }
+
+  handleSignIn(result) {
+    const { user, token } = result;
+    window.localStorage.setItem('react-context-jwt', token);
+    this.setState({ user });
+  }
+
+  handleSignOut() {
+    window.localStorage.removeItem('react-context-jwt');
+    this.setState({ user: null });
   }
 
   renderPage() {
@@ -69,13 +87,19 @@ export default class App extends React.Component {
   }
 
   render() {
+    if (this.state.isAuthorizing) return null;
+    const { user, route } = this.state;
+    const { handleSignIn, handleSignOut } = this;
+    const contextValue = { user, route, handleSignIn, handleSignOut };
     return (
-      <>
-        <Navbar />
-        <PageContainer>
-          { this.renderPage()}
-        </PageContainer>
-      </>
+      <AppContext.Provider value={contextValue}>
+        <>
+          <Navbar />
+          <PageContainer>
+            { this.renderPage()}
+          </PageContainer>
+        </>
+      </AppContext.Provider>
     );
   }
 }

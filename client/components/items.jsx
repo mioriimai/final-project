@@ -1,5 +1,7 @@
 import React from 'react';
 import CreateOptions from './create-options';
+import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class Items extends React.Component {
   constructor(props) {
@@ -21,7 +23,7 @@ export default class Items extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/items')
+    fetch(`/api/items/${this.context.user.userId}`)
       .then(res => res.json())
       .then(items => this.setState({ items }));
   }
@@ -45,13 +47,13 @@ export default class Items extends React.Component {
 
     if (event.target.value === 'Category' && this.state.sortBrand === 'Brand' && this.state.sortColor === 'Color') {
       // Use fetch() to send a GET request to get all items
-      fetch('/api/items')
+      fetch(`/api/items/${this.context.user.userId}`)
         .then(res => res.json())
         .then(items => this.setState({ items }));
 
     } else {
       // Use fetch() to send a GET request to get items that meet the conditons
-      fetch(`/api/items/${event.target.value}/${this.state.sortBrand}/${this.state.sortColor}`, {
+      fetch(`/api/items/${event.target.value}/${this.state.sortBrand}/${this.state.sortColor}/${this.context.user.userId}`, {
         method: 'GET'
       })
         .then(res => res.json())
@@ -67,13 +69,13 @@ export default class Items extends React.Component {
 
     if (this.state.sortCategory === 'Category' && event.target.value === 'Brand' && this.state.sortColor === 'Color') {
       // Use fetch() to send a GET request to get all items
-      fetch('/api/items')
+      fetch(`/api/items/${this.context.user.userId}`)
         .then(res => res.json())
         .then(items => this.setState({ items }));
 
     } else {
       // Use fetch() to send a GET request to get items that meet the conditons
-      fetch(`/api/items/${this.state.sortCategory}/${event.target.value}/${this.state.sortColor}`, {
+      fetch(`/api/items/${this.state.sortCategory}/${event.target.value}/${this.state.sortColor}/${this.context.user.userId}`, {
         method: 'GET'
       })
         .then(res => res.json())
@@ -89,13 +91,13 @@ export default class Items extends React.Component {
 
     if (this.state.sortCategory === 'Category' && this.state.sortBrand === 'Brand' && event.target.value === 'Color') {
       // Use fetch() to send a GET request to get all items
-      fetch('/api/items')
+      fetch(`/api/items/${this.context.user.userId}`)
         .then(res => res.json())
         .then(items => this.setState({ items }));
 
     } else {
       // Use fetch() to send a GET request to get items that meet the conditons
-      fetch(`/api/items/${this.state.sortCategory}/${this.state.sortBrand}/${event.target.value}`, {
+      fetch(`/api/items/${this.state.sortCategory}/${this.state.sortBrand}/${event.target.value}/${this.context.user.userId}`, {
         method: 'GET'
       })
         .then(res => res.json())
@@ -106,7 +108,7 @@ export default class Items extends React.Component {
 
   handleSortReset() {
     // Use fetch() to send a GET request to get all items
-    fetch('/api/items')
+    fetch(`/api/items/${this.context.user.userId}`)
       .then(res => res.json())
       .then(items => this.setState({ items }));
 
@@ -128,7 +130,7 @@ export default class Items extends React.Component {
     const status = { favorite: !favoriteStatus };
 
     // Use fetch() to send a PATCH request to update item's favorite status
-    fetch(`/api/itemFavoriteUpdate/${this.state.itemId}`, {
+    fetch(`/api/itemFavoriteUpdate/${this.state.itemId}/${this.context.user.userId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -138,13 +140,13 @@ export default class Items extends React.Component {
 
     if (this.state.sortCategory === 'Category' && this.state.sortBrand === 'Brand' && this.state.sortColor === 'Color') {
       // Use fetch() to send a GET request to get all items
-      fetch('/api/items')
+      fetch(`/api/items/${this.context.user.userId}`)
         .then(res => res.json())
         .then(items => this.setState({ items }));
 
     } else {
       // Use fetch() to send a GET request to get items that meet the conditons
-      fetch(`/api/items/${this.state.sortCategory}/${this.state.sortBrand}/${this.state.sortColor}`, {
+      fetch(`/api/items/${this.state.sortCategory}/${this.state.sortBrand}/${this.state.sortColor}/${this.context.user.userId}`, {
         method: 'GET'
       })
         .then(res => res.json())
@@ -154,6 +156,7 @@ export default class Items extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="sign-in" />;
 
     const itemsArray = [];
     for (let i = 0; i < this.state.items.length; i++) {
@@ -265,3 +268,4 @@ function Item(props) {
     </div>
   );
 }
+Items.contextType = AppContext;
