@@ -1120,7 +1120,18 @@ body {
   border: none;
   border-radius: 40px;
   padding: 13px 80px;
-  margin: 25px auto 15px;
+  margin: 33px auto 15px;
+}
+
+.signin-validation-message {
+  margin: 0 auto;
+  color: rgb(221, 86, 86);
+  font-family: Alegreya, sans-serif;
+  font-size: 15px;
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* ------------- media query ------------  */
@@ -1762,7 +1773,14 @@ body {
   .confirm-sign-in-button {
     font-size: 15px;
     padding: 10px 60px;
-    margin: 20px auto 10px;
+    margin: 30px auto 10px;
+  }
+
+  .signin-validation-message {
+    font-size: 12px;
+    top: 68px;
+    width: 200px;
+    text-align: center;
   }
 }
 

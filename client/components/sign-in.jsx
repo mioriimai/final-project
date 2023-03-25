@@ -1,4 +1,5 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
 
 export default class SignIn extends React.Component {
 
@@ -6,10 +7,12 @@ export default class SignIn extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      valid: ''
     };
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChangeUsername(event) {
@@ -24,10 +27,36 @@ export default class SignIn extends React.Component {
     });
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    const req = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(this.state)
+    };
+    fetch('/api/auth/sign-in', req)
+      .then(res => res.json())
+      .then(result => {
+        if (result.user && result.token) {
+          // rerult = this.context;
+          window.location.hash = '#';
+        } else {
+          this.setState({ valid: false });
+        }
+      });
+  }
+
   render() {
     // console.log(this.state);
+    let validationMessage;
+    if (this.state.valid === false) {
+      validationMessage = 'signin-validation-message';
+    } else {
+      validationMessage = 'hidden';
+    }
+
     return (
-      <form /* onSubmit={this.handleSubmit} */>
+      <form onSubmit={this.handleSubmit}>
         <div className='sign-up-container'>
           <div className='sign-in-white-box'>
             <div className='row'>
@@ -45,7 +74,7 @@ export default class SignIn extends React.Component {
                 Password<br />
                 <input required type="password" id='passward' name='password' className='sign-up-password-input' value={this.state.password} onChange={this.handleChangePassword} />
               </label>
-              {/* <p className={passwordValidationMessage}>Password must be 4-15 characters.</p> */}
+              <p className={validationMessage}>The username or password is incorrect.</p>
             </div>
             <div className='row'>
               <button type='submit' className='confirm-sign-in-button'>
@@ -61,3 +90,4 @@ export default class SignIn extends React.Component {
     );
   }
 }
+SignIn.contextType = AppContext;
