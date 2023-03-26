@@ -1,5 +1,6 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
+import AppContext from '../lib/app-context';
 
 export default class EditOutfit extends React.Component {
   constructor(props) {
@@ -30,15 +31,15 @@ export default class EditOutfit extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/outfitItems/${this.props.outfitId}`)
+    fetch(`/api/outfitItems/${this.props.outfitId}/${this.context.user.userId}`)
       .then(res => res.json())
       .then(chosenItems => this.setState({ chosenItems }));
 
-    fetch(`/api/outfits/${this.props.outfitId}`)
+    fetch(`/api/outfits/${this.props.outfitId}/${this.context.user.userId}`)
       .then(res => res.json())
       .then(outfit => this.setState({ outfit }));
 
-    fetch('/api/items')
+    fetch(`/api/items/${this.context.user.userId}`)
       .then(res => res.json())
       .then(items => this.setState({ items }));
   }
@@ -80,7 +81,7 @@ export default class EditOutfit extends React.Component {
   }
 
   handleItemClick() {
-    fetch(`/api/items/${this.state.itemId}`)
+    fetch(`/api/items/${this.state.itemId}/${this.context.user.userId}`)
       .then(res => res.json())
       .then(chosenItems => {
         chosenItems.deltaX = 0;
@@ -149,7 +150,7 @@ export default class EditOutfit extends React.Component {
     }
     const newNotes = { notes: updatedNotes };
 
-    fetch(`/api/outfitsNotes/${this.props.outfitId}`, {
+    fetch(`/api/outfitsNotes/${this.props.outfitId}/${this.context.user.userId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -165,7 +166,7 @@ export default class EditOutfit extends React.Component {
       })
       .catch(err => console.error(err));
 
-    fetch(`/api/outfitItems/${this.props.outfitId}`, {
+    fetch(`/api/outfitItems/${this.props.outfitId}/${this.context.user.userId}`, {
       method: 'DELETE'
     })
       .then(res => res.json())
@@ -188,9 +189,10 @@ export default class EditOutfit extends React.Component {
 
         const deltaX = Math.round(this.state.chosenItems[i].deltaX);
         const deltaY = Math.round(this.state.chosenItems[i].deltaY);
+        const { user } = this.context;
 
         //  Append entries to the form data object I created.
-        formDataItem.append('userId', 1);
+        formDataItem.append('userId', user.userId);
         formDataItem.append('outfitId', this.props.outfitId);
         formDataItem.append('itemId', this.state.chosenItems[i].itemId);
         formDataItem.append('deltaX', deltaX);
@@ -209,9 +211,10 @@ export default class EditOutfit extends React.Component {
 
         const deltaX = Math.round(this.state.chosenItems[i].deltaX);
         const deltaY = Math.round(this.state.chosenItems[i].deltaY);
+        const { user } = this.context;
 
         //  Append entries to the form data object I created.
-        formDataItem.append('userId', 1);
+        formDataItem.append('userId', user.userId);
         formDataItem.append('outfitId', this.props.outfitId);
         formDataItem.append('itemId', this.state.chosenItems[i].itemId);
         formDataItem.append('deltaX', deltaX);
@@ -241,14 +244,14 @@ export default class EditOutfit extends React.Component {
 
   handleDeleteOutfit() {
     // Use fetch() to send a DELETE request to /api/outfits.
-    fetch(`/api/outfits/${this.props.outfitId}`, {
+    fetch(`/api/outfits/${this.props.outfitId}/${this.context.user.userId}`, {
       method: 'DELETE'
     })
       .then(res => res.json())
       .catch(err => console.error(err));
 
     // Use fetch() to send a DELETE request to /api/outfitItems.
-    fetch(`/api/outfitItems/${this.props.outfitId}`, {
+    fetch(`/api/outfitItems/${this.props.outfitId}/${this.context.user.userId}`, {
       method: 'DELETE'
     })
       .then(res => res.json())
@@ -449,7 +452,7 @@ export default class EditOutfit extends React.Component {
             <h1 className='successfully-saved'>Successfully saved!</h1>
             <a className='add-more-items' href='#add-outfit' onClick={this.handleSaveConfirmPopupClick}>Add More Outfits</a>
             <br />
-            <a className='see-items' href='#outfits' onClick={this.handleSaveConfirmPopupClick}>See Your Outfits</a>
+            <a className='see-items' href='#outfits' onClick={this.handleSaveConfirmPopupClick}>See My Outfits</a>
           </div>
         </div>
 
@@ -482,3 +485,4 @@ function Item(props) {
     </div>
   );
 }
+EditOutfit.contextType = AppContext;

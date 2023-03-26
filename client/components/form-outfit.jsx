@@ -1,5 +1,7 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
+import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class FormOutfit extends React.Component {
   constructor(props) {
@@ -28,13 +30,14 @@ export default class FormOutfit extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/items')
-      .then(res => res.json())
-      .then(items => this.setState({ items }));
+    if (this.context.user) {
+      fetch(`/api/items/${this.context.user.userId}`)
+        .then(res => res.json())
+        .then(items => this.setState({ items }));
+    }
   }
 
   handleAddButtonClick() {
-
     if (this.state.chosenItems.length < 10) {
       this.setState({
         addItemPopup: true
@@ -71,7 +74,7 @@ export default class FormOutfit extends React.Component {
   }
 
   handleItemClick() {
-    fetch(`/api/items/${this.state.itemId}`)
+    fetch(`/api/items/${this.state.itemId}/${this.context.user.userId}`)
       .then(res => res.json())
       .then(chosenItems => {
         chosenItems.deltaX = 0;
@@ -139,9 +142,10 @@ export default class FormOutfit extends React.Component {
 
         const deltaX = Math.round(this.state.chosenItems[i].deltaX);
         const deltaY = Math.round(this.state.chosenItems[i].deltaY);
+        const { user } = this.context;
 
         //  Append entries to the form data object I created.
-        formDataItem.append('userId', 1);
+        formDataItem.append('userId', user.userId);
         formDataItem.append('outfitId', this.state.savedOutfitId);
         formDataItem.append('itemId', this.state.chosenItems[i].itemId);
         formDataItem.append('deltaX', deltaX);
@@ -164,9 +168,10 @@ export default class FormOutfit extends React.Component {
 
         const deltaX = Math.round(this.state.chosenItems[i].deltaX);
         const deltaY = Math.round(this.state.chosenItems[i].deltaY);
+        const { user } = this.context;
 
         //  Append entries to the form data object I created.
-        formDataItem.append('userId', 1);
+        formDataItem.append('userId', user.userId);
         formDataItem.append('outfitId', this.state.savedOutfitId);
         formDataItem.append('itemId', this.state.chosenItems[i].itemId);
         formDataItem.append('deltaX', deltaX);
@@ -195,9 +200,10 @@ export default class FormOutfit extends React.Component {
 
     // Create a `new` FormData object.
     const formData = new FormData();
+    const { user } = this.context;
 
     //  Append entries to the form data object.
-    formData.append('userId', '1');
+    formData.append('userId', user.userId);
     formData.append('favorite', false);
     formData.append('notes', this.state.notes);
 
@@ -218,6 +224,8 @@ export default class FormOutfit extends React.Component {
   }
 
   render() {
+    if (!this.context.user) return <Redirect to="sign-in" />;
+
     const chosenItemsArray = [];
     for (let i = 0; i < this.state.chosenItems.length; i++) {
       const targetedItemId = Number(this.state.itemId);
@@ -392,7 +400,7 @@ export default class FormOutfit extends React.Component {
             <h1 className='successfully-saved'>Successfully saved!</h1>
             <a className='add-more-items' href='#add-outfit' onClick={this.handleSaveConfirmPopupClick}>Add More Outfits</a>
             <br />
-            <a className='see-items' href='#outfits' onClick={this.handleSaveConfirmPopupClick}>See Your Outfits</a>
+            <a className='see-items' href='#outfits' onClick={this.handleSaveConfirmPopupClick}>See My Outfits</a>
           </div>
         </div>
       </>
@@ -417,3 +425,4 @@ function Item(props) {
     </div>
   );
 }
+FormOutfit.contextType = AppContext;

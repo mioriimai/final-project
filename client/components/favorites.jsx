@@ -1,6 +1,8 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
-export default class FormItem extends React.Component {
+export default class Favorites extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,17 +22,19 @@ export default class FormItem extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/favoriteItems')
-      .then(res => res.json())
-      .then(favoriteItems => this.setState({ favoriteItems }));
+    if (this.context.user) {
+      fetch(`/api/favoriteItems/${this.context.user.userId}`)
+        .then(res => res.json())
+        .then(favoriteItems => this.setState({ favoriteItems }));
 
-    fetch('/api/favoriteOutfits')
-      .then(res => res.json())
-      .then(favoriteOutfits => this.setState({ favoriteOutfits }));
+      fetch(`/api/favoriteOutfits/${this.context.user.userId}`)
+        .then(res => res.json())
+        .then(favoriteOutfits => this.setState({ favoriteOutfits }));
 
-    fetch('/api/outfitItems')
-      .then(res => res.json())
-      .then(itemsForOutfit => this.setState({ itemsForOutfit }));
+      fetch(`/api/outfitItems/${this.context.user.userId}`)
+        .then(res => res.json())
+        .then(itemsForOutfit => this.setState({ itemsForOutfit }));
+    }
   }
 
   handleMouseEnter(event) {
@@ -58,7 +62,7 @@ export default class FormItem extends React.Component {
       }
       const status = { favorite: !favoriteStatus };
       // Use fetch() to send a PATCH request to update item's favorite status
-      fetch(`/api/itemFavoriteUpdate/${this.state.itemId}`, {
+      fetch(`/api/itemFavoriteUpdate/${this.state.itemId}/${this.context.user.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -67,7 +71,7 @@ export default class FormItem extends React.Component {
       });
 
       // Use fetch() to send a GET request to get all item that have favorite=true.
-      fetch('/api/favoriteItems')
+      fetch(`/api/favoriteItems/${this.context.user.userId}`)
         .then(res => res.json())
         .then(favoriteItems => this.setState({ favoriteItems }));
 
@@ -82,7 +86,7 @@ export default class FormItem extends React.Component {
       const status = { favorite: !favoriteStatus };
 
       // Use fetch() to send a PATCH request to update item's favorite status
-      fetch(`/api/outfitFavoriteUpdate/${this.state.outfitId}`, {
+      fetch(`/api/outfitFavoriteUpdate/${this.state.outfitId}/${this.context.user.userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -91,7 +95,7 @@ export default class FormItem extends React.Component {
       });
 
       // Use fetch() to send a GET request to get all outfits that have favorite=true.
-      fetch('/api/favoriteOutfits')
+      fetch(`/api/favoriteOutfits/${this.context.user.userId}`)
         .then(res => res.json())
         .then(favoriteOutfits => this.setState({ favoriteOutfits }));
     }
@@ -117,6 +121,7 @@ export default class FormItem extends React.Component {
 
   render() {
 
+    if (!this.context.user) return <Redirect to="sign-in" />;
     // create arrays for favorite items
     const itemsArray = [];
     for (let i = 0; i < this.state.favoriteItems.length; i++) {
@@ -350,3 +355,4 @@ function Outfit(props) {
     </div>
   );
 }
+Favorites.contextType = AppContext;

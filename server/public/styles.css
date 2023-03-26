@@ -19,6 +19,10 @@ body {
   text-decoration: none;
 }
 
+.sign-in-icon-wrapper {
+  text-decoration: none;
+}
+
 .fa-solid.fa-circle-user {
   color: #717171;
   font-size: 2.5rem;
@@ -27,9 +31,27 @@ body {
   top: 14px;
 }
 
-.fa-solid.fa-circle-user:hover {
+.sign-in-icon-wrapper:hover {
   cursor: pointer;
   opacity: 0.6;
+}
+
+.fa-solid.fa-right-from-bracket {
+  color: #717171;
+  font-size: 1.7rem;
+  position: absolute;
+  right: 56px;
+  top: 10px;
+}
+
+.sign-out {
+  color: #717171;
+  position: absolute;
+  right: 44px;
+  top: 23px;
+  font-family: "Playfair Display", serif;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 /* ------- app-drawer-menu ------ */
@@ -1060,11 +1082,13 @@ body {
   margin: -10px auto 10px;
   color: rgb(221, 86, 86);
   font-family: Alegreya, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   position: absolute;
   top: 78px;
   left: 50%;
   transform: translateX(-50%);
+  width: 250px;
+  text-align: center;
 }
 
 .create-account-button {
@@ -1102,6 +1126,43 @@ body {
   opacity: 0.6;
 }
 
+/* ------------ Sign in view -------------- */
+
+.sign-in-white-box {
+  margin: 0 auto;
+  width: 480px;
+  height: 560px;
+  background-color: white;
+}
+
+.confirm-sign-in-button {
+  color: white;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 19px;
+  font-weight: bold;
+  background-color: #8f8f8f;
+  border: none;
+  border-radius: 40px;
+  padding: 12px 80px;
+  margin: 33px auto 15px;
+}
+
+.confirm-sign-in-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.signin-validation-message {
+  margin: 0 auto;
+  color: rgb(221, 86, 86);
+  font-family: Alegreya, sans-serif;
+  font-size: 15px;
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /* ------------- media query ------------  */
 
 /* mobile screen */
@@ -1121,6 +1182,18 @@ body {
     font-size: 1.8rem;
     right: 24px;
     top: 12px;
+  }
+
+  .fa-solid.fa-right-from-bracket {
+    font-size: 1.1rem;
+    right: 22px;
+    top: 11px;
+  }
+
+  .sign-out {
+    right: 16px;
+    top: 22px;
+    font-size: 8px;
   }
 
   /* ------- mobile app-drawer-menu ------ */
@@ -1730,6 +1803,25 @@ body {
     font-size: 9px;
     top: 74px;
     left: 150px;
+  }
+
+  /* ------------ mobile sign in view -------------- */
+  .sign-in-white-box {
+    width: 310px;
+    height: 450px;
+  }
+
+  .confirm-sign-in-button {
+    font-size: 15px;
+    padding: 10px 60px;
+    margin: 30px auto 10px;
+  }
+
+  .signin-validation-message {
+    font-size: 12px;
+    top: 68px;
+    width: 200px;
+    text-align: center;
   }
 }
 
