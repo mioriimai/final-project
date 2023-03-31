@@ -33,6 +33,10 @@ Try the application live at https://wearly.mioriimai.com/
 - Users can edit an outfit.
 - Users can delete an outfit.
 - Users can add an outfit to their favorite.
+- Users can sign up.
+- Users can sign in.
+- Users can sigh out.
+- Users can sign in to the demo account.
 
 ## Preview
 Users can sort items.
@@ -42,10 +46,9 @@ Users can create an outfit.
 
 
 ## Stretch features
-- Users can sign up.
-- Users can sign in.
-- Users can sign out.
 - Users can remove the background of an image.
+- Users can adjust the size of items when they create an outfit.
+- Users can edit their brand list.
 
 
 ## Development
