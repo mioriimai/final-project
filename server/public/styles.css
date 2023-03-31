@@ -1827,13 +1827,19 @@ body {
   /* ------------ mobile sign in view -------------- */
   .sign-in-white-box {
     width: 310px;
-    height: 450px;
+    height: 500px;
   }
 
   .confirm-sign-in-button {
     font-size: 15px;
     padding: 10px 60px;
-    margin: 30px auto 10px;
+    margin: 30px auto 8px;
+  }
+
+  .demo-account-button {
+    font-size: 13px;
+    padding: 10px 22px;
+    margin: 20px auto 10px;
   }
 
   .signin-validation-message {
