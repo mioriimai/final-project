@@ -87,6 +87,11 @@ export default class SignIn extends React.Component {
             <div className='row'>
               <p className='have-an-account'>Don&rsquo;t have an account?<a href="#sign-up" className='sign-in-button'>Sign Up</a></p>
             </div>
+            <div className='row'>
+              <button type='submit' className='demo-account-button'>
+                Use a Demo Account
+              </button>
+            </div>
           </div>
         </div>
       </form>
