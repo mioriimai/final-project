@@ -1131,7 +1131,7 @@ body {
 .sign-in-white-box {
   margin: 0 auto;
   width: 480px;
-  height: 560px;
+  height: 620px;
   background-color: white;
 }
 
@@ -1145,6 +1145,25 @@ body {
   border-radius: 40px;
   padding: 12px 80px;
   margin: 33px auto 15px;
+}
+
+.demo-account-button {
+  color: #e78f8f;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 17px;
+  font-weight: bold;
+  background-color: white;
+  border: 2px solid #e78f8f;
+  border-radius: 40px;
+  padding: 12px 30px;
+  margin: 28px auto 15px;
+}
+
+.demo-account-button:hover {
+  cursor: pointer;
+  background-color: #e8a4a4;
+  border: 2px solid #e8a4a4;
+  color: white;
 }
 
 .confirm-sign-in-button:hover {
@@ -1808,13 +1827,19 @@ body {
   /* ------------ mobile sign in view -------------- */
   .sign-in-white-box {
     width: 310px;
-    height: 450px;
+    height: 500px;
   }
 
   .confirm-sign-in-button {
     font-size: 15px;
     padding: 10px 60px;
-    margin: 30px auto 10px;
+    margin: 30px auto 8px;
+  }
+
+  .demo-account-button {
+    font-size: 13px;
+    padding: 10px 22px;
+    margin: 20px auto 10px;
   }
 
   .signin-validation-message {
