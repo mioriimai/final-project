@@ -14,6 +14,7 @@ export default class SignIn extends React.Component {
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemoSignIn = this.handleDemoSignIn.bind(this);
   }
 
   handleChangeUsername(event) {
@@ -34,6 +35,27 @@ export default class SignIn extends React.Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.state)
+    };
+    fetch('/api/auth/sign-in', req)
+      .then(res => res.json())
+      .then(result => {
+        if (result.user && result.token) {
+          this.context.handleSignIn(result);
+          window.location.hash = '#';
+        } else {
+          this.setState({ valid: false });
+        }
+      });
+  }
+
+  handleDemoSignIn() {
+    const req = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: 'demo',
+        password: 'passwordfordemo'
+      })
     };
     fetch('/api/auth/sign-in', req)
       .then(res => res.json())
@@ -88,7 +110,7 @@ export default class SignIn extends React.Component {
               <p className='have-an-account'>Don&rsquo;t have an account?<a href="#sign-up" className='sign-in-button'>Sign Up</a></p>
             </div>
             <div className='row'>
-              <button type='submit' className='demo-account-button'>
+              <button type='button' className='demo-account-button' onClick={this.handleDemoSignIn}>
                 Use a Demo Account
               </button>
             </div>
